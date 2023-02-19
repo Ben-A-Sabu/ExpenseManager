@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        Expense Manager
+    </title>
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+
+    <meta name="description" content="A simple ExpenseManagerApp" />
+<script defer src="index.js"></script></head>
+<link rel="stylesheet" href="main1.css">
+
+<body>
+    <div id="header">
+        <button id="loginBtn" class="Submit">Sign In</button>
+        <button id="logoutBtn" class="Submit">Sign Out</button>
+        <input type="image" src="./sidebar.png" name="sidebar" id="sidebar" alt="submit" label="homebtnimage" />
+        <div class="sidebarContent">
+            <div id="HomeBtn" class="Sidebarfeatures">Home</div>
+            <!----<div id="Settings" class="Sidebarfeatures">Settings</div>-->
+            <div id="KeepNotes" class="Sidebarfeatures">Keep notes</div>
+            <div id="EditBudget" class="Sidebarfeatures">edit Budget</div>
+            <div id="Details" class="Sidebarfeatures">
+                Detailed Report of Expense
+            </div>
+        </div>
+        <h1 id="MainHeading">Expense Tracker</h1>
+    </div>
+    <div id="ExpenseInput">
+        <input type="text" class="Inputbox" name="expense" id="expenseIn" placeholder="expense" />
+        <input type="text" class="Inputbox" name="amount" id="amount" placeholder="Amount" />
+        <button type="submit" class="Submit" id="AddBtn">Add</button>
+        <button type="submit" class="Submit" id="Clear">Clear</button>
+
+        <div id="popup" class="popupcollection"></div>
+        <div id="popupContent" class="ppcontent">
+            <h4>Expense Added</h4>
+            <button type="submit" class="close" id="closeBtn">&times;</button>
+
+            <h5>Date</h5>
+            <input type="date" id="expenseDate" class="Inputbox" />
+
+            <div class="category" id="categorycontent">
+                <h5>Category</h5>
+                <div class="category-list" id="categorycontentlist">
+                    <select name="Category" id="ExpenseCat" class="categorypopups">
+              <option value="SelectCategory" id="cat1">
+                Select Expense Category
+              </option>
+              <option value="Home Expense" id="cat2">Home Expense</option>
+              <option value="Transportation Expense" id="cat3">
+                Transportation Expense
+              </option>
+              <option value="Food Expense" id="cat4">Food Expense</option>
+              <option value="lend" id="cat5">lend</option>
+              <option value="borrow" id="cat6">borrow</option>
+              <option value="HealthCare Expense" id="cat7">
+                HealthCare Expense
+              </option>
+              <option value="PetCare Expense" id="cat8">PetCare Expense</option>
+              <option value="Entertainment Expense" id="cat9">
+                Entertainment Expense
+              </option>
+              <option value="Child-related expenses" id="cat10">
+                Child-related expenses
+              </option>
+              <option value="Others" id="cat 11">Others</option>
+            </select>
+                </div>
+            </div>
+            <button type="submit" class="Submit" id="popupBtn">OK</button>
+        </div>
+    </div>
+
+    <!-- edit part elements -->
+
+    <div id="editpopup" class="popupcollection"></div>
+    <div id="editpopupContent" class="ppcontent">
+        <h4>Expense Added</h4>
+        <button type="submit" class="close" id="editcloseBtn">&times;</button>
+        <h5>Enter Expense and Amount</h5>
+        <input type="text" class="Inputbox" name="expense" id="EexpenseIn" placeholder="expense" />
+        <input type="text" class="Inputbox" name="amount" id="Eamount" placeholder="Amount" />
+        <h5>Date</h5>
+        <input type="date" id="editexpenseDate" class="Inputbox" />
+
+        <div class="category" id="editcategorycontent">
+            <h5>Category</h5>
+            <div class="category-list" id="editcategorycontentlist">
+                <select name="Category" id="editExpenseCat" class="categorypopups">
+            <option value="SelectCategory" id="Ecat1">
+              Select Expense Category
+            </option>
+            <option value="Home Expense" id="Ecat2">Home Expense</option>
+            <option value="Transportation Expense" id="Ecat3">
+              Transportation Expense
+            </option>
+            <option value="Food Expense" id="Ecat4">Food Expense</option>
+            <option value="lend" id="Ecat5">lend</option>
+            <option value="borrow" id="Ecat6">borrow</option>
+            <option value="HealthCare Expense" id="Ecat7">
+              HealthCare Expense
+            </option>
+            <option value="PetCare Expense" id="Ecat8">PetCare Expense</option>
+            <option value="Entertainment Expense" id="Ecat9">
+              Entertainment Expense
+            </option>
+            <option value="Child-related expenses" id="Ecat10">
+              Child-related expenses
+            </option>
+            <option value="Others" id="Ecat 11">Others</option>
+          </select>
+            </div>
+        </div>
+        <button type="submit" class="Submit" id="editpopupBtn">OK</button>
+    </div>
+
+    <!-- edit part elements -->
+
+    <!--------- view details  part-->
+
+    <div id="ViewType" class="popupcollection"></div>
+    <div id="ViewTypeconts" class="ppcontent">
+        <h4>Details</h4>
+        <button type="submit" class="close" id="viewclsBtn">&times;</button>
+        <div id="vdis">Descriptin:</div>
+        <div id="vamt">Amount:</div>
+        <div id="vdate">Date:</div>
+        <div id="vcat">Category:</div>
+        <button type="submit" class="Submit" id="vclsbtn">OK</button>
+    </div>
+
+    <!--------------------  view details part end -->
+
+    <div id="ExpenseList">
+        <h2 id="ExpenseListHeading">Expense</h2>
+
+        <div class="Expenses">
+            <div id="TodaysExpense">
+                <h3 class="ExpenseListHeading" id="TodayExpenseListHeading">
+                    Todays Expense
+                </h3>
+                <div class="Expense"></div>
+            </div>
+            <div id="WExpense">
+                <h3 class="ExpenseListHeading" id="WExpenseListHeading">
+                    Weekly Expense
+                </h3>
+                <div class="ExpenseOfW"></div>
+            </div>
+            <div id="MExpense">
+                <h3 class="ExpenseListHeading" id="MExpenseListHeading">
+                    Monthly Expense
+                </h3>
+                <div class="ExpenseOfM"></div>
+            </div>
+            <div id="DExpense">
+                <h3 class="ExpenseListHeading" id="DExpenseListHeading">
+                    Daily Expense
+                </h3>
+                <div class="ExpenseOfD"></div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------footeer begin-------------------------------->
+    <div id="footer">
+        <div id="displayGraphpopup" class="popupcollection"></div>
+        <div id="displayGraphpopupContent" class="ppcontent">
+            <h4>graph</h4>
+            <button type="submit" class="close" id="GraphcloseBtn">&times;</button>
+            <div id="container" style="width: 100%; height: 100%"></div>
+        </div>
+
+        <button id="SetBudget" class="Submit">Set Budget</button>
+        <div id="balance" class="Budgetdet">Balance :</div>
+        <div id="budgetOfMon" class="Budgetdet">Budget :</div>
+        <button id="graphViewer" class="Submit">view graph</button>
+    </div>
+    <!----------------------footer end -------------------------------->
+
+    <!-------------setbudget html begin------------------------>
+    <div id="budgetpopup" class="popupcollection"></div>
+    <div id="budgetpopupContent" class="ppcontent">
+        <h4>Budget Added</h4>
+        <button type="submit" class="close" id="budgetcloseBtn">&times;</button>
+        <input type="month" id="expensemonth" class="Inputbox" />
+        <input type="text" class="Inputbox" name="amount" id="bamount" placeholder="Amount" />
+
+        <button type="submit" class="Submit" id="budgetpopupBtn">OK</button>
+    </div>
+    <!-------------set budget html end------------------------>
+
+    <!-------------notes html begin------------------------>
+    <div id="notepopup" class="popupcollection"></div>
+
+    <div id="NoteContent" class="notecontent">
+        <h2 class="headng">Notes</h2>
+        <button type="submit" class="close" id="noteclose">&times;</button>
+        <div id="Notes">
+            <button class="add-note" type="button">+</button>
+        </div>
+    </div>
+
+    <!-------------notes html end----------------------->
+
+    <!-------------detailed expense reports html begin------------------------>
+    <div id="ExpenseType" class="popupcollection"></div>
+    <div id="ExpenseTypeconts" class="ppcontent">
+        <h4>Expenses Details</h4>
+        <button type="submit" class="close" id="ExpenseTypeBtn">&times;</button>
+        <div class="category" id="typecontent">
+            <h5 id="changing" class="localHeadings">Select Expense Type</h5>
+            <div class="category-list" id="typecontentlist">
+                <select name="Category" id="typeCat" class="categorypopups">
+            <option value="Select Expense detail type" id="type1">
+              Select Expense detail type
+            </option>
+            <option value="Daily Expense" id="type2">Daily Expense</option>
+            <option value="Weekly Expense" id="type3">Weekly Expense</option>
+            <option value="Monthly Expense" id="type4">Monthly Expense</option>
+          </select>
+                <div id="typeSelection">
+                    <input type="month" id="typemonth" class="Inputbox" value="tmonth" />
+                    <input type="date" id="typeDate" class="Inputbox" value="tDate" />
+                    <input type="week" id="typeweek" class="Inputbox" value="tweek" />
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="Submit" id="TypeSubmissionBtn">
+        Submit
+      </button>
+        <button type="submit" class="Submit" id="TypeBackBtn">Back</button>
+        <button type="submit" class="Submit" id="ExpenseTypeSubmissionBtn">
+        OK
+      </button>
+    </div>
+    <!-------------detailed expense report html end------------------------>
+
+    <!--------------split expense begin  ---------------------------------------->
+
+    <!----------------------split expense end------------------------------------>
+</body>
+
+</html>

@@ -1,0 +1,770 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #af6363;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+#header {
+    background-color: #af6363;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#ExpenseInput {
+    width: 100vw;
+    height: 10vh;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid #ccc;
+    background-color: rgba(250, 235, 215, 0.503);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#ExpenseList {
+    width: 100vw;
+    height: 70vh;
+    line-height: 2;
+    font-size: 55%;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid #ccc;
+    background-color: rgba(250, 241, 215, 0.467);
+}
+
+#footer {
+    background-color: #af6363;
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#loginBtn,
+#logoutBtn {
+    height: 6vh;
+    width: 6vh;
+    position: absolute;
+    left: 1vh;
+    top: 1vh;
+    z-index: 0;
+}
+
+#logoutBtn {
+    display: none;
+}
+
+#sidebar {
+    height: 3vh;
+    width: 3vh;
+    cursor: pointer;
+    display: flex;
+    position: absolute;
+    right: 1vh;
+    top: 1vh;
+    z-index: 0;
+}
+
+.sidebarContent {
+    background-color: #af6363;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0vh;
+    z-index: 1;
+    background-color: rgba(250, 241, 215, 0.467);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: .2s all linear;
+}
+
+.sidebarContent.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.5s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#sidebar.active {
+    z-index: 2;
+}
+
+.Sidebarfeatures {
+    background-color: #af6363;
+    height: 10vh;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 5vh 0;
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.Sidebarfeatures:hover {
+    background-color: #a34747;
+}
+
+.Inputbox {
+    line-height: 2;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid rgba(204, 204, 204, 0.614);
+    background-color: rgba(223, 220, 220, 0.857);
+    border-radius: 5px;
+    padding: 0 1rem;
+    box-shadow: 0px 0px 5px #000;
+}
+
+.Submit {
+    width: 10vw;
+    height: 5vh;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 50px;
+    color: #333;
+    background-color: rgba(199, 190, 179, 0.846);
+    cursor: pointer;
+}
+
+.close {
+    width: 20px;
+    height: 20px;
+    outline: none;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #333;
+    background-color: rgb(210, 106, 61);
+    cursor: pointer;
+    position: absolute;
+    right: 0vh;
+    top: 1vh;
+    z-index: 2;
+}
+
+.category {
+    width: 100%;
+    height: 20vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 5rem;
+}
+
+.category-list {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.categorypopups {
+    width: 100%;
+    height: 4vh;
+    padding: 0 5rem;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#ExpenseCat option {
+    width: 100%;
+    height: 4vh;
+    font-size: 12px;
+    padding: 0 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(79, 68, 68, 0.228);
+}
+
+.popupcollection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.515);
+    pointer-events: none;
+    opacity: 1;
+    cursor: none;
+    visibility: hidden;
+    z-index: 1;
+}
+
+#editpopupContent {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 1;
+    z-index: 1;
+}
+
+.ppcontent {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #a0edadf3;
+    height: 50vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    opacity: 1;
+    z-index: 2;
+    visibility: hidden;
+    top: 20vh
+}
+
+.ppcontent h4 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 90%;
+    width: 50vw;
+    height: 5vh;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    line-height: 3;
+    background-color: rgba(213, 229, 169, 0.909);
+}
+
+#editpopup.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.5s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#editpopupContent.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#popup.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#popupContent.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#budgetpopup.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#budgetpopupContent.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#ExpenseType.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#ExpenseTypeconts.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#ExpenseCat.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#ViewTypeconts {
+    margin-left: 25vw;
+    margin-right: 25vw;
+}
+
+#ViewType.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#ViewTypeconts.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#typemonth,
+#typeDate,
+#typeweek {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#typemonth.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.75s all ease-in-out;
+    opacity: 1;
+}
+
+#typeDate.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.75s all ease-in-out;
+    opacity: 1;
+}
+
+#typeweek.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.75s all ease-in-out;
+    opacity: 1;
+}
+
+#TypeSubmissionBtn,
+#TypeBackBtn {
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#TypeSubmissionBtn.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.75s all ease-in-out;
+    opacity: 1;
+}
+
+#TypeBackBtn.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.75s all ease-in-out;
+    opacity: 1;
+}
+
+.Expenses {
+    width: 100%;
+    height: 10vh;
+    line-height: 2;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+#ExpenseListHeading {
+    width: 100%;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid #ccc;
+    background-color: rgba(250, 241, 215, 0.467);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.localHeadings {
+    display: flex;
+    justify-content: space-around;
+    font-size: 90%;
+    width: 50vw;
+    height: 5vh;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    line-height: 3;
+}
+
+.ExpenseListHeading {
+    font-size: 150%;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(196, 119, 119, 0.399);
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    line-height: 2;
+    margin-top: 1vh;
+}
+
+.Expense,
+.ExpenseOfM,
+.ExpenseOfW,
+.ExpenseOfD {
+    width: 100%;
+    line-height: 2;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(70, 68, 68, 0.219);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 1vh;
+}
+
+#TodaysExpense {
+    height: 60vh;
+    overflow: auto;
+}
+
+#WExpense,
+#MExpense,
+#DExpense {
+    height: 60vh;
+    overflow: auto;
+    display: none;
+}
+
+.action {
+    line-height: 2;
+    font-size: 90%;
+    font-weight: bold;
+    width: 10vw;
+    background-color: inherit;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.action:hover {
+    background-color: rgb(66, 110, 51);
+    color: #fff;
+}
+
+#displayGraphpopup.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+#displayGraphpopupContent.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.Budgetdet {
+    font-size: larger;
+    font-weight: bolder;
+}
+
+@media screen and (max-width:890px) {
+
+    .Inputbox,
+    .Submit {
+        width: 20%;
+        font-size: 12px;
+    }
+
+    #ExpenseList {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #footer {
+        font-size: 8px;
+    }
+
+    .ExpenseListHeading {
+        font-size: 60%;
+    }
+
+    #MainHeading {
+        font-size: 90%;
+    }
+
+    #sidebar {
+        height: 1.5vh;
+        width: 1.5vh;
+        right: 1vh;
+    }
+
+    #container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .action {
+        line-height: 2;
+        font-size: 8px;
+        font-weight: bold;
+        width: 10vw;
+        background-color: inherit;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    p {
+        max-width: 40ch;
+        color: #a34747;
+        font-size: 10px;
+    }
+
+    .Budgetdet {
+        font-size: 12px;
+        font-weight: bolder;
+    }
+}
+
+@media screen and (max-height:400px) {
+
+    .Inputbox,
+    .Submit {
+        width: 20%;
+        font-size: 12px;
+        height: 60%;
+    }
+
+    #ExpenseList {
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #footer {
+        font-size: 8px;
+    }
+
+    .ExpenseListHeading {
+        font-size: 60%;
+    }
+
+    #MainHeading {
+        font-size: 90%;
+    }
+
+    #sidebar {
+        height: 1.5vh;
+        width: 1.5vh;
+        right: 1vh;
+    }
+
+    #container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .action {
+        line-height: 2;
+        font-size: 8px;
+        font-weight: bold;
+        width: 10vw;
+        background-color: inherit;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    p {
+        max-width: 40ch;
+        color: #a34747;
+        font-size: 10px;
+    }
+
+    .Budgetdet {
+        font-size: 12px;
+        font-weight: bolder;
+    }
+}
+
+
+/*   notes css---------------------------------------------------------*/
+
+.headng {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: normal;
+    position: relative;
+}
+
+#Notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 50vw);
+    padding: 24px;
+    gap: 24px;
+}
+
+.note {
+    height: 200px;
+    box-sizing: border-box;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
+    resize: none;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.add-note {
+    height: 200px;
+    width: 200px;
+    border: none;
+    outline: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 120px;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-note:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.notecontent {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #96d5a1f3;
+    height: 90vh;
+    width: 90vw;
+    opacity: 1;
+    z-index: 1;
+    top: 5vh;
+    visibility: hidden;
+    overflow: auto;
+}
+
+#NoteContent.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#notepopup.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+
+/*   notes css end---------------------------------------------------------*/
+
+p {
+    max-width: 6ch;
+    color: #a34747;
+}
+
+
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
