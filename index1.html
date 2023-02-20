@@ -16,38 +16,42 @@
 <link rel="stylesheet" href="main1.css">
 
 <body>
-    <div id="header">
-        <button id="loginBtn" class="Submit">Sign In</button>
-        <button id="logoutBtn" class="Submit">Sign Out</button>
+    <!------------------------------ header ------------------------------------------->
+    <div id="header" class="row">
+        <div id="loginBtn" class="Submit row">Sign In</div>
+        <div id="logoutBtn" class="Submit row">Sign Out</div>
+              <h1 class="headng " id="MainHeading">Expense Tracker</h1>
         <input type="image" src="./sidebar.png" name="sidebar" id="sidebar" alt="submit" label="homebtnimage" />
-        <div class="sidebarContent">
-            <div id="HomeBtn" class="Sidebarfeatures">Home</div>
+       
+        <div class="sidebarContent col">
+          
+            <div id="HomeBtn" class="Sidebarfeatures row">Home</div>
             <!----<div id="Settings" class="Sidebarfeatures">Settings</div>-->
-            <div id="KeepNotes" class="Sidebarfeatures">Keep notes</div>
-            <div id="EditBudget" class="Sidebarfeatures">edit Budget</div>
-            <div id="Details" class="Sidebarfeatures">
-                Detailed Report of Expense
-            </div>
-        </div>
-        <h1 id="MainHeading">Expense Tracker</h1>
+            <div id="KeepNotes" class="Sidebarfeatures row">Keep notes</div>
+            <div id="EditBudget" class="Sidebarfeatures row">edit Budget</div>
+            <div id="Details" class="Sidebarfeatures row">Detailed Report of Expense</div>
     </div>
-    <div id="ExpenseInput">
+  
+    </div>
+    <!------------------------------ ExpenseInput ------------------------------------------->
+    <div id="ExpenseInput" class="row">
         <input type="text" class="Inputbox" name="expense" id="expenseIn" placeholder="expense" />
         <input type="text" class="Inputbox" name="amount" id="amount" placeholder="Amount" />
-        <button type="submit" class="Submit" id="AddBtn">Add</button>
-        <button type="submit" class="Submit" id="Clear">Clear</button>
-
+        <div type="submit" class="Submit row" id="AddBtn">Add</div>
+        <div type="submit" class="Submit row" id="Clear">Clear</div>
+<!---------------------------------------- popup1---------------------------------->
         <div id="popup" class="popupcollection"></div>
-        <div id="popupContent" class="ppcontent">
-            <h4>Expense Added</h4>
-            <button type="submit" class="close" id="closeBtn">&times;</button>
-
-            <h5>Date</h5>
+        <div id="popupContent" class="ppcontent col">
+            <div class="headingarea row">
+            <h4 class="row">Expense Added</h4>
+            <div type="submit" class="close" id="closeBtn">&times;</div>
+        </div>
+            <h5 class="localHeadings">Date</h5>
             <input type="date" id="expenseDate" class="Inputbox" />
 
-            <div class="category" id="categorycontent">
-                <h5>Category</h5>
-                <div class="category-list" id="categorycontentlist">
+            <div class="category col" id="categorycontent">
+                <h5 class="localHeadings">Category</h5>
+                <div class="category-list col" id="categorycontentlist">
                     <select name="Category" id="ExpenseCat" class="categorypopups">
               <option value="SelectCategory" id="cat1">
                 Select Expense Category
@@ -73,24 +77,26 @@
             </select>
                 </div>
             </div>
-            <button type="submit" class="Submit" id="popupBtn">OK</button>
+            <div type="submit" class="Submit row" id="popupBtn">OK</div>
         </div>
     </div>
 
     <!-- edit part elements -->
 
     <div id="editpopup" class="popupcollection"></div>
-    <div id="editpopupContent" class="ppcontent">
-        <h4>Expense Added</h4>
-        <button type="submit" class="close" id="editcloseBtn">&times;</button>
-        <h5>Enter Expense and Amount</h5>
+    <div id="editpopupContent" class="ppcontent col">
+        <div class="headingarea row">
+        <h4 class="row">Expense Added</h4>
+        <div type="submit" class="close" id="editcloseBtn">&times;</div>
+    </div>
+        <h5 class="localHeadings">Enter Expense and Amount</h5>
         <input type="text" class="Inputbox" name="expense" id="EexpenseIn" placeholder="expense" />
         <input type="text" class="Inputbox" name="amount" id="Eamount" placeholder="Amount" />
-        <h5>Date</h5>
+        <h5 class="localHeadings">Date</h5>
         <input type="date" id="editexpenseDate" class="Inputbox" />
 
-        <div class="category" id="editcategorycontent">
-            <h5>Category</h5>
+        <div class="category col" id="editcategorycontent">
+            <h5 class="localHeadings">Category</h5>
             <div class="category-list" id="editcategorycontentlist">
                 <select name="Category" id="editExpenseCat" class="categorypopups">
             <option value="SelectCategory" id="Ecat1">
@@ -117,7 +123,7 @@
           </select>
             </div>
         </div>
-        <button type="submit" class="Submit" id="editpopupBtn">OK</button>
+        <div type="submit" class="Submit row" id="editpopupBtn">OK</div>
     </div>
 
     <!-- edit part elements -->
@@ -125,74 +131,80 @@
     <!--------- view details  part-->
 
     <div id="ViewType" class="popupcollection"></div>
-    <div id="ViewTypeconts" class="ppcontent">
-        <h4>Details</h4>
-        <button type="submit" class="close" id="viewclsBtn">&times;</button>
+    <div id="ViewTypeconts" class="ppcontent col">
+        <div class="headingarea row">
+        <h4 class="row">Details</h4>
+        <div type="submit" class="close" id="viewclsBtn">&times;</div>
+    </div>
         <div id="vdis">Descriptin:</div>
         <div id="vamt">Amount:</div>
         <div id="vdate">Date:</div>
         <div id="vcat">Category:</div>
-        <button type="submit" class="Submit" id="vclsbtn">OK</button>
+        <div type="submit" class="Submit row" id="vclsbtn">OK</div>
     </div>
 
     <!--------------------  view details part end -->
 
-    <div id="ExpenseList">
-        <h2 id="ExpenseListHeading">Expense</h2>
-
+    <div id="ExpenseList" class="col">
         <div class="Expenses">
             <div id="TodaysExpense">
                 <h3 class="ExpenseListHeading" id="TodayExpenseListHeading">
                     Todays Expense
                 </h3>
-                <div class="Expense"></div>
+                <div class="Expense row"></div>
             </div>
             <div id="WExpense">
                 <h3 class="ExpenseListHeading" id="WExpenseListHeading">
                     Weekly Expense
                 </h3>
-                <div class="ExpenseOfW"></div>
+                <div class="ExpenseOfW col"></div>
             </div>
             <div id="MExpense">
                 <h3 class="ExpenseListHeading" id="MExpenseListHeading">
                     Monthly Expense
                 </h3>
-                <div class="ExpenseOfM"></div>
+                <div class="ExpenseOfM col"></div>
             </div>
             <div id="DExpense">
                 <h3 class="ExpenseListHeading" id="DExpenseListHeading">
                     Daily Expense
                 </h3>
-                <div class="ExpenseOfD"></div>
+                <div class="ExpenseOfD col"></div>
             </div>
         </div>
     </div>
 
     <!----------------footeer begin-------------------------------->
-    <div id="footer">
+    <div id="footer" class="row">
         <div id="displayGraphpopup" class="popupcollection"></div>
-        <div id="displayGraphpopupContent" class="ppcontent">
-            <h4>graph</h4>
-            <button type="submit" class="close" id="GraphcloseBtn">&times;</button>
-            <div id="container" style="width: 100%; height: 100%"></div>
+        <div id="displayGraphpopupContent" class="ppcontent col">
+            <div class="headingarea row">
+            <h4 class="row">graph</h4>
+            <div type="submit" class="close" id="GraphcloseBtn">&times;</div>
+        </div>
+            <div id="container"></div>
         </div>
 
-        <button id="SetBudget" class="Submit">Set Budget</button>
+        <div id="SetBudget" class="Submit row">Set Budget</div>
+        <div class="displayarea">
         <div id="balance" class="Budgetdet">Balance :</div>
         <div id="budgetOfMon" class="Budgetdet">Budget :</div>
-        <button id="graphViewer" class="Submit">view graph</button>
+       </div>
+        <div id="graphViewer" class="Submit row">view graph</div>
     </div>
     <!----------------------footer end -------------------------------->
 
     <!-------------setbudget html begin------------------------>
     <div id="budgetpopup" class="popupcollection"></div>
-    <div id="budgetpopupContent" class="ppcontent">
-        <h4>Budget Added</h4>
-        <button type="submit" class="close" id="budgetcloseBtn">&times;</button>
+    <div id="budgetpopupContent" class="ppcontent col">
+        <div class="headingarea row">
+        <h4 class="row">Budget Added</h4>
+        <div type="submit" class="close" id="budgetcloseBtn">&times;</div>
+    </div>
         <input type="month" id="expensemonth" class="Inputbox" />
         <input type="text" class="Inputbox" name="amount" id="bamount" placeholder="Amount" />
 
-        <button type="submit" class="Submit" id="budgetpopupBtn">OK</button>
+        <div type="submit" class="Submit row" id="budgetpopupBtn">OK</div>
     </div>
     <!-------------set budget html end------------------------>
 
@@ -200,10 +212,12 @@
     <div id="notepopup" class="popupcollection"></div>
 
     <div id="NoteContent" class="notecontent">
+        <div class="headingarea row">
         <h2 class="headng">Notes</h2>
-        <button type="submit" class="close" id="noteclose">&times;</button>
+        <div type="submit" class="close" id="noteclose">&times;</div>
+        </div>
         <div id="Notes">
-            <button class="add-note" type="button">+</button>
+            <div class="add-note" type="div">+</div>
         </div>
     </div>
 
@@ -211,11 +225,13 @@
 
     <!-------------detailed expense reports html begin------------------------>
     <div id="ExpenseType" class="popupcollection"></div>
-    <div id="ExpenseTypeconts" class="ppcontent">
-        <h4>Expenses Details</h4>
-        <button type="submit" class="close" id="ExpenseTypeBtn">&times;</button>
-        <div class="category" id="typecontent">
-            <h5 id="changing" class="localHeadings">Select Expense Type</h5>
+    <div id="ExpenseTypeconts" class="ppcontent col">
+        <div class="headingarea row">
+        <h4 class="row">Expenses Details</h4>
+        <div type="submit" class="close" id="ExpenseTypeBtn">&times;</div>
+    </div>
+        <div class="category col" id="typecontent">
+            <h5 id="changing" class="localHeadings col">Select Expense Type</h5>
             <div class="category-list" id="typecontentlist">
                 <select name="Category" id="typeCat" class="categorypopups">
             <option value="Select Expense detail type" id="type1">
@@ -226,19 +242,19 @@
             <option value="Monthly Expense" id="type4">Monthly Expense</option>
           </select>
                 <div id="typeSelection">
-                    <input type="month" id="typemonth" class="Inputbox" value="tmonth" />
-                    <input type="date" id="typeDate" class="Inputbox" value="tDate" />
-                    <input type="week" id="typeweek" class="Inputbox" value="tweek" />
+                    <input type="month" id="typemonth" class="Inputbox col" value="tmonth" />
+                    <input type="date" id="typeDate" class="Inputbox col" value="tDate" />
+                    <input type="week" id="typeweek" class="Inputbox col" value="tweek" />
                 </div>
             </div>
         </div>
-        <button type="submit" class="Submit" id="TypeSubmissionBtn">
+        <div type="submit" class="Submit row" id="TypeSubmissionBtn">
         Submit
-      </button>
-        <button type="submit" class="Submit" id="TypeBackBtn">Back</button>
-        <button type="submit" class="Submit" id="ExpenseTypeSubmissionBtn">
+      </div>
+        <div type="submit" class="Submit row" id="TypeBackBtn">Back</div>
+        <div type="submit" class="Submit row" id="ExpenseTypeSubmissionBtn">
         OK
-      </button>
+      </div>
     </div>
     <!-------------detailed expense report html end------------------------>
 
@@ -248,3 +264,4 @@
 </body>
 
 </html>
+

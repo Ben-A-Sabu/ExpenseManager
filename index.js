@@ -447,13 +447,13 @@ function displayFromlocalStorage() {
 
         if (expense.date == currentdate) {
 
-            const li = document.createElement('li');
+            const li = document.createElement('div');
             li.classList.add('Expense');
             li.innerHTML = `
-            <p>${expense.expense}</p>
-            <p>${expense.amount}</p>
-            <p>${expense.date}</p>
-            <button  class="action" id="dltbtn">Delete</button><button  class="action" id="editbtn">Edit</button><button  class="action" id="viewbtn">View</button>
+            <div>${expense.expense}</div>
+            <div>${expense.amount}</div>
+            <div>${expense.date}</div>
+            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
            `;
 
             Expense.appendChild(li);
@@ -469,13 +469,13 @@ function AddtoExpenselist(AddExpenseInput, AddExpenseAmount, ExpenseDate, id) {
 
     if (ExpenseDate === currentdate) {
 
-        let li = document.createElement('li');
+        let li = document.createElement('div');
         li.classList.add('Expense');
         li.innerHTML =
-            `<p>${AddExpenseInput.toLowerCase()}</p>
-       <p>${AddExpenseAmount}</p>
-       <p>${ExpenseDate}</p>
-        <button  class="action" id="dltbtn">Delete</button><button class="action" id="editbtn">Edit</button><button  class="action" id="viewbtn">View</button>`;
+            `<div>${AddExpenseInput.toLowerCase()}</div>
+       <div>${AddExpenseAmount}</div>
+       <div>${ExpenseDate}</div>
+        <div  class="action" id="dltbtn">Delete</div><div class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>`;
         Expense.appendChild(li);
         li.setAttribute('id', id);
         TodayExpense.appendChild(li);
@@ -634,13 +634,13 @@ function displayMonthlyExpenses(month, year) {
     expenseList.forEach(function (expense) {
         if (expense.month == month && expense.year == year) {
 
-            let li = document.createElement('li');
+            let li = document.createElement('div');
             li.classList.add('Expense');
             li.innerHTML = `
-            <p>${expense.expense}</p>
-            <p>${expense.amount}</p>
-            <p>${expense.date}</p>
-            <button  class="action" id="dltbtn">Delete</button><button  class="action" id="editbtn">Edit</button><button  class="action" id="viewbtn">View</button>
+            <div>${expense.expense}</div>
+            <div>${expense.amount}</div>
+            <div>${expense.date}</div>
+            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
            `;
             MonthlyExpense.appendChild(li);
             li.setAttribute('id', expense.id);
@@ -668,13 +668,13 @@ function displayweeklyExpenses(week, year) {
 
         if (expense.week == week && expense.year == year) {
 
-            let li = document.createElement('li');
+            let li = document.createElement('div');
             li.classList.add('Expense');
             li.innerHTML = `
-            <p>${expense.expense}</p>
-            <p>${expense.amount}</p>
-            <p>${expense.date}</p>
-            <button  class="action" id="dltbtn">Delete</button><button  class="action" id="editbtn">Edit</button><button  class="action" id="viewbtn">View</button>
+            <div>${expense.expense}</div>
+            <div>${expense.amount}</div>
+            <div>${expense.date}</div>
+            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
            `;
             WeeklyExpense.appendChild(li);
             li.setAttribute('id', expense.id);
@@ -688,7 +688,6 @@ function displayweeklyExpenses(week, year) {
 
         }
     })
-
 
 
 
@@ -707,13 +706,13 @@ function DisplayDailyExpenses(date) {
     expenseList.forEach(function (expense) {
         if (expense.date === date) {
             existFlag = true;
-            let li = document.createElement('li');
+            let li = document.createElement('div');
             li.classList.add('Expense');
             li.innerHTML = `
-            <p>${expense.expense}</p>
-            <p>${expense.amount}</p>
-            <p>${expense.date}</p>
-            <button  class="action" id="dltbtn">Delete</button><button  class="action" id="editbtn">Edit</button><button  class="action" id="viewbtn">View</button>
+            <div>${expense.expense}</div>
+            <div>${expense.amount}</div>
+            <div>${expense.date}</div>
+            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
            `;
             DailyMonthlyExpense.appendChild(li);
             li.setAttribute('id', expense.id);

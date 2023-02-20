@@ -15,84 +15,56 @@ body {
     align-items: center;
 }
 
-
+/*-----------------header--------------------------------*/
 #header {
     background-color: #af6363;
     height: 10vh;
     width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
 }
 
+/*------------------ ExpenseInput------------------------*/
 #ExpenseInput {
     width: 100vw;
     height: 10vh;
-    font-size: 12px;
-    font-weight: bold;
     color: #333;
-    border: 1px solid #ccc;
     background-color: rgba(250, 235, 215, 0.503);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+
 }
 
+/*-------------------------ExpenseList--------------------- */
 #ExpenseList {
     width: 100vw;
     height: 70vh;
-    line-height: 2;
-    font-size: 55%;
-    font-weight: bold;
-    color: #333;
-    border: 1px solid #ccc;
     background-color: rgba(250, 241, 215, 0.467);
+    justify-content: space-between;
 }
 
+/*---------------------footer------------------------------*/
 #footer {
     background-color: #af6363;
     height: 10vh;
     width: 100vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
 }
 
+/*-------------------- header btn (login,logout,sidebar) */
 #loginBtn,
-#logoutBtn {
+#logoutBtn,
+#sidebar {
     height: 6vh;
     width: 6vh;
-    position: absolute;
-    left: 1vh;
-    top: 1vh;
-    z-index: 0;
+    text-align: center;
+
 }
 
 #logoutBtn {
     display: none;
 }
 
-#sidebar {
-    height: 3vh;
-    width: 3vh;
-    cursor: pointer;
-    display: flex;
-    position: absolute;
-    right: 1vh;
-    top: 1vh;
-    z-index: 0;
-}
-
+/*-------------------sidebar-----------------------------*/
 .sidebarContent {
     background-color: #af6363;
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     position: absolute;
     top: 0;
     right: 0vh;
@@ -114,29 +86,30 @@ body {
 
 #sidebar.active {
     z-index: 2;
+
 }
 
 .Sidebarfeatures {
     background-color: #af6363;
-    height: 10vh;
+    height: clamp(5vh, 10%, 30vh);
     width: 100%;
+    border-radius: 10px;
     cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin: 5vh 0;
-    font-size: xx-large;
+    font-size: clamp(1rem, 2vw, 2rem);
     font-family: 'Times New Roman', Times, serif;
+
 }
 
 .Sidebarfeatures:hover {
     background-color: #a34747;
 }
 
+/*------------------------------------general css part-----------------------*/
+
 .Inputbox {
-    line-height: 2;
-    font-size: 12px;
+    height: clamp(5vh, 20%, 30vh);
+    width: clamp(30%, 20%, 150%);
+    font-size: clamp(12px, 2vw, 50px);
     font-weight: bold;
     color: #333;
     border: 1px solid rgba(204, 204, 204, 0.614);
@@ -147,10 +120,9 @@ body {
 }
 
 .Submit {
-    width: 10vw;
-    height: 5vh;
-    outline: none;
-    font-size: 20px;
+    height: clamp(5vh, 20%, 30vh);
+    width: clamp(30%, 20%, 150%);
+    font-size: clamp(12px, 2vw, 50px);
     font-weight: bold;
     border-radius: 50px;
     color: #333;
@@ -159,126 +131,76 @@ body {
 }
 
 .close {
-    width: 20px;
-    height: 20px;
-    outline: none;
-    font-size: 12px;
-    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 50px;
     border-radius: 50px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     color: #333;
-    background-color: rgb(210, 106, 61);
+    background-color: rgba(243, 6, 6, 0.968);
     cursor: pointer;
-    position: absolute;
-    right: 0vh;
-    top: 1vh;
     z-index: 2;
 }
 
-.category {
+
+.headingarea {
+    background-color: rgba(213, 229, 169, 0.909);
     width: 100%;
-    height: 20vh;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0 5rem;
+}
+
+
+.category {
+    width: 80%;
+}
+
+select {
+    border-radius: 10px;
+    font-size: clamp(1.5rem, 5%, 2rem);
 }
 
 .category-list {
     width: 100%;
-    height: 50vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    height: clamp(10vh, 20%, 20vh);
 }
 
 .categorypopups {
     width: 100%;
-    height: 4vh;
-    padding: 0 5rem;
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
-
-#ExpenseCat option {
-    width: 100%;
-    height: 4vh;
-    font-size: 12px;
-    padding: 0 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    background-color: rgba(79, 68, 68, 0.228);
+    height: 100%;
+    max-width: 700px;
+    text-align: center;
 }
 
 .popupcollection {
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
     height: 100vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
     background-color: rgba(0, 0, 0, 0.515);
-    pointer-events: none;
     opacity: 1;
-    cursor: none;
     visibility: hidden;
     z-index: 1;
 }
 
-#editpopupContent {
-    width: 100%;
-    height: 60vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    opacity: 1;
-    z-index: 1;
-}
 
 .ppcontent {
     position: absolute;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #a0edadf3;
+    background-color: #95e395f3;
     height: 50vh;
-    width: 50vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    width: clamp(80%, 50%, 80%);
     opacity: 1;
     z-index: 2;
     visibility: hidden;
-    top: 20vh
+    top: 20%;
+    border-radius: 10px;
 }
 
+
+
 .ppcontent h4 {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-size: 90%;
-    width: 50vw;
+    font-size: clamp(1rem, 2vw, 2rem);
+    width: 100%;
     height: 5vh;
-    font-weight: bold;
-    text-align: center;
     color: #333;
-    line-height: 3;
-    background-color: rgba(213, 229, 169, 0.909);
 }
 
 #editpopup.active {
@@ -349,10 +271,7 @@ body {
     left: 0
 }
 
-#ViewTypeconts {
-    margin-left: 25vw;
-    margin-right: 25vw;
-}
+
 
 #ViewType.active {
     visibility: visible;
@@ -372,12 +291,8 @@ body {
 #typemonth,
 #typeDate,
 #typeweek {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     visibility: hidden;
     opacity: 0;
-    pointer-events: none;
 }
 
 #typemonth.active {
@@ -425,40 +340,19 @@ body {
 
 .Expenses {
     width: 100%;
-    height: 10vh;
-    line-height: 2;
-    font-size: 20px;
-    font-weight: bold;
     color: #333;
 }
 
-#ExpenseListHeading {
-    width: 100%;
-    font-size: 30px;
-    font-weight: bold;
-    color: #333;
-    border: 1px solid #ccc;
-    background-color: rgba(250, 241, 215, 0.467);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
 
 .localHeadings {
-    display: flex;
-    justify-content: space-around;
-    font-size: 90%;
-    width: 50vw;
-    height: 5vh;
+    font-size: clamp(0.75rem, 1vw, 1.5rem);
     font-weight: bold;
     text-align: center;
     color: #333;
-    line-height: 3;
 }
 
 .ExpenseListHeading {
-    font-size: 150%;
+    font-size: clamp(1rem, 2vw, 2rem);
     font-weight: bold;
     color: #333;
     background-color: rgba(196, 119, 119, 0.399);
@@ -475,24 +369,25 @@ body {
 .ExpenseOfD {
     width: 100%;
     line-height: 2;
-    font-size: 20px;
+    font-size: clamp(0.75rem, 1vw, 1.5rem);
     font-weight: bold;
     color: #333;
     background-color: rgba(70, 68, 68, 0.219);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     margin-top: 1vh;
+    border-radius: 5px;
+    text-align: center;
 }
 
 #TodaysExpense {
     height: 60vh;
+    width: 100%;
     overflow: auto;
 }
 
 #WExpense,
 #MExpense,
 #DExpense {
+    width: 100%;
     height: 60vh;
     overflow: auto;
     display: none;
@@ -532,52 +427,19 @@ body {
 #container {
     width: 100%;
     height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
 .Budgetdet {
-    font-size: larger;
-    font-weight: bolder;
+    font-size: clamp(1rem, 2vw, 2rem);
 }
 
-@media screen and (max-width:890px) {
+@media screen and (max-width:890px)and (max-width: 600px) {
 
-    .Inputbox,
-    .Submit {
-        width: 20%;
-        font-size: 12px;
-    }
-
-    #ExpenseList {
+    .displayarea {
+        display: flex;
         flex-direction: column;
-        justify-content: space-around;
         align-items: center;
-    }
-
-    #footer {
-        font-size: 8px;
-    }
-
-    .ExpenseListHeading {
-        font-size: 60%;
-    }
-
-    #MainHeading {
-        font-size: 90%;
-    }
-
-    #sidebar {
-        height: 1.5vh;
-        width: 1.5vh;
-        right: 1vh;
-    }
-
-    #container {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
+        justify-content: space-around;
     }
 
     .action {
@@ -591,79 +453,7 @@ body {
         cursor: pointer;
     }
 
-    p {
-        max-width: 40ch;
-        color: #a34747;
-        font-size: 10px;
-    }
 
-    .Budgetdet {
-        font-size: 12px;
-        font-weight: bolder;
-    }
-}
-
-@media screen and (max-height:400px) {
-
-    .Inputbox,
-    .Submit {
-        width: 20%;
-        font-size: 12px;
-        height: 60%;
-    }
-
-    #ExpenseList {
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    #footer {
-        font-size: 8px;
-    }
-
-    .ExpenseListHeading {
-        font-size: 60%;
-    }
-
-    #MainHeading {
-        font-size: 90%;
-    }
-
-    #sidebar {
-        height: 1.5vh;
-        width: 1.5vh;
-        right: 1vh;
-    }
-
-    #container {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .action {
-        line-height: 2;
-        font-size: 8px;
-        font-weight: bold;
-        width: 10vw;
-        background-color: inherit;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    p {
-        max-width: 40ch;
-        color: #a34747;
-        font-size: 10px;
-    }
-
-    .Budgetdet {
-        font-size: 12px;
-        font-weight: bolder;
-    }
 }
 
 
@@ -701,7 +491,6 @@ body {
     height: 200px;
     width: 200px;
     border: none;
-    outline: none;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     font-size: 120px;
@@ -747,12 +536,6 @@ body {
 
 
 /*   notes css end---------------------------------------------------------*/
-
-p {
-    max-width: 6ch;
-    color: #a34747;
-}
-
 
 
 .row {
