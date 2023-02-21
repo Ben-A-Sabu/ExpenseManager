@@ -1,0 +1,417 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #af6363;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/*-----------------header--------------------------------*/
+#header {
+    background-color: #af6363;
+    height: 10vh;
+    width: 100vw;
+}
+
+/*------------------ ExpenseInput------------------------*/
+#ExpenseInput {
+    width: 100vw;
+    height: 10vh;
+    color: #333;
+    background-color: rgba(250, 235, 215, 0.503);
+
+}
+
+/*-------------------------ExpenseList--------------------- */
+#ExpenseList {
+    width: 100vw;
+    height: 70vh;
+    background-color: rgba(250, 241, 215, 0.467);
+    justify-content: space-between;
+}
+
+/*---------------------footer------------------------------*/
+#footer {
+    background-color: #af6363;
+    height: 10vh;
+    width: 100vw;
+}
+
+/*-------------------- header btn (login,logout,sidebar) */
+#loginBtn,
+#logoutBtn,
+#sidebar {
+    height: 6vh;
+    width: 6vh;
+    text-align: center;
+}
+
+#logoutBtn {
+    display: none;
+}
+
+/*-------------------sidebar-----------------------------*/
+.sidebarContent {
+    background-color: #af6363;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0vh;
+    z-index: 1;
+    background-color: rgba(250, 241, 215, 0.467);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: .2s all linear;
+}
+
+#sidebar.active {
+    z-index: 2;
+}
+
+.Sidebarfeatures {
+    background-color: #af6363;
+    height: clamp(5vh, 10%, 30vh);
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: clamp(1rem, 2vw, 2rem);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.Sidebarfeatures:hover {
+    background-color: #a34747;
+}
+
+/*------------------------------------general css part-----------------------*/
+
+.Inputbox {
+    height: clamp(5vh, 20%, 30vh);
+    width: clamp(30%, 20%, 150%);
+    font-size: clamp(12px, 2vw, 50px);
+    font-weight: bold;
+    color: #333;
+    border: 1px solid rgba(204, 204, 204, 0.614);
+    background-color: rgba(223, 220, 220, 0.857);
+    border-radius: 5px;
+    padding: 0 1rem;
+    box-shadow: 0px 0px 5px #000;
+}
+
+.Submit {
+    height: clamp(5vh, 20%, 30vh);
+    width: clamp(30%, 20%, 150%);
+    font-size: clamp(12px, 2vw, 50px);
+    font-weight: bold;
+    border-radius: 50px;
+    color: #333;
+    background-color: rgba(199, 190, 179, 0.846);
+    cursor: pointer;
+}
+
+.close {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 50px;
+    border-radius: 50px;
+    color: #333;
+    background-color: rgba(243, 6, 6, 0.968);
+    cursor: pointer;
+    z-index: 2;
+}
+
+
+.headingarea {
+    background-color: rgba(213, 229, 169, 0.909);
+    width: 100%;
+}
+
+.category {
+    width: 80%;
+}
+
+select {
+    border-radius: 10px;
+    font-size: clamp(1.5rem, 5%, 2rem);
+}
+
+.category-list {
+    width: 100%;
+    height: clamp(10vh, 20%, 20vh);
+}
+
+.categorypopups {
+    width: 100%;
+    height: 100%;
+    max-width: 700px;
+    text-align: center;
+}
+
+.popupcollection {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.515);
+    opacity: 1;
+    visibility: hidden;
+    z-index: 1;
+}
+
+.ppcontent {
+    position: absolute;
+    background-color: #95e395f3;
+    height: 50vh;
+    width: clamp(80%, 50%, 80%);
+    opacity: 1;
+    z-index: 2;
+    visibility: hidden;
+    top: 20%;
+    border-radius: 10px;
+}
+
+.ppcontent h4 {
+    font-size: clamp(1rem, 2vw, 2rem);
+    width: 100%;
+    height: 5vh;
+    color: #333;
+}
+
+.tpsel {
+    visibility: hidden;
+    opacity: 0;
+}
+
+
+
+.localHeadings {
+    font-size: clamp(0.75rem, 1vw, 1.5rem);
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+.ExpenseListHeading {
+    font-size: clamp(1rem, 2vw, 2rem);
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(196, 119, 119, 0.399);
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+    line-height: 2;
+    margin-top: 1vh;
+}
+
+.Expense {
+    width: 100%;
+    height: clamp(10vh, 20%, 20vh);
+    line-height: 2;
+    font-size: clamp(0.75rem, 1vw, 1.5rem);
+    font-weight: bold;
+    color: #333;
+    background-color: rgba(70, 68, 68, 0.219);
+    margin-top: 1vh;
+    border-radius: 50px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#WeekExp,
+#MonthExp,
+#DailyExp {
+    height: 60vh;
+    width: 100%;
+    overflow: auto;
+    display: none;
+}
+
+#TodayExp {
+    height: 60vh;
+    width: 100%;
+    overflow: auto;
+}
+
+.editoption {
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    border-radius: 50px;
+    font-size: clamp(2rem, 1vw, 1.5rem);
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.action {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s all ease-in-out;
+    background-color: rgb(8, 163, 111);
+    box-shadow: 0px 0px 10px #000;
+    border-radius: 5px;
+    font-size: clamp(0.75rem, 1vw, 1.5rem);
+    font-weight: bold;
+    color: #333;
+    border: 2px solid rgba(204, 204, 204, 0.614);
+    padding: 0 1rem;
+    cursor: pointer;
+    line-height: 2;
+    width: 10vw;
+    margin: 10px;
+    z-index: 2;
+
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+}
+
+.Budgetdet {
+    font-size: clamp(1rem, 2vw, 2rem);
+}
+
+@media screen and (max-width:890px)and (max-width: 600px) {
+
+    .displayarea {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+
+
+    .editoption {
+        width: 30px;
+        height: 30px;
+        font-size: clamp(1rem, 1vw, 1.5rem);
+    }
+
+
+}
+
+
+.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 0.5s all ease-in-out;
+    opacity: 1;
+}
+
+
+
+/*   notes css---------------------------------------------------------*/
+
+.headng {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: normal;
+    position: relative;
+}
+
+#Notes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 50vw);
+    padding: 24px;
+    gap: 24px;
+}
+
+.note {
+    height: 200px;
+    box-sizing: border-box;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
+    resize: none;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+.add-note {
+    height: 200px;
+    width: 200px;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-size: 120px;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-note:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.notecontent {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #96d5a1f3;
+    height: 90vh;
+    width: 90vw;
+    opacity: 1;
+    z-index: 1;
+    top: 5vh;
+    visibility: hidden;
+    overflow: auto;
+}
+
+
+#NoteContent.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+}
+
+#notepopup.active {
+    visibility: visible;
+    pointer-events: inherit;
+    transition: 2s all ease-in-out;
+    opacity: 1;
+    left: 0
+}
+
+
+/*   notes css end---------------------------------------------------------*/
+
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}

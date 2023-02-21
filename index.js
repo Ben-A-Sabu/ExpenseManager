@@ -1,70 +1,3 @@
-/*import sidebar from './assets/sidebar.png'
-
-
-
-import { app as firebase } from './firebase-config'
-
-
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
-//import { getDatabase, ref, set, child, update, remove } from "firebase/database";
-
-
-
-const auth = getAuth(firebase);
-const googleAuthProvider = new GoogleAuthProvider();
-
-const loginBtn = document.querySelector('#loginBtn');
-const logoutBtn = document.querySelector('#logoutBtn');
-
-
-
-loginBtn.addEventListener('click', () => {
-    signInWithPopup(auth, googleAuthProvider)
-        .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-            // ...
-        }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-        });
-})
-
-logoutBtn.addEventListener('click', () => {
-
-
-    const auth = getAuth();
-    signOut(auth).then(() => {
-        // Sign-out successful.
-        console.log("Sign-out successful.")
-    }).catch((error) => {
-        // An error happened.
-    });
-})
-
-onAuthStateChanged(auth, user => {
-    if (user) {
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block'
-    } else {
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none'
-    }
-
-})
-*/
-//const db = getDatabase(firebase)
-
-
 const DisplaysidebarContent = document.querySelector('#sidebar');
 const sidebarContent = document.querySelector('.sidebarContent');
 const closeBtn = document.querySelector('#closeBtn');
@@ -78,15 +11,16 @@ const AddExpenseAmount = document.querySelector('#amount');
 const ExpenseDate = document.querySelector('#expenseDate');
 const OKbtn = document.querySelector('#popupBtn');
 const ExpenseCat = document.querySelector('#ExpenseCat');
-const ExpensesList = document.querySelector('.Expenses'); /////
-const Expense = document.querySelector('.Expense');
-const TodayExpense = document.querySelector('#TodaysExpense');
-const MonthlyExpenseList = document.querySelector('#MExpense');
-const MonthlyExpense = document.querySelector('.ExpenseOfM');
-const WeeklyExpenseList = document.querySelector('#WExpense');
-const WeeklyExpense = document.querySelector('.ExpenseOfW');
-const DailyExpenseList = document.querySelector('#DExpense');
-const DailyMonthlyExpense = document.querySelector('.ExpenseOfD');
+
+
+const TodayExpense = document.querySelector('#TodayExp');
+
+const MonthlyExpense = document.querySelector('#MonthExp');
+
+const WeeklyExpense = document.querySelector('#WeekExp');
+
+const DailyMonthlyExpense = document.querySelector('#DailyExp');
+
 const DetailedReportOfExpense = document.querySelector('#Details');
 const setbudget = document.querySelector('#SetBudget');
 const ExpenseType = document.querySelector('#ExpenseType');
@@ -97,37 +31,8 @@ const budgetOfMonth = document.querySelector('#budgetOfMon');
 const balanceLeft = document.querySelector('#balance');
 const Homebtn = document.querySelector("#HomeBtn");
 
-var Is_expanse_set;
-
-function removesidebar() {
-    sidebarContent.classList.remove('active');
-    DisplaysidebarContent.classList.remove('active');
-}
-
-
-/////////////////////////////////
-
-
-function getWeek(year, month, date) {
-    var onejan = new Date(year, 0, 1);
-    var today = new Date(year, month, date);
-    var dayOfYear = ((today - onejan + 86400000) / 86400000);
-    return Math.round(dayOfYear / 7)
-
-};
-
-
-Homebtn.addEventListener("click", function () {
-
-    window.location.reload();
-})
-
-
-
-
 //////////////////////////////////////
-
-
+var Is_expanse_set;
 var flag = true;
 var dateflag = true;
 var objid = 0;
@@ -139,190 +44,122 @@ var currentMonth = '';
 var currentWeekNumber = 0;
 var enteredmonth = '';
 
+var deletebtnarray
+var editbtnarray
+var viewbtnarray
+var editoptionarray
+
 findcurrentdate();
 restbudget();
 displayFromlocalStorage();
 
-
-
-//////////////////// id checking  ans budget set checking////////////////////////
-
-if (localStorage.getItem('explastId') != null) {
-
-    objid = localStorage.getItem('explastId');
-    objid = JSON.parse(objid);
-
-} else {
-    objid = 0;
+function removesidebar() {
+    sidebarContent.classList.remove('active');
+    DisplaysidebarContent.classList.remove('active');
 }
+/////////////////////////////////////////  function to find week number////////////////////////////////////////
+function getWeek(year, month, date) {
+    var onejan = new Date(year, 0, 1);
+    var today = new Date(year, month, date);
+    var dayOfYear = ((today - onejan + 86400000) / 86400000);
+    return Math.round(dayOfYear / 7)
 
-if (localStorage.getItem('budgetId') != null) {
-    budid = localStorage.getItem('budgetId');
-    budid = JSON.parse(budid);
+};
+///////////////////////////////////// event listener///////////////////////////////////////////
 
-} else {
-    budid = 0;
-
-}
-
-
-/////////////////////////////////////////////////////////////
-
-
-if (localStorage.getItem('Is_budget_set') == null) {
-
-    Is_expanse_set = "false"
-
-} else {
-
-    Is_expanse_set = localStorage.getItem('Is_budget_set')
-}
-
-
-
-///  function to display the sidebar content/////////////////////////////
-DisplaysidebarContent.addEventListener('click', function (e) {
-    if (e.target.classList.contains('active')) {
-        sidebarContent.classList.remove('active');
-        DisplaysidebarContent.classList.remove('active');
-    } else {
-        sidebarContent.classList.add('active');
-        DisplaysidebarContent.classList.add('active');
-    }
-
-
-})
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////// popup close function////////////////////////////////////////////////////////////////////////////////////////////////////
-closeBtn.addEventListener('click', function (e) {
-
-    popup.classList.remove('active');
-    popupContent.classList.remove('active');
-
-
-})
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-///////////// function to add expense///////////////////////////////////////////////////////////////////////////////////////////////
-AddBtn.addEventListener('click', function () {
-
-    if (AddExpenseInput.value === '' || AddExpenseAmount.value === '') {
-        alert('Please fill all the fields');
-    } else {
-
-        var check = AmountValidation(AddExpenseAmount.value);
-
-
-        if (check === true) {
-
-            popup.classList.add('active');
-            popupContent.classList.add('active');
-
-
-            OKbtn.addEventListener('click', function () {
-                console.log(ExpenseDate.value, ExpenseCat.value)
-                var checkdate = checkEnterdDate(ExpenseDate.value, ExpenseCat.value);
-                var havebudgetset = localStorage.getItem('Is_budget_set');
-
-
-                function additem() {
-                    let text = ExpenseDate.value;
-                    const weekarr = text.split("-", 3);
-                    currentWeekNumber = getWeek(weekarr[0], weekarr[1] - 1, weekarr[2]);
-                    enteredmonth = weekarr[1];
-                    AddtoExpenselist(AddExpenseInput.value, AddExpenseAmount.value, ExpenseDate.value, objid);
-                    AddtolocacalStorage(AddExpenseInput.value, AddExpenseAmount.value, ExpenseDate.value, objid, enteredmonth, weekarr[0], ExpenseCat.value, currentWeekNumber);
-
-                    updateid();
-
-
-
-
-                    /*set(ref(db, "The_Expenses/" + AddExpenseAmount.value), {
-
-                            expense: AddExpenseInput.value.toLowerCase(),
-                            amount: AddExpenseAmount.value,
-                            date: ExpenseDate.value,
-                            id: objid,
-                            month: enteredmonth,
-                            year: weekarr[0],
-                            category: ExpenseCat.value,
-                            week: currentWeekNumber,
-
-
-                        }).then(() => {
-                            alert("data stored sucessfully")
-                        })
-                        .catch((error) => {
-                            alert("unsucessfull, error" + error);
-
-                        });*/
-
-
-
-                    ExpenseDate.value = '';
-                    ExpenseCat.value = 'SelectCategory';
-                    popup.classList.remove('active');
-                    popupContent.classList.remove('active');
-                    AddExpenseInput.value = '';
-                    AddExpenseAmount.value = '';
-                }
-
-
-                if (checkdate === true) {
-
-                    let text = ExpenseDate.value;
-                    const weekarr = text.split("-", 3);
-
-                    if (weekarr[1] == currentMonth && weekarr[0] == new Date().getFullYear() && havebudgetset == "true") {
-                        var Isunder = parseInt(TotalExpenseOfmonth(weekarr[1], weekarr[0]));
-                        var assignedbudget = parseInt(checkIsUnderBudget(weekarr[1], weekarr[0]));
-
-                        Isunder += parseInt(AddExpenseAmount.value);
-
-                        console.log(Isunder, assignedbudget);
-
-                        if (Isunder < assignedbudget) {
-                            additem();
-
-                        } else {
-                            ExpenseDate.value = '';
-                            ExpenseCat.value = 'SelectCategory';
-                            popup.classList.remove('active');
-                            popupContent.classList.remove('active');
-                            AddExpenseInput.value = '';
-                            AddExpenseAmount.value = '';
-                            alert("You have meet your budget");
-                        }
-                    } else {
-
-                        additem();
-                    }
-
-                }
-
-                window.location.reload();
-            })
-
-
+window.addEventListener('load', function () {
+    Homebtn.addEventListener("click", function () {
+        window.location.reload();
+    })
+    //////////////////// id checking  ans budget set checking////////////////////////
+    objid = JSON.parse(localStorage.getItem('explastId') || 0);
+    budid = JSON.parse(localStorage.getItem('budgetId') || 0);
+    Is_expanse_set = (localStorage.getItem('Is_budget_set') || "false");
+    ///to display the sidebar content/////////////////////////////
+    DisplaysidebarContent.addEventListener('click', function (e) {
+        if (e.target.classList.contains('active')) {
+            sidebarContent.classList.remove('active');
+            DisplaysidebarContent.classList.remove('active');
+        } else {
+            sidebarContent.classList.add('active');
+            DisplaysidebarContent.classList.add('active');
         }
-    }
-
+    })
+    /////////// popup close ////////////////////////////////////////////////////////////////////////////////////////////////////
+    closeBtn.addEventListener('click', function (e) {
+        popup.classList.remove('active');
+        popupContent.classList.remove('active');
+    })
+    //////////////////////////////////////  to close the graph popup///////////////////////////////////////////
 
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////// function to add expense///////////////////////////////////////////////////////////////////////////////////////////////
+AddBtn.addEventListener('click', function () {
+    var expenseInput = AddExpenseInput.value;
+    var expenseAmount = AddExpenseAmount.value;
+    var expenseDate = ExpenseDate.value;
+    var expenseCategory = ExpenseCat.value;
 
+    if (!expenseInput || !expenseAmount) {
+        alert('Please fill all the fields ');
+        return;
+    }
+    if (!AmountValidation(expenseAmount)) {
+        return;
+    }
+    popup.classList.add('active');
+    popupContent.classList.add('active');
+
+    OKbtn.addEventListener('click', function () {
+        expenseDate = ExpenseDate.value;
+        expenseCategory = ExpenseCat.value;
+        console.log(expenseDate);
+        console.log(expenseCategory);
+        const checkDate = checkEnterdDate(expenseDate, expenseCategory);
+        const haveBudgetSet = localStorage.getItem('Is_budget_set');
+
+        function addItem() {
+            const weekArr = expenseDate.split('-', 3);
+            const enteredMonth = weekArr[1];
+            const currentWeekNumber = getWeek(weekArr[0], weekArr[1] - 1, weekArr[2]);
+            AddtoExpenselist(expenseInput, expenseAmount, expenseDate, objid);
+            AddtolocacalStorage(expenseInput, expenseAmount, expenseDate, objid, enteredMonth, weekArr[0], expenseCategory, currentWeekNumber);
+
+            updateid();
+
+            ExpenseDate.value = '';
+            ExpenseCat.value = 'SelectCategory';
+            AddExpenseInput.value = '';
+            AddExpenseAmount.value = '';
+            popup.classList.remove('active');
+            popupContent.classList.remove('active');
+        }
+        if (checkDate) {
+            const weekArr = expenseDate.split('-', 3);
+            const enteredMonth = weekArr[1];
+            if (enteredMonth == currentMonth && weekArr[0] == new Date().getFullYear() && haveBudgetSet == 'true') {
+                const isUnderBudget = parseInt(TotalExpenseOfmonth(weekArr[1], weekArr[0])) + parseInt(expenseAmount);
+                const assignedBudget = parseInt(checkIsUnderBudget(weekArr[1], weekArr[0]));
+                if (isUnderBudget < assignedBudget) {
+                    addItem();
+                } else {
+                    alert('You have met your budget');
+                    ExpenseDate.value = '';
+                    ExpenseCat.value = 'SelectCategory';
+                    AddExpenseInput.value = '';
+                    AddExpenseAmount.value = '';
+                    popup.classList.remove('active');
+                    popupContent.classList.remove('active');
+                }
+            } else {
+                addItem();
+            }
+        }
+    });
+});
 ///// function addto local storage////////////////////////////////////////////////////////////////////////////////////////////////////
-
 function AddtolocacalStorage(Description, amount, date, id, month, year, category, week) {
-
-
-
     let expense = {
         expense: Description.toLowerCase(),
         amount: amount,
@@ -334,260 +171,195 @@ function AddtolocacalStorage(Description, amount, date, id, month, year, categor
         week: week
     }
 
-
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.push(expense);
     localStorage.setItem('expenseList', JSON.stringify(expenseList));
-
-
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 ///////////// function for amount validation ///////////////////////////////////////////////////////////////////////////////////////////////
 function AmountValidation(Amount) {
-    if (Number.isInteger(parseInt(Amount)) === false) {
-        alert('Please enter avalid format of amount');
-        flag = false;
-    } else if (Amount <= 0) {
+    if (!Number.isInteger(parseInt(Amount)) || Amount <= 0) {
         alert('Please enter a valid amount');
-        flag = false;
+        return false;
     } else {
-
-        flag = true;
-
+        return true;
     }
-
-    return flag;
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //////////////// function to update id /////////////////////////////////////////////////////////////////////////////////////////////////
 function updateid() {
-
     objid++;
     explastId = objid;
     localStorage.setItem('explastId', JSON.stringify(explastId));
-
 }
-
-
 function updateids() {
     budid++;
     budgetId = budid;
     localStorage.setItem('budgetId', JSON.stringify(budgetId));
-
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 ///////////// function find current date ///////////////////////////////////////////////////////////////////////////////////////////////
 
 function findcurrentdate() {
-    if (new Date().getMonth() + 1 < 10) {
-        if (new Date().getDate() < 10) {
-            currentdate = new Date().getFullYear() + '-' + "0" + (new Date().getMonth() + 1) + '-' + "0" + new Date().getDate();
-            currentMonth = "0" + (new Date().getMonth() + 1);
-        } else {
-            currentdate = new Date().getFullYear() + '-' + "0" + (new Date().getMonth() + 1) + '-' + new Date().getDate();
-            currentMonth = "0" + (new Date().getMonth() + 1);
-        }
-    } else {
-
-        if (new Date().getDate() < 10) {
-            currentdate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + "0" + new Date().getDate();
-            currentMonth = (new Date().getMonth() + 1);
-        } else {
-            currentdate = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
-            currentMonth = (new Date().getMonth() + 1);
-        }
-    }
-
-
+    const now = new Date();
+    const year = now.getFullYear();
+    /* the padStart method to add leading zeros to the month and date values if they are less than 10.  */
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const date = String(now.getDate()).padStart(2, '0');
+    currentdate = `${year}-${month}-${date}`;
+    currentMonth = month;
 }
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 ///////////// function to check Entered dDate ///////////////////////////////////////////////////////////////////////////////////////////////  
 
 function checkEnterdDate(Endate, Ecategory) {
 
     if (Endate == '' || Ecategory == 'SelectCategory') {
-        alert(' Please fill all the fields');
-        dateflag = false;
-
-    } else if ((Endate == currentdate || new Date(currentdate).getTime() > new Date(Endate).getTime()) && (Ecategory != 'SelectCategory')) {
-
-        dateflag = true;
-
-    } else {
-        alert('Please enter a valid date');
-        dateflag = false;
+        alert(' Please fill all the fields from the form correctly');
     }
-
-    return dateflag;
+    else if ((Endate == currentdate || new Date(currentdate).getTime() > new Date(Endate).getTime()) && (Ecategory != 'SelectCategory')) {
+        return true;
+    }
 }
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 ///////////// function to display the expense list ///////////////////////////////////////////////////////////////////////////////////////////////
-
 function displayFromlocalStorage() {
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-
-
     expenseList.forEach(function (expense) {
-
         if (expense.date == currentdate) {
-
-            const li = document.createElement('div');
+            let li = document.createElement('div');
             li.classList.add('Expense');
             li.innerHTML = `
             <div>${expense.expense}</div>
             <div>${expense.amount}</div>
             <div>${expense.date}</div>
-            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
-           `;
-
-            Expense.appendChild(li);
-            li.setAttribute('id', expense.id);
+           <div class="actionbtncontainer"> <div class="action deletebtn">Delete</div> <div  class="action editbtn">Edit</div> <div class="action viewbtn">View</div></div> <div class="editoption">...</div>`;
             TodayExpense.appendChild(li);
-
+            li.setAttribute('id', expense.id);
         }
     })
+    addcontrolbtns();
 }
-
-
+///////////////////////////////// function to Add to expense list ///////////////////////////////////////////////////////////////////////////////////////////////
 function AddtoExpenselist(AddExpenseInput, AddExpenseAmount, ExpenseDate, id) {
-
     if (ExpenseDate === currentdate) {
-
         let li = document.createElement('div');
         li.classList.add('Expense');
         li.innerHTML =
             `<div>${AddExpenseInput.toLowerCase()}</div>
        <div>${AddExpenseAmount}</div>
        <div>${ExpenseDate}</div>
-        <div  class="action" id="dltbtn">Delete</div><div class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>`;
-        Expense.appendChild(li);
+        <div class="actionbtncontainer"><div  class="action deletebtn">Delete</div><div class="action editbtn">Edit</div><div class="action viewbtn">View</div></div>
+        <div class="editoption">...</div>`;
         li.setAttribute('id', id);
         TodayExpense.appendChild(li);
     }
 
 }
 
+function addcontrolbtns() {
+    deletebtnarray = document.querySelectorAll('.deletebtn');
+    editbtnarray = document.querySelectorAll('.editbtn');
+    viewbtnarray = document.querySelectorAll('.viewbtn');
+    editoptionarray = document.querySelectorAll('.editoption');
 
+    deletebtnarray.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            const parent = e.target.parentElement.parentElement.id;
+            console.log(parent);
+            deletefromlocalstorage(parent);
+            e.target.parentElement.remove();
+        })
+    });
 
+    editbtnarray.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            const parent = e.target.parentElement.parentElement.id;
+            initiateEdit(parent)
+            e.target.parentElement.remove();
+        })
+    });
 
+    viewbtnarray.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            const parent = e.target.parentElement.parentElement.id;
+            viewfromlocalstorage(parent);
+        })
+    });
 
+    editoptionarray.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            // display the edit delete and view options of the clicked expense
+            const parent = e.target.parentElement.id;
+            document.querySelectorAll('.action').forEach(function (btn) {
+                if (btn.parentElement.parentElement.id == parent) {
+                    btn.classList.toggle('active');
+                }
+                ////////////////////////// remove all  div with class action when any one is clicked  ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ExpensesList.addEventListener('click', function (e) {
+                document.querySelectorAll('.action').forEach(function (btn) {
+                    btn.addEventListener('click', function (e) {
+                        document.querySelectorAll('.action').forEach(function (btn) {
+                            btn.classList.remove('active');
+                        })
+                    })
+                })
 
-
-
-    if (e.target.id === 'dltbtn') {
-        deletefromlocalstorage(e.target.parentElement.id);
-        e.target.parentElement.remove();
-
-    }
-
-
-    if (e.target.id === 'editbtn') {
-
-        const editpopup = document.querySelector('#editpopup');
-        const editpopupContent = document.querySelector('#editpopupContent');
-        editpopup.classList.add('active');
-        editpopupContent.classList.add('active');
-
-        editcloseBtn.addEventListener('click', function (e) {
-
-            editpopup.classList.remove('active');
-            editpopupContent.classList.remove('active');
-
+            })
 
         })
-
-        var isEdited = false;
-        //////////////////////////Entries to the edit //////////////////////////////////
-        const EditExpenseInput = document.querySelector('#EexpenseIn');
-        const EditExpenseAmount = document.querySelector('#Eamount');
-        const EditExpenseDate = document.querySelector('#editexpenseDate');
-        const EditExpenseCat = document.querySelector('#editExpenseCat');
-        const editbtn = document.querySelector('#editpopupBtn');
-
-        ///////////////////////////////Entries to the edit //////////////////////////////////
-        editbtn.addEventListener('click', function () {
+    })
 
 
-            if (EditExpenseInput.value === '' || EditExpenseAmount.value === '' || EditExpenseDate.value === '' || EditExpenseCat.value === 'SelectCategory') {
-                alert('Please fill all the fields');
-            } else {
+}
+//////////////////////////////////// initiate edit ///////////////////////////////////////////////////////////////////////////////////////////////
 
-                var check = AmountValidation(EditExpenseAmount.value);
+function initiateEdit(id) {
+    const editpopup = document.querySelector('#editpopup');
+    const editpopupContent = document.querySelector('#editpopupContent');
+    const editcloseBtn = document.querySelector('#editcloseBtn');
+    const editbtn = document.querySelector('#editpopupBtn');
+    const EditExpenseInput = document.querySelector('#EexpenseIn');
+    const EditExpenseAmount = document.querySelector('#Eamount');
+    const EditExpenseDate = document.querySelector('#editexpenseDate');
+    const EditExpenseCat = document.querySelector('#editExpenseCat');
+    let isEdited = false;
 
-                if (check === true) {
+    editpopup.classList.toggle('active');
+    editpopupContent.classList.toggle('active');
 
-                    editbtn.addEventListener('click', function () {
+    editcloseBtn.addEventListener('click', function () {
+        editpopup.classList.toggle('active');
+        editpopupContent.classList.toggle('active');
+    });
 
-
-
-                        var checkdate = checkEnterdDate(EditExpenseDate.value, EditExpenseCat.value);
-
-
-                        if (checkdate === true) {
-                            e.target.parentElement.setAttribute('id', e.target.parentElement.id);
-                            let text = EditExpenseDate.value;
-                            const weekarr = text.split("-", 3);
-                            let WeekNumber = getWeek(weekarr[0], weekarr[1] - 1, weekarr[2]);
-                            let Enteredmonth = weekarr[1];
-                            editfromlocalstorage(EditExpenseInput.value, EditExpenseAmount.value, EditExpenseDate.value, EditExpenseCat.value, e.target.parentElement.id, WeekNumber, Enteredmonth, weekarr[0]);
-                            //   writeDatatodatabase1(EditExpenseInput.value, EditExpenseAmount.value, EditExpenseDate.value, EditExpenseCat.value, e.target.parentElement.id, WeekNumber, Enteredmonth, weekarr[0]);
-                            ///////////////////////////////edit from local storage///////////////////////////////
-                            isEdited = true;
-                        }
-
-
-                    })
-
+    editbtn.addEventListener('click', function () {
+        console.log(AmountValidation(EditExpenseAmount.value));
+        if (EditExpenseInput.value === '' || EditExpenseAmount.value === '' || EditExpenseDate.value === '' || EditExpenseCat.value === 'SelectCategory') {
+            alert('Please fill all the fields');
+        } else {
+            if (AmountValidation(EditExpenseAmount.value) === true) {
+                if (checkEnterdDate(EditExpenseDate.value, EditExpenseCat.value) === true) {
+                    let text = EditExpenseDate.value;
+                    const weekarr = text.split("-", 3);
+                    let WeekNumber = getWeek(weekarr[0], weekarr[1] - 1, weekarr[2]);
+                    let Enteredmonth = weekarr[1];
+                    editfromlocalstorage(EditExpenseInput.value, EditExpenseAmount.value, EditExpenseDate.value, EditExpenseCat.value, id, WeekNumber, Enteredmonth, weekarr[0]);
+                    isEdited = true;
+                    alert("Expense edited successfully");
+                    editpopup.classList.toggle('active');
+                    editpopupContent.classList.toggle('active');
+                    restbudget();
                 }
-                ///////////////////////////////////////////////////////////////////
             }
-        });
-
-        if (isEdited === true) {
-            alert("Expense edited successfully");
-            editpopup.classList.remove('active');
-            editpopupContent.classList.remove('active');
-            restbudget();
-            isEdited = false;
         }
-    }
+    });
 
-    if (e.target.id === 'viewbtn') {
-
-        viewfromlocalstorage(e.target.parentElement.id);
-    }
+}
 
 
 
-})
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function editfromlocalstorage(Description, Amount, date, category, Id, week, month, year) {
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-
     for (let i = 0; i < expenseList.length; i++) {
-
-
         if (expenseList[i].id == Id) {
-
             expenseList[i].expense = Description;
             expenseList[i].amount = Amount;
             expenseList[i].date = date;
@@ -596,152 +368,149 @@ function editfromlocalstorage(Description, Amount, date, category, Id, week, mon
             expenseList[i].week = week;
             expenseList[i].month = month;
             expenseList[i].year = year;
-
-
-
         }
-
-
     }
     localStorage.setItem('expenseList', JSON.stringify(expenseList));
-    window.location.reload()
+    displayFromlocalStorage();
 }
 
 function deletefromlocalstorage(id) {
-
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-
     for (let i = 0; i < expenseList.length; i++) {
         if (expenseList[i].id == id) {
             expenseList.splice(i, 1);
-
         }
-
     }
-
-
     restbudget();
     localStorage.setItem('expenseList', JSON.stringify(expenseList));
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function createstructure(expense, where_to_add) {
+    let li = document.createElement('div');
+    li.classList.add('Expense');
+    li.innerHTML = `
+    <div>${expense.expense}</div>
+    <div>${expense.amount}</div>
+    <div>${expense.date}</div>
+    <div class="actionbtncontainer"><div  class="action deletebtn">Delete</div><div  class="action editbtn">Edit</div><div  class="action viewbtn">View</div></div>
+    <div class="editoption">...</div>`
+    li.setAttribute('id', expense.id);
+    where_to_add.appendChild(li);
+    MonthlyExpense.style.display = "none";
+    WeeklyExpense.style.display = "none";
+    TodayExpense.style.display = "none";
+    where_to_add.style.display = "flex";
+
 }
 
 function displayMonthlyExpenses(month, year) {
 
-    if (MonthlyExpenseList.textContent.trim().length > 0) {
-        MonthlyExpenseList.innerHTML = ""
-    }
-
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.month == month && expense.year == year) {
-
-            let li = document.createElement('div');
-            li.classList.add('Expense');
-            li.innerHTML = `
-            <div>${expense.expense}</div>
-            <div>${expense.amount}</div>
-            <div>${expense.date}</div>
-            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
-           `;
-            MonthlyExpense.appendChild(li);
-            li.setAttribute('id', expense.id);
-            MonthlyExpenseList.appendChild(li);
-            MonthlyExpense.style.display = 'block';
-            MonthlyExpenseList.style.display = 'block';
-            TodayExpense.style.display = 'none';
-            Expense.style.display = 'none';
-            WeeklyExpense.style.display = 'none';
-            WeeklyExpenseList.style.display = 'none';
+            createstructure(expense, MonthlyExpense);
         }
     })
-
-
 }
 
 function displayweeklyExpenses(week, year) {
+
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-
-    if (WeeklyExpenseList.textContent.trim().length > 14) {
-        WeeklyExpenseList.innerHTML = ""
-    }
-
     expenseList.forEach(function (expense) {
-
         if (expense.week == week && expense.year == year) {
-
-            let li = document.createElement('div');
-            li.classList.add('Expense');
-            li.innerHTML = `
-            <div>${expense.expense}</div>
-            <div>${expense.amount}</div>
-            <div>${expense.date}</div>
-            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
-           `;
-            WeeklyExpense.appendChild(li);
-            li.setAttribute('id', expense.id);
-            WeeklyExpenseList.appendChild(li);
-            MonthlyExpense.style.display = 'none';
-            MonthlyExpenseList.style.display = 'none';
-            TodayExpense.style.display = 'none';
-            Expense.style.display = 'none';
-            WeeklyExpense.style.display = 'block';
-            WeeklyExpenseList.style.display = 'block';
-
+            createstructure(expense, WeeklyExpense);
         }
     })
-
-
-
-
 }
+
 
 function DisplayDailyExpenses(date) {
 
-    if (DailyExpenseList.textContent.trim().length > 0) {
-        DailyExpenseList.innerHTML = ""
-    }
-
-
-    var existFlag = false;
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.date === date) {
             existFlag = true;
-            let li = document.createElement('div');
-            li.classList.add('Expense');
-            li.innerHTML = `
-            <div>${expense.expense}</div>
-            <div>${expense.amount}</div>
-            <div>${expense.date}</div>
-            <div  class="action" id="dltbtn">Delete</div><div  class="action" id="editbtn">Edit</div><div  class="action" id="viewbtn">View</div>
-           `;
-            DailyMonthlyExpense.appendChild(li);
-            li.setAttribute('id', expense.id);
-            DailyExpenseList.appendChild(li);
-            DailyMonthlyExpense.style.display = 'block';
-            DailyExpenseList.style.display = 'block';
-            TodayExpense.style.display = 'none';
-            Expense.style.display = 'none';
-            WeeklyExpense.style.display = 'none';
-            WeeklyExpenseList.style.display = 'none';
-            MonthlyExpense.style.display = 'none';
-            MonthlyExpenseList.style.display = 'none';
-
+            createstructure(expense, DailyMonthlyExpense);
         }
     })
-
-
-    if (existFlag == false) {
-
-        DailyMonthlyExpense.style.display = 'block';
-        DailyExpenseList.style.display = 'block';
-        TodayExpense.style.display = 'none';
-        WeeklyExpense.style.display = 'none';
-        WeeklyExpenseList.style.display = 'none';
-        MonthlyExpense.style.display = 'none';
-        MonthlyExpenseList.style.display = 'none';
-        Expense.style.display = 'none';
-    }
 }
+
+
+
+const ExpenseTypeBtn = document.querySelector('#ExpenseTypeBtn');
+const typeCat = document.querySelector('#typeCat');
+const OkBtn = document.querySelector('#ExpenseTypeSubmissionBtn');
+const BackBtn = document.querySelector('#TypeBackBtn');
+const typemonth = document.querySelector('#typemonth');
+const typeweek = document.querySelector('#typeweek');
+const typeDate = document.querySelector('#typeDate');
+const submitbtn = document.querySelector('#TypeSubmissionBtn');
+const heading = document.querySelector('#changing');
+
+
+
+OkBtn.addEventListener('click', function () {
+
+    if (typeCat.value === 'Select Expense detail type') {
+        alert('Please Select Category');
+    } else {
+        heading.innerHTML = "Select" + " " + typeCat.value + " " + "to view";
+        BackBtn.classList.add('active');
+        OkBtn.style.display = 'none';
+        submitbtn.classList.add('active');
+        typeCat.style.display = 'none';
+
+        if (typeCat.value === 'Monthly Expense') {
+            typemonth.classList.add('active');
+            typeweek.classList.remove('active');
+            typeDate.classList.remove('active');
+        } else if (typeCat.value === 'Weekly Expense') {
+
+            typeweek.classList.add('active');
+            typemonth.classList.remove('active');
+            typeDate.classList.remove('active');
+        } else if (typeCat.value === 'Daily Expense') {
+
+            typeDate.classList.add('active');
+            typeweek.classList.remove('active');
+            typemonth.classList.remove('active');
+        }
+    }
+})
+
+function restoreBack() {
+    ExpenseType.classList.remove('active');
+    ExpenseTypeconts.classList.remove('active');
+    BackBtn.classList.remove('active');
+    submitbtn.classList.remove('active');
+}
+BackBtn.addEventListener('click', function () {
+    OkBtn.style.display = 'flex';
+    BackBtn.classList.remove('active');
+    submitbtn.classList.remove('active');
+    typeCat.style.display = 'block';
+    typemonth.classList.remove('active');
+    typeweek.classList.remove('active');
+    typeDate.classList.remove('active');
+    heading.innerHTML = "Select Expense Type";
+})
+
+
+function close() {
+    ExpenseType.classList.remove('active');
+    ExpenseTypeconts.classList.remove('active');
+    OkBtn.style.display = 'flex';
+    BackBtn.classList.remove('active');
+    submitbtn.classList.remove('active');
+    typeCat.style.display = 'flex';
+    typemonth.classList.remove('active');
+    typeweek.classList.remove('active');
+    typeDate.classList.remove('active');
+    heading.innerHTML = "Select Expense Type";
+}
+
+ExpenseTypeBtn.addEventListener('click', () => close())
 
 DetailedReportOfExpense.addEventListener('click', () => De_R_o_E())
 
@@ -752,103 +521,15 @@ function De_R_o_E() {
     sidebarContent.classList.remove('active');
     DisplaysidebarContent.classList.remove('active');
 
-    const ExpenseTypeBtn = document.querySelector('#ExpenseTypeBtn');
 
-
-
-    const typeCat = document.querySelector('#typeCat');
-    const OkBtn = document.querySelector('#ExpenseTypeSubmissionBtn');
-    const BackBtn = document.querySelector('#TypeBackBtn');
-    const typemonth = document.querySelector('#typemonth');
-    const typeweek = document.querySelector('#typeweek');
-    const typeDate = document.querySelector('#typeDate');
-    const submitbtn = document.querySelector('#TypeSubmissionBtn');
-    const heading = document.querySelector('#changing');
-
-    ExpenseTypeBtn.addEventListener('click', () => close())
-
-    function close() {
-
-        ExpenseType.classList.remove('active');
-        ExpenseTypeconts.classList.remove('active');
-        OkBtn.style.display = 'block';
-        BackBtn.classList.remove('active');
-        submitbtn.classList.remove('active');
-        typeCat.style.display = 'block';
-        typemonth.classList.remove('active');
-        typeweek.classList.remove('active');
-        typeDate.classList.remove('active');
-        heading.innerHTML = "Select Expense Type";
-
-    }
-
-    OkBtn.addEventListener('click', function () {
-
-        if (typeCat.value === 'Select Expense detail type') {
-            alert('Please Select Category');
-        } else {
-            heading.innerHTML = "Select" + " " + typeCat.value + " " + "to view";
-            BackBtn.classList.add('active');
-            OkBtn.style.display = 'none';
-            submitbtn.classList.add('active');
-            typeCat.style.display = 'none';
-
-            if (typeCat.value === 'Monthly Expense') {
-                typemonth.classList.add('active');
-                typeweek.classList.remove('active');
-                typeDate.classList.remove('active');
-            } else if (typeCat.value === 'Weekly Expense') {
-
-                typeweek.classList.add('active');
-                typemonth.classList.remove('active');
-                typeDate.classList.remove('active');
-            } else if (typeCat.value === 'Daily Expense') {
-
-                typeDate.classList.add('active');
-                typeweek.classList.remove('active');
-                typemonth.classList.remove('active');
-
-            }
-
-        }
-
-    })
-
-
-    function restoreBack() {
-        ExpenseType.classList.remove('active');
-        ExpenseTypeconts.classList.remove('active');
-        BackBtn.classList.remove('active');
-        submitbtn.classList.remove('active');
-
-
-    }
-
-
-
-    BackBtn.addEventListener('click', function () {
-        OkBtn.style.display = 'block';
-        BackBtn.classList.remove('active');
-        submitbtn.classList.remove('active');
-        typeCat.style.display = 'block';
-        typemonth.classList.remove('active');
-        typeweek.classList.remove('active');
-        typeDate.classList.remove('active');
-        heading.innerHTML = "Select Expense Type";
-
-    })
 
     submitbtn.addEventListener('click', function () {
 
-
-
         if (typeCat.value === 'Monthly Expense') {
-
             if (typemonth.value === '') {
                 alert('Please Select Month');
             } else {
                 let text = typemonth.value;
-
                 const input = text.split("-", 2);
                 displayMonthlyExpenses(input[1], input[0]);
                 typemonth.classList.remove('active');
@@ -885,15 +566,12 @@ function De_R_o_E() {
     })
 
 
-
-
 }
 
 
 
 function viewfromlocalstorage(displayid) {
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-
 
     expenseList.forEach(function (expense) {
 
@@ -940,21 +618,9 @@ function viewfromlocalstorage(displayid) {
 
 setbudget.addEventListener("click", function () {
 
-    const budgetpopup = document.querySelector('#budgetpopup');
-    const budgetpopupContent = document.querySelector('#budgetpopupContent');
-    const budgetpopupBtn = document.querySelector('#budgetpopupBtn');
-    const expensemonth = document.querySelector('#expensemonth');
-    const bamount = document.querySelector('#bamount');
-    const budgetcloseBtn = document.querySelector('#budgetcloseBtn');
 
     budgetpopup.classList.add('active');
     budgetpopupContent.classList.add('active');
-
-    budgetcloseBtn.addEventListener("click", function () {
-
-        budgetpopup.classList.remove('active');
-        budgetpopupContent.classList.remove('active');
-    })
 
     budgetpopupBtn.addEventListener("click", function () {
 
@@ -963,11 +629,8 @@ setbudget.addEventListener("click", function () {
         let cyear = currentDate.getFullYear();
         let enteredmonth = expensemonth.value;
         let input = enteredmonth.split("-", 2);
-
         let emonth = parseInt(input[1]);
         let eyear = parseInt(input[0]);
-
-
 
         if (cMonth == emonth && eyear == cyear && Is_expanse_set == "false") {
             var check = TotalExpenseOfmonth(emonth, eyear);
@@ -995,15 +658,13 @@ setbudget.addEventListener("click", function () {
                 restbudget();
                 budgetpopup.classList.remove('active');
                 budgetpopupContent.classList.remove('active');
-                //  writeDatatodatabase2(cMonth, bamount.value, eyear, budid, Is_expanse_set)
+
             } else if (check >= bamount.value && Isvalid == true) {
                 alert("think you should extent your budget your current expense is" + check);
             }
 
         } else if (enteredmonth == "" || bamount.value == "") {
-
             alert("please fill all the fields");
-
         } else if (localStorage.getItem('Is_budget_set') == "true") {
             alert("budget for this month is set");
             budgetpopup.classList.remove('active');
@@ -1011,53 +672,34 @@ setbudget.addEventListener("click", function () {
         } else {
             alert("you can only set budget for current month");
         }
-
-
     })
-
-
-
 })
 
 
 
 
 function checkIsUnderBudget(budgetmont, budgetyear) {
-
     var budgetAmount = JSON.parse(localStorage.getItem('budgetlist'));
     var currentBudget = "";
-
     budgetAmount.forEach(function (budget) {
-
         if (budget.budgetmonth == budgetmont && budget.year == budgetyear) {
             currentBudget = budget.budgetamount;
-
-
         }
-
     })
-
     return currentBudget;
-
 }
 
 
 
 function TotalExpenseOfmonth(budgetmont, budgetyear) {
-
     var totalexpenseofmonth = 0;
-
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.month == budgetmont && expense.year == budgetyear) {
-
             totalexpenseofmonth += JSON.parse(expense.amount);
-
         }
     })
-
     return totalexpenseofmonth;
-
 }
 
 function restbudget() {
@@ -1089,27 +731,28 @@ function restbudget() {
 
 const EditBudget = document.querySelector("#EditBudget");
 
+
+const budgetpopup = document.querySelector('#budgetpopup');
+const budgetpopupContent = document.querySelector('#budgetpopupContent');
+const budgetpopupBtn = document.querySelector('#budgetpopupBtn');
+const expensemonth = document.querySelector('#expensemonth');
+const bamount = document.querySelector('#bamount');
+const budgetcloseBtn = document.querySelector('#budgetcloseBtn');
+
+budgetcloseBtn.addEventListener("click", function () {
+
+    budgetpopup.classList.remove('active');
+    budgetpopupContent.classList.remove('active');
+})
+
+
 EditBudget.addEventListener("click", () => editBudget());
 
 function editBudget() {
 
-
-    const budgetpopup = document.querySelector('#budgetpopup');
-    const budgetpopupContent = document.querySelector('#budgetpopupContent');
-    const budgetpopupBtn = document.querySelector('#budgetpopupBtn');
-    const expensemonth = document.querySelector('#expensemonth');
-    const bamount = document.querySelector('#bamount');
-    const budgetcloseBtn = document.querySelector('#budgetcloseBtn');
-
     budgetpopup.classList.add('active');
     budgetpopupContent.classList.add('active');
     removesidebar();
-
-    budgetcloseBtn.addEventListener("click", function () {
-
-        budgetpopup.classList.remove('active');
-        budgetpopupContent.classList.remove('active');
-    })
 
     budgetpopupBtn.addEventListener("click", function () {
 
@@ -1118,7 +761,6 @@ function editBudget() {
         let cyear = currentDate.getFullYear();
         let enteredmonth = expensemonth.value;
         let input = enteredmonth.split("-", 2);
-
         let emonth = parseInt(input[1]);
         let eyear = parseInt(input[0]);
 
@@ -1141,11 +783,8 @@ function editBudget() {
                         budget.budgetmonth = emonth;
                         budget.year = eyear;
                         budget.budgetid = budget.budgetid;
-
-
                     }
                 })
-
                 localStorage.setItem('budgetlist', JSON.stringify(budgetlist));
                 budgetpopup.classList.remove('active');
                 budgetpopupContent.classList.remove('active');
@@ -1161,10 +800,7 @@ function editBudget() {
         } else {
             alert("you can only edit budget for current month");
         }
-
-
     })
-
 }
 
 
@@ -1179,31 +815,10 @@ function editBudget() {
 
 ////////////////////////////////////////// graph begins /////////////////////////////////
 
-
-
-var He_amount = 0;
-var Te_amount = 0;
-var Fe_amount = 0;
-var Le_amount = 0;
-var Bo_amount = 0;
-var Hc_eamount = 0;
-var Pe_amount = 0;
-var Ee_amount = 0;
-var Cre_amount = 0;
-var Ot_amount = 0;
-
 const graphViewerBtn = document.querySelector('#graphViewer');
 const displayGraphpopup = document.querySelector('#displayGraphpopup')
 const displayGraphpopupContent = document.querySelector('#displayGraphpopupContent')
 const graphcloser = document.querySelector("#GraphcloseBtn");
-
-graphcloser.addEventListener("click", function () {
-
-    displayGraphpopup.classList.remove('active');
-    displayGraphpopupContent.classList.remove('active');
-    window.location.reload();
-
-})
 
 
 
@@ -1213,106 +828,12 @@ graphViewerBtn.addEventListener("click", function () {
 
     ExpenseType.classList.add('active');
     ExpenseTypeconts.classList.add('active');
-    sidebarContent.classList.remove('active');
-    DisplaysidebarContent.classList.remove('active');
 
-    const ExpenseTypeBtn = document.querySelector('#ExpenseTypeBtn');
-
-
-
-    const typeCat = document.querySelector('#typeCat');
-    const OkBtn = document.querySelector('#ExpenseTypeSubmissionBtn');
-    const BackBtn = document.querySelector('#TypeBackBtn');
-    const typemonth = document.querySelector('#typemonth');
-    const typeweek = document.querySelector('#typeweek');
-    const typeDate = document.querySelector('#typeDate');
-    const submitbtn = document.querySelector('#TypeSubmissionBtn');
-    const heading = document.querySelector('#changing');
     let text;
     let input;
 
-    ExpenseTypeBtn.addEventListener('click', function (e) {
-
-        ExpenseType.classList.remove('active');
-        ExpenseTypeconts.classList.remove('active');
-        OkBtn.style.display = 'block';
-        BackBtn.classList.remove('active');
-        submitbtn.classList.remove('active');
-        typeCat.style.display = 'block';
-        typemonth.classList.remove('active');
-        typeweek.classList.remove('active');
-        typeDate.classList.remove('active');
-        heading.innerHTML = "Select Expense Type";
-
-    })
-
-
-    OkBtn.addEventListener('click', function () {
-
-        if (typeCat.value === 'Select Expense detail type') {
-            alert('Please Select Category');
-        } else {
-            heading.innerHTML = "Select" + " " + typeCat.value + " " + "to view";
-            BackBtn.classList.add('active');
-            OkBtn.style.display = 'none';
-            submitbtn.classList.add('active');
-            typeCat.style.display = 'none';
-
-            if (typeCat.value === 'Monthly Expense') {
-                typemonth.classList.add('active');
-                typeweek.classList.remove('active');
-                typeDate.classList.remove('active');
-
-
-            } else if (typeCat.value === 'Weekly Expense') {
-
-                typeweek.classList.add('active');
-                typemonth.classList.remove('active');
-                typeDate.classList.remove('active');
-
-
-            } else if (typeCat.value === 'Daily Expense') {
-
-                typeDate.classList.add('active');
-                typeweek.classList.remove('active');
-                typemonth.classList.remove('active');
-
-
-            }
-
-
-
-        }
-
-    })
-
-    BackBtn.addEventListener('click', function () {
-        OkBtn.style.display = 'block';
-        BackBtn.classList.remove('active');
-        submitbtn.classList.remove('active');
-        typeCat.style.display = 'block';
-        typemonth.classList.remove('active');
-        typeweek.classList.remove('active');
-        typeDate.classList.remove('active');
-        heading.innerHTML = "Select Expense Type";
-
-    })
-
-    function restoreBack() {
-        ExpenseType.classList.remove('active');
-        ExpenseTypeconts.classList.remove('active');
-        BackBtn.classList.remove('active');
-        submitbtn.classList.remove('active');
-
-
-    }
-
     submitbtn.addEventListener('click', function () {
-
-
-
         if (typeCat.value === 'Monthly Expense') {
-
 
             if (typemonth.value === '') {
                 alert('Please Select Month');
@@ -1356,207 +877,69 @@ graphViewerBtn.addEventListener("click", function () {
         }
     })
 
-
-
-
-
     function viewgraphs() {
-
         if (isGraphReady == 1) {
-
-
-
             displayGraphpopup.classList.add('active');
             displayGraphpopupContent.classList.add('active');
-
-
             anychart.onDocumentReady(function () {
-
-
-
                 let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-
-
+                // AN object OF EXPENSES  to store all expenses of a particular month
+                let expenseArray = {
+                    'Home Expense': 0,
+                    'Transportation Expense': 0,
+                    'Food Expense': 0,
+                    'lend': 0,
+                    ' borrow': 0,
+                    'HealthCare Expense': 0,
+                    'PetCare Expense': 0,
+                    'Entertainment Expense': 0,
+                    'Child-related expenses': 0,
+                    'Others': 0
+                };
+                /*here expenseArray[expense.categeory], here expense.categeory act as index of array for each index the value gets added up for that array element  */
                 expenseList.forEach(function (expense) {
-
                     switch (typeCat.value) {
-
                         case 'Monthly Expense':
-
-                            if (expense.category == "Home Expense" && expense.month == input[1] && expense.year == input[0]) {
-
-                                He_amount += JSON.parse(expense.amount);
+                            if (expense.month == input[1] && expense.year == input[0]) {
+                                expenseArray[expense.category] += parseInt(expense.amount);
+                                console.log(expenseArray[expense.category]);
                             }
-                            if (expense.category == "Transportation Expense" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Te_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Food Expense" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Fe_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "lend" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Le_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "borrow" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Bo_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "HealthCare Expense" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Hc_eamount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "PetCare Expense" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Cre_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Entertainment Expense" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Ot_amount += JSON.parse(expense.amount);
-                            }
-
-                            if (expense.category == "Child-related expenses" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Pe_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Others" && expense.month == input[1] && expense.year == input[0]) {
-
-                                Ee_amount += JSON.parse(expense.amount);
-                            }
-
                             break;
-
                         case 'Weekly Expense':
-
-
-                            if (expense.category == "Home Expense" && expense.week == input[1] && expense.year == input[0]) {
-
-                                He_amount += JSON.parse(expense.amount);
+                            if (expense.week == input[1] && expense.year == input[0]) {
+                                expenseArray[expense.category] += parseInt(expense.amount);
                             }
-                            if (expense.category == "Transportation Expense" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Te_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Food Expense" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Fe_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "lend" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Le_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "borrow" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Bo_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "HealthCare Expense" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Hc_eamount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "PetCare Expense" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Cre_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Entertainment Expense" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Ot_amount += JSON.parse(expense.amount);
-                            }
-
-                            if (expense.category == "Child-related expenses" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Pe_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Others" && expense.week == input[1] && expense.year == input[0]) {
-
-                                Ee_amount += JSON.parse(expense.amount);
-                            }
-
-
                             break;
-
                         case 'Daily Expense':
-
-
-                            if (expense.category == "Home Expense" && expense.date == typeDate.value) {
-
-                                He_amount += JSON.parse(expense.amount);
+                            if (expense.date == typeDate.value) {
+                                expenseArray[expense.category] += parseInt(expense.amount);
                             }
-                            if (expense.category == "Transportation Expense" && expense.date == typeDate.value) {
-
-                                Te_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Food Expense" && expense.date == typeDate.value) {
-
-                                Fe_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "lend" && expense.date == typeDate.value) {
-
-                                Le_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "borrow" && expense.date == typeDate.value) {
-
-                                Bo_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "HealthCare Expense" && expense.date == typeDate.value) {
-
-                                Hc_eamount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "PetCare Expense" && expense.date == typeDate.value) {
-
-                                Cre_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Entertainment Expense" && expense.date == typeDate.value) {
-
-                                Ot_amount += JSON.parse(expense.amount);
-                            }
-
-                            if (expense.category == "Child-related expenses" && expense.date == typeDate.value) {
-
-                                Pe_amount += JSON.parse(expense.amount);
-                            }
-                            if (expense.category == "Others" && expense.date == typeDate.value) {
-
-                                Ee_amount += JSON.parse(expense.amount);
-                            }
-
-
                             break;
-
-
-
                     }
                 })
-
-
                 // set the data
                 var data = [
-                    { x: "Home Expense", value: He_amount },
-                    { x: "Transportation Expense", value: Te_amount },
-                    { x: "Food Expense", value: Fe_amount },
-                    { x: "lend", value: Le_amount },
-                    { x: "borrow", value: Bo_amount },
-                    { x: "HealthCare Expense", value: Hc_eamount },
-                    { x: "PetCare Expense", value: Pe_amount },
-                    { x: "Entertainment Expense", value: Ee_amount },
-                    { x: "Child-related expenses", value: Cre_amount },
-                    { x: "Others", value: Ot_amount },
-
+                    { x: "Home Expense", value: expenseArray['Home Expense'] },
+                    { x: "Transportation Expense", value: expenseArray['Transportation Expense'] },
+                    { x: "Food Expense", value: expenseArray['Food Expense'] },
+                    { x: "Lend", value: expenseArray['lend'] },
+                    { x: "Borrow", value: expenseArray[' borrow'] },
+                    { x: "Health Care Expense", value: expenseArray['HealthCare Expense'] },
+                    { x: "PetCare Expense", value: expenseArray['PetCare Expense'] },
+                    { x: "Entertainment Expense", value: expenseArray['Entertainment Expense'] },
+                    { x: "Child Expense", value: expenseArray['Child-related expenses'] },
+                    { x: "Other Expense", value: expenseArray['Others'] }
                 ];
 
                 // create the chart
                 var chart = anychart.pie();
-
                 // set the chart title
                 chart.title("Expense graphical analysis");
-
                 // add the data
                 chart.data(data);
-
                 // display the chart in the container
                 chart.container('container');
                 chart.draw();
-
             });
         }
 
@@ -1564,12 +947,11 @@ graphViewerBtn.addEventListener("click", function () {
 
 })
 
-
-
-
-
-
-
+graphcloser.addEventListener("click", function () {
+    displayGraphpopup.classList.remove('active');
+    displayGraphpopupContent.classList.remove('active');
+    location.reload();
+})
 
 
 
@@ -1677,3 +1059,4 @@ function deleteNote(id, element) {
 
 
 /////////////////////////////////////////////////////////////////////////////
+
