@@ -1,26 +1,20 @@
 const DisplaysidebarContent = document.querySelector('#sidebar');
-const sidebarContent = document.querySelector('.sidebarContent');
+const sidebarContent = document.querySelector('.menu');
 const closeBtn = document.querySelector('#closeBtn');
 const BudgetcloseBtn = document.querySelector('#budgetcloseBtn');
 const editcloseBtn = document.querySelector('#editcloseBtn');
-const popup = document.querySelector('#popup');
+const popup = document.querySelector('#Addpopup');
 const popupContent = document.querySelector('#popupContent');
 const AddBtn = document.querySelector('#AddBtn');
 const AddExpenseInput = document.querySelector('#expenseIn');
 const AddExpenseAmount = document.querySelector('#amount');
 const ExpenseDate = document.querySelector('#expenseDate');
-const OKbtn = document.querySelector('#popupBtn');
+const AddpopupOkbtn = document.querySelector('#AddpopupBtn');
 const ExpenseCat = document.querySelector('#ExpenseCat');
-
-
 const TodayExpense = document.querySelector('#TodayExp');
-
 const MonthlyExpense = document.querySelector('#MonthExp');
-
 const WeeklyExpense = document.querySelector('#WeekExp');
-
 const DailyMonthlyExpense = document.querySelector('#DailyExp');
-
 const DetailedReportOfExpense = document.querySelector('#Details');
 const setbudget = document.querySelector('#SetBudget');
 const ExpenseType = document.querySelector('#ExpenseType');
@@ -30,7 +24,30 @@ const viewTypeconts = document.querySelector('#ViewTypeconts');
 const budgetOfMonth = document.querySelector('#budgetOfMon');
 const balanceLeft = document.querySelector('#balance');
 const Homebtn = document.querySelector("#HomeBtn");
-
+const ExpenseTypeBtn = document.querySelector('#ExpenseTypeBtn');
+const typeCat = document.querySelector('#typeCat');
+const OkBtn = document.querySelector('#ExpenseTypeSubmissionBtn');
+const BackBtn = document.querySelector('#TypeBackBtn');
+const typemonth = document.querySelector('#typemonth');
+const typeweek = document.querySelector('#typeweek');
+const typeDate = document.querySelector('#typeDate');
+const submitbtn = document.querySelector('#TypeSubmissionBtn');
+const graphViewerBtn = document.querySelector('#graphViewer');
+const displayGraphpopup = document.querySelector('#displayGraphpopup')
+const displayGraphpopupContent = document.querySelector('#displayGraphpopupContent')
+const graphcloser = document.querySelector("#GraphcloseBtn");
+const EditBudget = document.querySelector("#EditBudget");
+const budgetpopup = document.querySelector('#budgetpopup');
+const budgetpopupContent = document.querySelector('#budgetpopupContent');
+const budgetpopupBtn = document.querySelector('#budgetpopupBtn');
+const expensemonth = document.querySelector('#expensemonth');
+const bamount = document.querySelector('#bamount');
+const budgetcloseBtn = document.querySelector('#budgetcloseBtn');
+const fltbtn = document.querySelector("#fltbtn");
+const cost = document.querySelector("#td_detail");
+const thisday = document.querySelector('#this_day');
+const thisweek = document.querySelector('#this_week');
+const thismonth = document.querySelector('#this_month');
 //////////////////////////////////////
 var Is_expanse_set;
 var flag = true;
@@ -43,139 +60,20 @@ var currentdate = '';
 var currentMonth = '';
 var currentWeekNumber = 0;
 var enteredmonth = '';
-
+var Displaygraph = 0;
 var deletebtnarray
 var editbtnarray
 var viewbtnarray
 var editoptionarray
-
-findcurrentdate();
-restbudget();
-displayFromlocalStorage();
-
-function removesidebar() {
-    sidebarContent.classList.remove('active');
-    DisplaysidebarContent.classList.remove('active');
-}
-/////////////////////////////////////////  function to find week number////////////////////////////////////////
+//<----------------------------- general function used----------------------------------------------->
+/////////////////////////////////////////  function to find week number//////////////////////////
 function getWeek(year, month, date) {
     var onejan = new Date(year, 0, 1);
     var today = new Date(year, month, date);
     var dayOfYear = ((today - onejan + 86400000) / 86400000);
     return Math.round(dayOfYear / 7)
-
 };
-///////////////////////////////////// event listener///////////////////////////////////////////
-
-window.addEventListener('load', function () {
-    Homebtn.addEventListener("click", function () {
-        window.location.reload();
-    })
-    //////////////////// id checking  ans budget set checking////////////////////////
-    objid = JSON.parse(localStorage.getItem('explastId') || 0);
-    budid = JSON.parse(localStorage.getItem('budgetId') || 0);
-    Is_expanse_set = (localStorage.getItem('Is_budget_set') || "false");
-    ///to display the sidebar content/////////////////////////////
-    DisplaysidebarContent.addEventListener('click', function (e) {
-        if (e.target.classList.contains('active')) {
-            sidebarContent.classList.remove('active');
-            DisplaysidebarContent.classList.remove('active');
-        } else {
-            sidebarContent.classList.add('active');
-            DisplaysidebarContent.classList.add('active');
-        }
-    })
-    /////////// popup close ////////////////////////////////////////////////////////////////////////////////////////////////////
-    closeBtn.addEventListener('click', function (e) {
-        popup.classList.remove('active');
-        popupContent.classList.remove('active');
-    })
-    //////////////////////////////////////  to close the graph popup///////////////////////////////////////////
-
-});
-
-///////////// function to add expense///////////////////////////////////////////////////////////////////////////////////////////////
-AddBtn.addEventListener('click', function () {
-    var expenseInput = AddExpenseInput.value;
-    var expenseAmount = AddExpenseAmount.value;
-    var expenseDate = ExpenseDate.value;
-    var expenseCategory = ExpenseCat.value;
-
-    if (!expenseInput || !expenseAmount) {
-        alert('Please fill all the fields ');
-        return;
-    }
-    if (!AmountValidation(expenseAmount)) {
-        return;
-    }
-    popup.classList.add('active');
-    popupContent.classList.add('active');
-
-    OKbtn.addEventListener('click', function () {
-        expenseDate = ExpenseDate.value;
-        expenseCategory = ExpenseCat.value;
-        console.log(expenseDate);
-        console.log(expenseCategory);
-        const checkDate = checkEnterdDate(expenseDate, expenseCategory);
-        const haveBudgetSet = localStorage.getItem('Is_budget_set');
-
-        function addItem() {
-            const weekArr = expenseDate.split('-', 3);
-            const enteredMonth = weekArr[1];
-            const currentWeekNumber = getWeek(weekArr[0], weekArr[1] - 1, weekArr[2]);
-            AddtoExpenselist(expenseInput, expenseAmount, expenseDate, objid);
-            AddtolocacalStorage(expenseInput, expenseAmount, expenseDate, objid, enteredMonth, weekArr[0], expenseCategory, currentWeekNumber);
-
-            updateid();
-
-            ExpenseDate.value = '';
-            ExpenseCat.value = 'SelectCategory';
-            AddExpenseInput.value = '';
-            AddExpenseAmount.value = '';
-            popup.classList.remove('active');
-            popupContent.classList.remove('active');
-        }
-        if (checkDate) {
-            const weekArr = expenseDate.split('-', 3);
-            const enteredMonth = weekArr[1];
-            if (enteredMonth == currentMonth && weekArr[0] == new Date().getFullYear() && haveBudgetSet == 'true') {
-                const isUnderBudget = parseInt(TotalExpenseOfmonth(weekArr[1], weekArr[0])) + parseInt(expenseAmount);
-                const assignedBudget = parseInt(checkIsUnderBudget(weekArr[1], weekArr[0]));
-                if (isUnderBudget < assignedBudget) {
-                    addItem();
-                } else {
-                    alert('You have met your budget');
-                    ExpenseDate.value = '';
-                    ExpenseCat.value = 'SelectCategory';
-                    AddExpenseInput.value = '';
-                    AddExpenseAmount.value = '';
-                    popup.classList.remove('active');
-                    popupContent.classList.remove('active');
-                }
-            } else {
-                addItem();
-            }
-        }
-    });
-});
-///// function addto local storage////////////////////////////////////////////////////////////////////////////////////////////////////
-function AddtolocacalStorage(Description, amount, date, id, month, year, category, week) {
-    let expense = {
-        expense: Description.toLowerCase(),
-        amount: amount,
-        date: date,
-        id: id,
-        month: month,
-        year: year,
-        category: category,
-        week: week
-    }
-
-    let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-    expenseList.push(expense);
-    localStorage.setItem('expenseList', JSON.stringify(expenseList));
-}
-///////////// function for amount validation ///////////////////////////////////////////////////////////////////////////////////////////////
+///////////// function for amount validation //////////////////////////////////////////////////////
 function AmountValidation(Amount) {
     if (!Number.isInteger(parseInt(Amount)) || Amount <= 0) {
         alert('Please enter a valid amount');
@@ -184,19 +82,21 @@ function AmountValidation(Amount) {
         return true;
     }
 }
-//////////////// function to update id /////////////////////////////////////////////////////////////////////////////////////////////////
+//<----------------------------- id updating fun---------------------------------------------->
+//////////////// function to update expense  id ////////////////////////////////////////////////////////////
 function updateid() {
     objid++;
     explastId = objid;
     localStorage.setItem('explastId', JSON.stringify(explastId));
 }
-function updateids() {
+//////////////// function to update budget id /////////////////////////////////////////////////////
+function Budgetidupdate() {
     budid++;
     budgetId = budid;
     localStorage.setItem('budgetId', JSON.stringify(budgetId));
 }
-///////////// function find current date ///////////////////////////////////////////////////////////////////////////////////////////////
-
+//<--------------------------id updating fun end---------------------------------------------->
+///////////// function find current date //////////////////////////////////////////////////////////
 function findcurrentdate() {
     const now = new Date();
     const year = now.getFullYear();
@@ -206,10 +106,94 @@ function findcurrentdate() {
     currentdate = `${year}-${month}-${date}`;
     currentMonth = month;
 }
-///////////// function to check Entered dDate ///////////////////////////////////////////////////////////////////////////////////////////////  
+///////////////////////////////////// event listener//////////////////////////////////////////////
+window.addEventListener('load', function () {
+    findcurrentdate();
+    restbudget();
+    displayFromlocalStorage();
+    resetInputFields();
+    Homebtn.addEventListener("click", function () {
+        window.location.reload();
+    })
+    //////////////////// id checking and budget set checking////////////////////////
+    objid = JSON.parse(localStorage.getItem('explastId') || 0);
+    budid = JSON.parse(localStorage.getItem('budgetId') || 0);
+    Is_expanse_set = (localStorage.getItem('Is_budget_set') || "false");
+    displaybudgetbtn();
+});
+/////////////////////////////// to display/return the menu //////////////////////////////////////////
+function removesidebar() {
+    sidebarContent.classList.toggle('active');
+    DisplaysidebarContent.classList.toggle('active');
+}
+//<----------------------------- general function used end---------------------------------------------->
+////////to display the menu items/////////////////////////////
+DisplaysidebarContent.addEventListener('click', function (e) {
+    removesidebar();
+})
+/////////// Addpopup close btn  event listener//////////////////////////////////////////////////////
+closeBtn.addEventListener('click', function (e) {
+    popup.classList.remove('active');
+    popupContent.classList.remove('active');
+});
+///////////////////////////// addpopup btn event listener////////////////////////////////////
+AddBtn.addEventListener('click', function () {
+    popup.classList.add('active');
+    popupContent.classList.add('active');
+});
+///////////////////////////// addpopup ok btn event listener////////////////////////////////////
+AddpopupOkbtn.addEventListener('click', function () {
+    var expenseInput = AddExpenseInput.value;
+    var expenseAmount = AddExpenseAmount.value;
+    var expenseDate = ExpenseDate.value;
+    var expenseCategory = ExpenseCat.value;
+    if (!expenseInput || !expenseAmount) {
+        alert('Please fill all the fields ');
+        return;
+    }
+    if (!AmountValidation(expenseAmount)) {
+        return;
+    }
+    const checkDate = checkEnterdDate(expenseDate, expenseCategory);
+    const haveBudgetSet = localStorage.getItem('Is_budget_set');
 
+    if (checkDate) {
+        const weekArr = expenseDate.split('-', 3);
+        const enteredMonth = weekArr[1];
+        if (enteredMonth == currentMonth && weekArr[0] == new Date().getFullYear() && haveBudgetSet == 'true') {
+            const isUnderBudget = parseInt(TotalExpenseOfmonth(weekArr[1], weekArr[0])) + parseInt(expenseAmount);
+            const assignedBudget = parseInt(checkIsUnderBudget(weekArr[1], weekArr[0]));
+            if (isUnderBudget < assignedBudget) {
+                addItem();
+            } else {
+                alert('You have met your budget');
+                resetInputFields()
+            }
+        } else {
+            addItem();
+        }
+    }
+    function addItem() {
+        const weekArr = expenseDate.split('-', 3);
+        const enteredMonth = weekArr[1];
+        const currentWeekNumber = getWeek(weekArr[0], weekArr[1] - 1, weekArr[2]);
+        AddtolocacalStorage(expenseInput, expenseAmount, expenseDate, objid, enteredMonth, weekArr[0], expenseCategory, currentWeekNumber);
+        restbudget();
+        updateid();
+        resetInputFields();
+    }
+});
+/////////////////////////////restore back the addpopup//////////////////////////////////
+function resetInputFields() {
+    ExpenseDate.value = currentdate;
+    ExpenseCat.value = 'SelectCategory';
+    AddExpenseInput.value = '';
+    AddExpenseAmount.value = '';
+    popup.classList.remove('active');
+    popupContent.classList.remove('active');
+}
+///////////// function to check Entered dDate ///////////////////////////////////////////////////  
 function checkEnterdDate(Endate, Ecategory) {
-
     if (Endate == '' || Ecategory == 'SelectCategory') {
         alert(' Please fill all the fields from the form correctly');
     }
@@ -217,98 +201,49 @@ function checkEnterdDate(Endate, Ecategory) {
         return true;
     }
 }
-///////////// function to display the expense list ///////////////////////////////////////////////////////////////////////////////////////////////
-function displayFromlocalStorage() {
-    let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-    expenseList.forEach(function (expense) {
-        if (expense.date == currentdate) {
-            let li = document.createElement('div');
-            li.classList.add('Expense');
-            li.innerHTML = `
-            <div>${expense.expense}</div>
-            <div>${expense.amount}</div>
-            <div>${expense.date}</div>
-           <div class="actionbtncontainer"> <div class="action deletebtn">Delete</div> <div  class="action editbtn">Edit</div> <div class="action viewbtn">View</div></div> <div class="editoption">...</div>`;
-            TodayExpense.appendChild(li);
-            li.setAttribute('id', expense.id);
-        }
-    })
-    addcontrolbtns();
-}
-///////////////////////////////// function to Add to expense list ///////////////////////////////////////////////////////////////////////////////////////////////
-function AddtoExpenselist(AddExpenseInput, AddExpenseAmount, ExpenseDate, id) {
-    if (ExpenseDate === currentdate) {
-        let li = document.createElement('div');
-        li.classList.add('Expense');
-        li.innerHTML =
-            `<div>${AddExpenseInput.toLowerCase()}</div>
-       <div>${AddExpenseAmount}</div>
-       <div>${ExpenseDate}</div>
-        <div class="actionbtncontainer"><div  class="action deletebtn">Delete</div><div class="action editbtn">Edit</div><div class="action viewbtn">View</div></div>
-        <div class="editoption">...</div>`;
-        li.setAttribute('id', id);
-        TodayExpense.appendChild(li);
-    }
-
-}
-
+//<---------------- function To manipuilate the gives data(del,view,edit)---------------------------->
 function addcontrolbtns() {
     deletebtnarray = document.querySelectorAll('.deletebtn');
     editbtnarray = document.querySelectorAll('.editbtn');
     viewbtnarray = document.querySelectorAll('.viewbtn');
     editoptionarray = document.querySelectorAll('.editoption');
-
+    ////////////////////////delete option(Data manipulation btn(delete))//////////////////////////
     deletebtnarray.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
-            const parent = e.target.parentElement.parentElement.id;
-            console.log(parent);
+            const parent = e.target.parentElement.parentElement.parentElement.parentElement.id;
+            e.target.parentElement.parentElement.parentElement.parentElement.remove();
             deletefromlocalstorage(parent);
-            e.target.parentElement.remove();
+            e.target.parentElement.parentElement.parentElement.remove();
         })
     });
-
+    ////////////////////////edit option(Data manipulation btn(edit))//////////////////////////
     editbtnarray.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
-            const parent = e.target.parentElement.parentElement.id;
+            const parent = e.target.parentElement.parentElement.parentElement.parentElement.id;
             initiateEdit(parent)
-            e.target.parentElement.remove();
         })
     });
-
+    ////////////////////////view option(Data manipulation btn(view))//////////////////////////
     viewbtnarray.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
-            const parent = e.target.parentElement.parentElement.id;
+            const parent = e.target.parentElement.parentElement.parentElement.parentElement.id;
             viewfromlocalstorage(parent);
         })
     });
-
+    /////////////////edit option(Data manipulation btn(edit,del,view)) //////////////////////////    
     editoptionarray.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
-            // display the edit delete and view options of the clicked expense
-            const parent = e.target.parentElement.id;
-            document.querySelectorAll('.action').forEach(function (btn) {
-                if (btn.parentElement.parentElement.id == parent) {
-                    btn.classList.toggle('active');
+            const parent = e.target.parentElement.parentElement.id;
+            document.querySelectorAll('.action').forEach(function (action_btn) {
+                if (action_btn.parentElement.parentElement.parentElement.id == parent) {
+                    console.log('clicked');
+                    action_btn.classList.toggle('active');
                 }
-                ////////////////////////// remove all  div with class action when any one is clicked  ///////////////////////////////////////////////////////////////////////////////////////////////
-
-                document.querySelectorAll('.action').forEach(function (btn) {
-                    btn.addEventListener('click', function (e) {
-                        document.querySelectorAll('.action').forEach(function (btn) {
-                            btn.classList.remove('active');
-                        })
-                    })
-                })
-
             })
-
         })
     })
-
-
 }
-//////////////////////////////////// initiate edit ///////////////////////////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////// initiate edit /////////////////////////////////////////////
 function initiateEdit(id) {
     const editpopup = document.querySelector('#editpopup');
     const editpopupContent = document.querySelector('#editpopupContent');
@@ -319,17 +254,15 @@ function initiateEdit(id) {
     const EditExpenseDate = document.querySelector('#editexpenseDate');
     const EditExpenseCat = document.querySelector('#editExpenseCat');
     let isEdited = false;
-
     editpopup.classList.toggle('active');
     editpopupContent.classList.toggle('active');
-
+    /////////////// to close the edit popup ////////////////////////////////////////////////////////    
     editcloseBtn.addEventListener('click', function () {
         editpopup.classList.toggle('active');
         editpopupContent.classList.toggle('active');
     });
-
+    /////////////// to edit the expense// ////////////////////////////////////////////////////////    
     editbtn.addEventListener('click', function () {
-        console.log(AmountValidation(EditExpenseAmount.value));
         if (EditExpenseInput.value === '' || EditExpenseAmount.value === '' || EditExpenseDate.value === '' || EditExpenseCat.value === 'SelectCategory') {
             alert('Please fill all the fields');
         } else {
@@ -349,13 +282,47 @@ function initiateEdit(id) {
             }
         }
     });
-
 }
+//<------------------------------- local storage functions ------------------------------------------>
+///// function addto local storage//////////////////////////////////////////////////////////////
+function AddtolocacalStorage(Description, amount, date, id, month, year, category, week) {
+    let expense = {
+        expense: Description.toLowerCase(),
+        amount: amount,
+        date: date,
+        id: id,
+        month: month,
+        year: year,
+        category: category,
+        week: week
+    }
 
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
+    expenseList.push(expense);
+    localStorage.setItem('expenseList', JSON.stringify(expenseList));
+    displayFromlocalStorage();
+}
+///////////// function to display the expense list from local storage /////////////////////////
+function displayFromlocalStorage() {
+    TodayExpense.innerHTML = '<div class="ExpenseListHeading row">Todays Expense</div>';
+    let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
+    expenseList.forEach(function (expense) {
+        if (expense.date == currentdate) {
+            let li = document.createElement('div');
+            li.classList.add('Expense');
+            li.innerHTML = `
+            <div class="paid">${expense.expense}</div>
+            <div>Rs:${expense.amount}</div>
+            <div>${expense.date}</div>
+           <div class=actioncontainer><div class="editoption">...</div>
+           <div class="actionbtncontainer"><div  class="action deletebtn"><img src="images/delete.webp" alt="delete"></div><div  class="action editbtn"><img src="images/edit.webp" alt="edit"></div><div  class="action viewbtn"><img src="images/view.webp" alt="view"></div></div>`;
+            TodayExpense.appendChild(li);
+            li.setAttribute('id', expense.id);
+        }
+    })
+    addcontrolbtns();
+}
+////////////////////////////////////editlocalstorage function //////////////////////////////////
 function editfromlocalstorage(Description, Amount, date, category, Id, week, month, year) {
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     for (let i = 0; i < expenseList.length; i++) {
@@ -373,208 +340,137 @@ function editfromlocalstorage(Description, Amount, date, category, Id, week, mon
     localStorage.setItem('expenseList', JSON.stringify(expenseList));
     displayFromlocalStorage();
 }
-
+///////////////////////// delete from local storage ///////////////////////////////////////////
 function deletefromlocalstorage(id) {
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     for (let i = 0; i < expenseList.length; i++) {
         if (expenseList[i].id == id) {
             expenseList.splice(i, 1);
+            break;
         }
     }
     restbudget();
     localStorage.setItem('expenseList', JSON.stringify(expenseList));
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+//<------------------------------- local storage functions end--------------------------------------->
+/////////////////////////////createStructure function //////////////////////////////////////////
 function createstructure(expense, where_to_add) {
     let li = document.createElement('div');
     li.classList.add('Expense');
     li.innerHTML = `
-    <div>${expense.expense}</div>
-    <div>${expense.amount}</div>
+    <div class="paid">${expense.expense}</div>
+    <div>Rs:${expense.amount}</div>
     <div>${expense.date}</div>
-    <div class="actionbtncontainer"><div  class="action deletebtn">Delete</div><div  class="action editbtn">Edit</div><div  class="action viewbtn">View</div></div>
-    <div class="editoption">...</div>`
+    <div class=actioncontainer><div class="editoption">...</div>
+    <div class="actionbtncontainer"><div  class="action deletebtn"><img src="images/delete.webp" alt="delete"></div><div  class="action editbtn"><img src="images/edit.webp" alt="edit"></div><div  class="action viewbtn"><img src="images/view.webp" alt="view"></div></div>`
     li.setAttribute('id', expense.id);
-    where_to_add.appendChild(li);
     MonthlyExpense.style.display = "none";
     WeeklyExpense.style.display = "none";
     TodayExpense.style.display = "none";
-    where_to_add.style.display = "flex";
-
+    DailyMonthlyExpense.style.display = "none";
+    where_to_add.appendChild(li);
+    where_to_add.style.display = "block";
 }
-
+///////////////////////// display daily expenses function /////////////////////////////////////
 function displayMonthlyExpenses(month, year) {
-
+    MonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${month} Expnse</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.month == month && expense.year == year) {
             createstructure(expense, MonthlyExpense);
         }
     })
+    addcontrolbtns();
 }
-
+///////////////////////// display daily expenses function ////////////////////////////////////
 function displayweeklyExpenses(week, year) {
-
+    WeeklyExpense.innerHTML = `<div class="ExpenseListHeading row">${week} Expnse</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
+
         if (expense.week == week && expense.year == year) {
             createstructure(expense, WeeklyExpense);
         }
     })
+    addcontrolbtns();
 }
-
-
+///////////////////////// display daily expenses function ////////////////////////////////////
 function DisplayDailyExpenses(date) {
-
+    DailyMonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${date} Expnse</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.date === date) {
-            existFlag = true;
             createstructure(expense, DailyMonthlyExpense);
         }
     })
+    addcontrolbtns();
 }
 
-
-
-const ExpenseTypeBtn = document.querySelector('#ExpenseTypeBtn');
-const typeCat = document.querySelector('#typeCat');
-const OkBtn = document.querySelector('#ExpenseTypeSubmissionBtn');
-const BackBtn = document.querySelector('#TypeBackBtn');
-const typemonth = document.querySelector('#typemonth');
-const typeweek = document.querySelector('#typeweek');
-const typeDate = document.querySelector('#typeDate');
-const submitbtn = document.querySelector('#TypeSubmissionBtn');
-const heading = document.querySelector('#changing');
-
-
-
 OkBtn.addEventListener('click', function () {
-
+    /// create a key value pair 
+    let typeKeyvaluepairarray = {
+        typeDate: 'Daily Expense',
+        typemonth: 'Monthly Expense',
+        typeweek: 'Weekly Expense'
+    }
     if (typeCat.value === 'Select Expense detail type') {
         alert('Please Select Category');
     } else {
-        heading.innerHTML = "Select" + " " + typeCat.value + " " + "to view";
         BackBtn.classList.add('active');
         OkBtn.style.display = 'none';
         submitbtn.classList.add('active');
         typeCat.style.display = 'none';
 
-        if (typeCat.value === 'Monthly Expense') {
-            typemonth.classList.add('active');
-            typeweek.classList.remove('active');
-            typeDate.classList.remove('active');
-        } else if (typeCat.value === 'Weekly Expense') {
-
-            typeweek.classList.add('active');
-            typemonth.classList.remove('active');
-            typeDate.classList.remove('active');
-        } else if (typeCat.value === 'Daily Expense') {
-
-            typeDate.classList.add('active');
-            typeweek.classList.remove('active');
-            typemonth.classList.remove('active');
-        }
+        Object.keys(typeKeyvaluepairarray).forEach(function (key) {
+            const input = document.getElementById(key);
+            if (typeCat.value === typeKeyvaluepairarray[key]) {
+                input.classList.add('active');
+            } else {
+                input.classList.remove('active');
+            }
+        });
     }
 })
-
 function restoreBack() {
     ExpenseType.classList.remove('active');
     ExpenseTypeconts.classList.remove('active');
     BackBtn.classList.remove('active');
     submitbtn.classList.remove('active');
+    close();
 }
 BackBtn.addEventListener('click', function () {
-    OkBtn.style.display = 'flex';
-    BackBtn.classList.remove('active');
-    submitbtn.classList.remove('active');
-    typeCat.style.display = 'block';
-    typemonth.classList.remove('active');
-    typeweek.classList.remove('active');
-    typeDate.classList.remove('active');
-    heading.innerHTML = "Select Expense Type";
+    close();
 })
 
-
 function close() {
-    ExpenseType.classList.remove('active');
-    ExpenseTypeconts.classList.remove('active');
     OkBtn.style.display = 'flex';
     BackBtn.classList.remove('active');
     submitbtn.classList.remove('active');
     typeCat.style.display = 'flex';
+    typeCat.value = 'Select Expense detail type';
+    typeDate.value = '';
+    typemonth.value = '';
+    typeweek.value = '';
     typemonth.classList.remove('active');
     typeweek.classList.remove('active');
     typeDate.classList.remove('active');
-    heading.innerHTML = "Select Expense Type";
 }
 
-ExpenseTypeBtn.addEventListener('click', () => close())
+ExpenseTypeBtn.addEventListener('click', function () {
+    ExpenseType.classList.remove('active');
+    ExpenseTypeconts.classList.remove('active');
+    close();
+});
 
-DetailedReportOfExpense.addEventListener('click', () => De_R_o_E())
-
-function De_R_o_E() {
-
+DetailedReportOfExpense.addEventListener('click', function () {
     ExpenseType.classList.add('active');
     ExpenseTypeconts.classList.add('active');
-    sidebarContent.classList.remove('active');
-    DisplaysidebarContent.classList.remove('active');
-
-
-
-    submitbtn.addEventListener('click', function () {
-
-        if (typeCat.value === 'Monthly Expense') {
-            if (typemonth.value === '') {
-                alert('Please Select Month');
-            } else {
-                let text = typemonth.value;
-                const input = text.split("-", 2);
-                displayMonthlyExpenses(input[1], input[0]);
-                typemonth.classList.remove('active');
-                restoreBack();
-            }
-
-
-        } else if (typeCat.value === 'Weekly Expense') {
-
-            if (typeweek.value === '') {
-
-                alert('Please Select Week');
-            } else {
-
-                let text = typeweek.value;
-                const input = text.split("-W", 2);
-                displayweeklyExpenses(input[1], input[0]);
-                typeweek.classList.remove('active');
-                restoreBack();
-
-            }
-        } else if (typeCat.value === 'Daily Expense') {
-
-            if (typeDate.value === '') {
-                alert('Please Select Date');
-            } else {
-
-                DisplayDailyExpenses(typeDate.value);
-                typeDate.classList.remove('active');
-                restoreBack();
-            }
-        }
-        close();
-    })
-
-
-}
-
-
+    removesidebar();
+})
 
 function viewfromlocalstorage(displayid) {
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-
     expenseList.forEach(function (expense) {
-
         if (expense.id == displayid) {
             const discrt = document.querySelector('#vdis');
             const amt = document.querySelector('#vamt');
@@ -585,22 +481,14 @@ function viewfromlocalstorage(displayid) {
             amt.innerHTML = "Amount: " + expense.amount
             dte.innerHTML = "Date: " + expense.date
             cat.innerHTML = "Categeory" + expense.category
-
-
-
             view.classList.add('active');
             viewTypeconts.classList.add('active');
-
         }
-
         const viewokbtn = document.querySelector('#vclsbtn');
         const viewclsBtn = document.querySelector('#viewclsBtn');
-
-
         viewokbtn.addEventListener('click', function () {
             view.classList.remove('active');
             viewTypeconts.classList.remove('active');
-
         })
         viewclsBtn.addEventListener('click', function () {
             view.classList.remove('active');
@@ -609,75 +497,260 @@ function viewfromlocalstorage(displayid) {
         })
     })
 }
+////////////////////////////////////////// graph begins /////////////////////////////////
+graphViewerBtn.addEventListener("click", function () {
+    Displaygraph = 1;
+    ExpenseType.classList.add('active');
+    ExpenseTypeconts.classList.add('active');
+});
 
-//////////////////////////////////// set budget ////////////////////////////////////////
-
-
-
-
-
-setbudget.addEventListener("click", function () {
-
-
-    budgetpopup.classList.add('active');
-    budgetpopupContent.classList.add('active');
-
-    budgetpopupBtn.addEventListener("click", function () {
-
-        let currentDate = new Date();
-        let cMonth = currentDate.getMonth() + 1
-        let cyear = currentDate.getFullYear();
-        let enteredmonth = expensemonth.value;
-        let input = enteredmonth.split("-", 2);
-        let emonth = parseInt(input[1]);
-        let eyear = parseInt(input[0]);
-
-        if (cMonth == emonth && eyear == cyear && Is_expanse_set == "false") {
-            var check = TotalExpenseOfmonth(emonth, eyear);
-
-            var Isvalid = AmountValidation(bamount.value);
-
-
-            if (check < bamount.value && Isvalid == true) {
-                Is_expanse_set = true;
-
-                let setbud = {
-                    budgetmonth: cMonth,
-                    budgetamount: bamount.value,
-                    year: eyear,
-                    budgetid: budid
-                }
-
-                let budgetlist = JSON.parse(localStorage.getItem('budgetlist')) || [];
-                budgetlist.push(setbud);
-                localStorage.setItem('budgetlist', JSON.stringify(budgetlist));
-
-                localStorage.setItem('Is_budget_set', JSON.stringify(Is_expanse_set))
-
-                updateids();
-                restbudget();
-                budgetpopup.classList.remove('active');
-                budgetpopupContent.classList.remove('active');
-
-            } else if (check >= bamount.value && Isvalid == true) {
-                alert("think you should extent your budget your current expense is" + check);
-            }
-
-        } else if (enteredmonth == "" || bamount.value == "") {
-            alert("please fill all the fields");
-        } else if (localStorage.getItem('Is_budget_set') == "true") {
-            alert("budget for this month is set");
-            budgetpopup.classList.remove('active');
-            budgetpopupContent.classList.remove('active');
-        } else {
-            alert("you can only set budget for current month");
-        }
-    })
+submitbtn.addEventListener('click', function () {
+    OpenDetailedPopup();
 })
+////////// function to open detailed popup and to view graph //////////////////////////
+function OpenDetailedPopup() {
+    let text;
+    let input;
+    if (typeCat.value === 'Monthly Expense') {
+        if (typemonth.value === '') {
+            alert('Please Select Month');
+        } else {
+            text = typemonth.value;
+            input = text.split("-", 2);
+            if (checkGraphReady() === 0) {
+                displayMonthlyExpenses(input[1], input[0]);
+                Displaygraph = 0;
+                restoreBack()
+            }
+            else {
+                checkGraphReady();
+            }
+            typemonth.classList.remove('active');
+        }
+    } else if (typeCat.value === 'Weekly Expense') {
+        if (typeweek.value === '') {
+            alert('Please Select Week');
+        } else {
+            text = typeweek.value;
+            input = text.split("-W", 2);
+            if (checkGraphReady() === 0) {
+                displayweeklyExpenses(input[1], input[0]);
+                Displaygraph = 0;
+                restoreBack()
+            }
+            else {
+                checkGraphReady();
+            }
+            typeweek.classList.remove('active');
+        }
+    } else if (typeCat.value === 'Daily Expense') {
+        if (typeDate.value === '') {
+            alert('Please Select Date');
+        } else {
+            if (checkGraphReady() === 0) {
+                DisplayDailyExpenses(typeDate.value);
+                Displaygraph = 0;
+                restoreBack()
+            }
+            else {
+                checkGraphReady();
+            }
+            typeDate.classList.remove('active');
+        }
+    }
+    function checkGraphReady() {
+        if (Displaygraph == 1) {
+            viewgraphs();
+            Displaygraph = 0;
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    // ------------------------viewgraphs()--------------------------------------;   
+    function viewgraphs() {
+        displayGraphpopup.classList.add('active');
+        displayGraphpopupContent.classList.add('active');
+        anychart.onDocumentReady(function () {
+            let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
+            // AN object OF EXPENSES  to store all expenses of a particular month
+            let expenseArray = {
+                'Home Expense': 0,
+                'Transportation Expense': 0,
+                'Food Expense': 0,
+                'lend': 0,
+                ' borrow': 0,
+                'HealthCare Expense': 0,
+                'PetCare Expense': 0,
+                'Entertainment Expense': 0,
+                'Child-related expenses': 0,
+                'Others': 0
+            };
+            /*here expenseArray[expense.categeory], here expense.categeory act as index of array for each index the value gets added up for that array element  */
+            expenseList.forEach(function (expense) {
+                switch (typeCat.value) {
+                    case 'Monthly Expense':
+                        if (expense.month == input[1] && expense.year == input[0]) {
+                            expenseArray[expense.category] += parseInt(expense.amount);
+                        }
+                        break;
+                    case 'Weekly Expense':
+                        if (expense.week == input[1] && expense.year == input[0]) {
+                            expenseArray[expense.category] += parseInt(expense.amount);
+                        }
+                        break;
+                    case 'Daily Expense':
+                        if (expense.date == typeDate.value) {
+                            expenseArray[expense.category] += parseInt(expense.amount);
+                        }
+                        break;
+                }
+            })
+            // set the data
+            var data = [
+                { x: "Home Expense", value: expenseArray['Home Expense'] },
+                { x: "Transportation Expense", value: expenseArray['Transportation Expense'] },
+                { x: "Food Expense", value: expenseArray['Food Expense'] },
+                { x: "Lend", value: expenseArray['lend'] },
+                { x: "Borrow", value: expenseArray[' borrow'] },
+                { x: "Health Care Expense", value: expenseArray['HealthCare Expense'] },
+                { x: "PetCare Expense", value: expenseArray['PetCare Expense'] },
+                { x: "Entertainment Expense", value: expenseArray['Entertainment Expense'] },
+                { x: "Child Expense", value: expenseArray['Child-related expenses'] },
+                { x: "Other Expense", value: expenseArray['Others'] }
+            ];
+            // create the chart
+            var chart = anychart.pie();
+            // set the chart title
+            chart.title("Expense graphical analysis");
+            // add the data
+            chart.data(data);
+            // display the chart in the container
+            chart.container('container');
+            chart.draw();
+            restoreBack()
+        });
+    }
+}
+///////////////////////// close graph popup js////////////////////////////////////////
+graphcloser.addEventListener("click", function () {
+    displayGraphpopup.classList.remove('active');
+    displayGraphpopupContent.classList.remove('active');
+    location.reload();
+})
+//<!------------------------- budget js-------------------------------------------------->
+////////////////// budget set btn Eventlistener///////////////////////////////////////
+setbudget.addEventListener("click", function () {
+    if (localStorage.getItem('Is_budget_set') == "true") {
+        alert("budget for this month is set");
+    }
+    else {
+        budgetpopup.classList.add('active');
+        budgetpopupContent.classList.add('active');
+        budgetpopupBtn.addEventListener("click", function () {
+            budgetManagement();
+        })
+    }
+})
+///////////////////////////// close budget set/display ///////////////////////////////
+budgetcloseBtn.addEventListener("click", function () {
+    budgetpopup.classList.remove('active');
+    budgetpopupContent.classList.remove('active');
+})
+///////////////////// Edit budget btn eventlistner ///////////////////////////////////
+EditBudget.addEventListener("click", function () {
+    if (Is_expanse_set == "false") {
+        alert("You hadn't set budget for this month");
+    }
+    else {
+        budgetpopup.classList.add('active');
+        budgetpopupContent.classList.add('active');
+        removesidebar();
+        budgetpopupBtn.addEventListener("click", function () {
+            budgetManagement();
+        })
+    }
+});
+/////////////////////////// reset budget js//////////////////////////////////////////
+function restbudget() {
+    var budgetAmount = JSON.parse(localStorage.getItem('budgetlist'));
+    var resetvalue = localStorage.getItem('Is_budget_set');
+    if (resetvalue == "true") {
+        budgetAmount.forEach(function (budget) {
+            if (budget.budgetmonth == currentMonth && budget.year == new Date().getFullYear()) {
+                resetvalue = true;
+                budgetOfMonth.innerHTML = "Budget: " + budget.budgetamount;
+                balanceLeft.innerHTML = "Balance: " + (JSON.parse(budget.budgetamount) - TotalExpenseOfmonth(currentMonth, budget.year));
+            }
+        })
+        localStorage.setItem('Is_budget_set', JSON.stringify(resetvalue));
+    }
+    return resetvalue;
+}
+////////////////////////////// budget management ///////////////////////////////////
+function budgetManagement() {
+    const currentDate = new Date();
+    const cMonth = currentDate.getMonth() + 1;
+    const cYear = currentDate.getFullYear();
+    const enteredMonth = expensemonth.value;
+    const [eYear, eMonth] = enteredMonth.split("-").map(Number);
+    if (cMonth !== eMonth || eYear !== cYear) {
+        alert("You can only set and edit budget for current month.");
+        return;
+    }
+    const check = TotalExpenseOfmonth(eMonth, eYear);
+    const amount = Number(bamount.value);
+    if (!amount) {
+        alert("Please enter a valid budget amount.");
+        return;
+    }
+    if (check >= amount) {
+        alert(`Your current expense is ${check}. Consider increasing your budget.`);
+        return;
+    }
+    if (Is_expanse_set === "true") {
+        const budgetlist = JSON.parse(localStorage.getItem("budgetlist")) || [];
+        const budget = budgetlist.find(b => b.budgetmonth === eMonth && b.year === eYear);
+        if (budget) {
+            budget.budgetamount = amount;
+        } else {
+            Is_expanse_set = false;
+            budgetManagement();
+            return;
+        }
+        localStorage.setItem("budgetlist", JSON.stringify(budgetlist));
+        alert("Budget edited successfully.");
+    } else {
+        Is_expanse_set = true;
+        const setbud = { budgetmonth: cMonth, budgetamount: amount, year: eYear, budgetid: budid };
+        const budgetlist = JSON.parse(localStorage.getItem("budgetlist")) || [];
+        budgetlist.push(setbud);
+        localStorage.setItem("budgetlist", JSON.stringify(budgetlist));
+        localStorage.setItem("Is_budget_set", JSON.stringify(Is_expanse_set));
+        Budgetidupdate();
+        alert("Budget set successfully.");
 
-
-
-
+    }
+    restbudget();
+    displaybudgetbtn();
+    budgetpopup.classList.remove("active");
+    budgetpopupContent.classList.remove("active");
+}
+/////// display set budget if budget is not set else display none
+function displaybudgetbtn() {
+    const currentDate = new Date();
+    const cMonth = currentDate.getMonth() + 1;
+    const cYear = currentDate.getFullYear();
+    const budgetlist = JSON.parse(localStorage.getItem("budgetlist")) || [];
+    const budget = budgetlist.find(b => b.budgetmonth === cMonth && b.year === cYear);
+    if (budget) {
+        setbudget.style.display = "none";
+    } else {
+        setbudget.style.display = "block";
+    }
+}
+///////////////////////////////ckechIs underbudget/////////////////////////////////
 function checkIsUnderBudget(budgetmont, budgetyear) {
     var budgetAmount = JSON.parse(localStorage.getItem('budgetlist'));
     var currentBudget = "";
@@ -688,9 +761,7 @@ function checkIsUnderBudget(budgetmont, budgetyear) {
     })
     return currentBudget;
 }
-
-
-
+/////////////////////////// //total expense of month//////////////////////////////
 function TotalExpenseOfmonth(budgetmont, budgetyear) {
     var totalexpenseofmonth = 0;
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
@@ -701,267 +772,7 @@ function TotalExpenseOfmonth(budgetmont, budgetyear) {
     })
     return totalexpenseofmonth;
 }
-
-function restbudget() {
-
-    var budgetAmount = JSON.parse(localStorage.getItem('budgetlist'));
-    var resetvalue = localStorage.getItem('Is_budget_set');
-
-    if (resetvalue == "true") {
-        budgetAmount.forEach(function (budget) {
-
-            if (budget.budgetmonth == currentMonth && budget.year == new Date().getFullYear()) {
-
-                resetvalue = true;
-                budgetOfMonth.innerHTML = "Budget: " + budget.budgetamount;
-                balanceLeft.innerHTML = "Balance: " + (JSON.parse(budget.budgetamount) - TotalExpenseOfmonth(currentMonth, budget.year));
-
-            } else {
-
-                resetvalue = false;
-                budgetOfMonth.innerHTML = "Budget: ";
-                balanceLeft.innerHTML = "Balance: "
-            }
-        })
-        localStorage.setItem('Is_budget_set', JSON.stringify(resetvalue));
-    }
-
-    return resetvalue;
-}
-
-const EditBudget = document.querySelector("#EditBudget");
-
-
-const budgetpopup = document.querySelector('#budgetpopup');
-const budgetpopupContent = document.querySelector('#budgetpopupContent');
-const budgetpopupBtn = document.querySelector('#budgetpopupBtn');
-const expensemonth = document.querySelector('#expensemonth');
-const bamount = document.querySelector('#bamount');
-const budgetcloseBtn = document.querySelector('#budgetcloseBtn');
-
-budgetcloseBtn.addEventListener("click", function () {
-
-    budgetpopup.classList.remove('active');
-    budgetpopupContent.classList.remove('active');
-})
-
-
-EditBudget.addEventListener("click", () => editBudget());
-
-function editBudget() {
-
-    budgetpopup.classList.add('active');
-    budgetpopupContent.classList.add('active');
-    removesidebar();
-
-    budgetpopupBtn.addEventListener("click", function () {
-
-        let currentDate = new Date();
-        let cMonth = currentDate.getMonth() + 1
-        let cyear = currentDate.getFullYear();
-        let enteredmonth = expensemonth.value;
-        let input = enteredmonth.split("-", 2);
-        let emonth = parseInt(input[1]);
-        let eyear = parseInt(input[0]);
-
-
-        if (cMonth == emonth && eyear == cyear && Is_expanse_set == "true") {
-            var check = TotalExpenseOfmonth(emonth, eyear);
-
-            var Isvalid = AmountValidation(bamount.value);
-
-
-            if (check < bamount.value && Isvalid == true) {
-
-
-                let budgetlist = JSON.parse(localStorage.getItem('budgetlist')) || [];
-
-                budgetlist.forEach(function (budget) {
-                    if (budget.budgetmonth == emonth && budget.year == eyear) {
-
-                        budget.budgetamount = bamount.value;
-                        budget.budgetmonth = emonth;
-                        budget.year = eyear;
-                        budget.budgetid = budget.budgetid;
-                    }
-                })
-                localStorage.setItem('budgetlist', JSON.stringify(budgetlist));
-                budgetpopup.classList.remove('active');
-                budgetpopupContent.classList.remove('active');
-                alert("budget edited successfully");
-
-                restbudget();
-            } else if (check >= bamount.value && Isvalid == true) {
-                alert("think you should extent your budget your current expense is" + check);
-            }
-
-        } else if (Is_expanse_set == "false") {
-            alert("You hadn't set budget for this month");
-        } else {
-            alert("you can only edit budget for current month");
-        }
-    })
-}
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////// set budget ends/////////////////////////
-
-
-////////////////////////////////////////// graph begins /////////////////////////////////
-
-const graphViewerBtn = document.querySelector('#graphViewer');
-const displayGraphpopup = document.querySelector('#displayGraphpopup')
-const displayGraphpopupContent = document.querySelector('#displayGraphpopupContent')
-const graphcloser = document.querySelector("#GraphcloseBtn");
-
-
-
-graphViewerBtn.addEventListener("click", function () {
-
-    var isGraphReady = 0;
-
-    ExpenseType.classList.add('active');
-    ExpenseTypeconts.classList.add('active');
-
-    let text;
-    let input;
-
-    submitbtn.addEventListener('click', function () {
-        if (typeCat.value === 'Monthly Expense') {
-
-            if (typemonth.value === '') {
-                alert('Please Select Month');
-                isGraphReady = 0;
-            } else {
-                text = typemonth.value;
-
-                input = text.split("-", 2);
-                typemonth.classList.remove('active');
-                isGraphReady = 1;
-                restoreBack();
-                viewgraphs();
-            }
-
-        } else if (typeCat.value === 'Weekly Expense') {
-            if (typeweek.value === '') {
-
-                alert('Please Select Week');
-                isGraphReady = 0;
-            } else {
-
-                text = typeweek.value;
-                input = text.split("-W", 2);
-                isGraphReady = 1;
-                typeweek.classList.remove('active');
-                restoreBack();
-                viewgraphs();
-
-            }
-        } else if (typeCat.value === 'Daily Expense') {
-
-            if (typeDate.value === '') {
-                alert('Please Select Date');
-                isGraphReady = 0;
-            } else {
-                isGraphReady = 1;
-                typeDate.classList.remove('active');
-                restoreBack();
-                viewgraphs();
-            }
-        }
-    })
-
-    function viewgraphs() {
-        if (isGraphReady == 1) {
-            displayGraphpopup.classList.add('active');
-            displayGraphpopupContent.classList.add('active');
-            anychart.onDocumentReady(function () {
-                let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
-                // AN object OF EXPENSES  to store all expenses of a particular month
-                let expenseArray = {
-                    'Home Expense': 0,
-                    'Transportation Expense': 0,
-                    'Food Expense': 0,
-                    'lend': 0,
-                    ' borrow': 0,
-                    'HealthCare Expense': 0,
-                    'PetCare Expense': 0,
-                    'Entertainment Expense': 0,
-                    'Child-related expenses': 0,
-                    'Others': 0
-                };
-                /*here expenseArray[expense.categeory], here expense.categeory act as index of array for each index the value gets added up for that array element  */
-                expenseList.forEach(function (expense) {
-                    switch (typeCat.value) {
-                        case 'Monthly Expense':
-                            if (expense.month == input[1] && expense.year == input[0]) {
-                                expenseArray[expense.category] += parseInt(expense.amount);
-                                console.log(expenseArray[expense.category]);
-                            }
-                            break;
-                        case 'Weekly Expense':
-                            if (expense.week == input[1] && expense.year == input[0]) {
-                                expenseArray[expense.category] += parseInt(expense.amount);
-                            }
-                            break;
-                        case 'Daily Expense':
-                            if (expense.date == typeDate.value) {
-                                expenseArray[expense.category] += parseInt(expense.amount);
-                            }
-                            break;
-                    }
-                })
-                // set the data
-                var data = [
-                    { x: "Home Expense", value: expenseArray['Home Expense'] },
-                    { x: "Transportation Expense", value: expenseArray['Transportation Expense'] },
-                    { x: "Food Expense", value: expenseArray['Food Expense'] },
-                    { x: "Lend", value: expenseArray['lend'] },
-                    { x: "Borrow", value: expenseArray[' borrow'] },
-                    { x: "Health Care Expense", value: expenseArray['HealthCare Expense'] },
-                    { x: "PetCare Expense", value: expenseArray['PetCare Expense'] },
-                    { x: "Entertainment Expense", value: expenseArray['Entertainment Expense'] },
-                    { x: "Child Expense", value: expenseArray['Child-related expenses'] },
-                    { x: "Other Expense", value: expenseArray['Others'] }
-                ];
-
-                // create the chart
-                var chart = anychart.pie();
-                // set the chart title
-                chart.title("Expense graphical analysis");
-                // add the data
-                chart.data(data);
-                // display the chart in the container
-                chart.container('container');
-                chart.draw();
-            });
-        }
-
-    }
-
-})
-
-graphcloser.addEventListener("click", function () {
-    displayGraphpopup.classList.remove('active');
-    displayGraphpopupContent.classList.remove('active');
-    location.reload();
-})
-
-
-
-
-
-///////////////////////////////////// graph end //////////////////////////
-
-
-/////// notes js////////////////////////////////////////////////////////////
-
+//<------------------------------ notes js---------------------------------------------->
 const notesContainer = document.getElementById("Notes");
 const addNoteButton = notesContainer.querySelector(".add-note");
 const notepopup = document.querySelector('#notepopup');
@@ -970,93 +781,81 @@ const keepnotes = document.querySelector('#KeepNotes')
 const noteclose = document.querySelector('#noteclose')
 
 keepnotes.addEventListener("click", function () {
-
     notecontent.classList.add('active');
     notepopup.classList.add('active');
     removesidebar();
-
-
 })
-
 noteclose.addEventListener("click", function () {
-
     notecontent.classList.remove('active');
     notepopup.classList.remove('active');
 })
-
-
-//
-
-
-
 getNotes().forEach((note) => {
     const noteElement = createNoteElement(note.id, note.content);
     notesContainer.insertBefore(noteElement, addNoteButton);
 });
-
 addNoteButton.addEventListener("click", () => addNote());
-
 function getNotes() {
     return JSON.parse(localStorage.getItem("stickynotes-notes") || "[]");
 }
-
 function saveNotes(notes) {
     localStorage.setItem("stickynotes-notes", JSON.stringify(notes));
 }
-
 function createNoteElement(id, content) {
     const element = document.createElement("textarea");
-
     element.classList.add("note");
     element.value = content;
     element.placeholder = "Empty Sticky Note";
-
     element.addEventListener("change", () => {
         updateNote(id, element.value);
     });
-
     element.addEventListener("dblclick", () => {
         const doDelete = confirm(
             "Are you sure you wish to delete this sticky note?"
         );
-
         if (doDelete) {
             deleteNote(id, element);
         }
     });
-
     return element;
 }
-
 function addNote() {
     const notes = getNotes();
     const noteObject = {
         id: Math.floor(Math.random() * 100000),
         content: ""
     };
-
     const noteElement = createNoteElement(noteObject.id, noteObject.content);
     notesContainer.insertBefore(noteElement, addNoteButton);
-
     notes.push(noteObject);
     saveNotes(notes);
 }
-
 function updateNote(id, newContent) {
     const notes = getNotes();
     const targetNote = notes.filter((note) => note.id == id)[0];
-
     targetNote.content = newContent;
     saveNotes(notes);
 }
-
 function deleteNote(id, element) {
     const notes = getNotes().filter((note) => note.id != id);
-
     saveNotes(notes);
     notesContainer.removeChild(element);
 }
-
-
-/////////////////////////////////////////////////////////////////////////////
-
+//<------------------------------ floating btn js---------------------------------------------->
+fltbtn.addEventListener("click", function () {
+    // create a new Date object
+    const currentDate = new Date();
+    // get the current week (Sunday is the first day of the week)
+    const currentWeek = Math.ceil((((currentDate - new Date(currentDate.getFullYear(), 0, 1)) / 86400000) + 1) / 7);
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
+    cost.classList.toggle('active');
+    thisday.addEventListener("click", function () {
+        DisplayDailyExpenses(currentDate)
+    });
+    thisweek.addEventListener("click", function () {
+        displayweeklyExpenses(currentWeek, currentYear);
+    });
+    thismonth.addEventListener("click", function () {
+        displayMonthlyExpenses(currentMonth, currentYear);
+    });
+});
