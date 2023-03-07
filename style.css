@@ -35,7 +35,7 @@ body {
     width: 100vw;
     height: 10vh;
     color: #333;
-    background-color: rgba(250, 235, 215, 0.503);
+    background-color: rgba(162, 221, 227, 0.503);
 }
 
 /*-------------------------ExpenseList--------------------- */
@@ -406,15 +406,26 @@ body {
     z-index: 2;
 }
 
-@media screen and (max-width:890px)and (max-width: 600px) {
+.budgetarea {
+    height: clamp(60px, 20%, 60px);
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #b0f3c4;
+    border-radius: 10px;
+    font-size: clamp(1rem, 1vw, 2px);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+@media screen and (max-width:890px)and (max-width: 850px) {
     .Expense {
         font-size: clamp(.75rem, 1vw, 0.5rem);
     }
 
     .action {
         font-size: clamp(0.5rem, 1vw, 1.5rem);
-        width: 120%;
-        margin-top: 5px;
     }
 
     .ppcontent {
@@ -434,7 +445,7 @@ body {
     }
 
     #fltbtn {
-        top: 70px;
+        top: clamp(75px, 90px, 85px);
     }
 
     .fpcontent {
@@ -445,8 +456,10 @@ body {
         width: clamp(15px, 10px, 20px);
         height: clamp(15px, 10px, 20px);
         font-size: clamp(0.75rem, 1vw, 0.5rem);
+    }
 
-
+    .budgetarea {
+        flex-direction: column;
     }
 
 }
@@ -454,16 +467,5 @@ body {
 
 img {
     height: 20px;
-    width: 15px;
-}
-
-.budgetarea {
-    height: clamp(50px, 20%, 80px);
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #F3ECB0;
-    border-radius: 10px;
-    font-size: clamp(20px, 2vw, 25px)
+    width: 20px;
 }

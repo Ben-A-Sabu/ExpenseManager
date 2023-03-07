@@ -33,14 +33,14 @@
     </div>
     <!------------------------------ ExpenseInput ------------------------------------------->
     <div id="ExpenseInput" class="row">
-        <div id="SetBudget" class="Submit row">Set Budget</div>  
+        <div id="SetBudget" class="Submit row" style="display: none;">Set Budget</div>  
             <!------------------------------ floating btn  ------------------------------------------->
             <div id="td_detail" class="fpcontent">
               <div id="this_day" class="fpbtn">Day</div>
               <div id="this_week" class="fpbtn">Week</div>
               <div id="this_month" class="fpbtn">Month</div>
           </div>
-          <div class="row" id="fltbtn" >:</div>
+          <div class="row" id="fltbtn" ><img src="images/featurebtn.webp" alt=""></div>
        <!---------------------------------------- popup1---------------------------------->
         <div id="Addpopup" class="popupcollection"></div>
         <div id="popupContent" class="ppcontent col">
@@ -131,9 +131,10 @@
            </div>
            <div id="container"></div>
         </div>
-        <div class="budgetarea">
-            <div id="balance" class="Budgetdet">Balance :</div>
+        <div class="budgetarea" id="Budgetset&remove">
             <div id="budgetOfMon" class="Budgetdet">Budget :</div>
+            <div id="balance" class="Budgetdet">Balance :</div>
+            <div id="TotalExpense" class="Budgetdet">Expense:</div>
         </div>
     </div>
     <!-------------setbudget html begin------------------------>
@@ -180,7 +181,7 @@
         <div type="submit" class="tpsel Submit row" id="TypeBackBtn">Back</div>
         <div type="submit" class="Submit row" id="ExpenseTypeSubmissionBtn">OK</div>
     </div>
-    <div class="Submit row" id="AddBtn">Add</div>
+    <div class="Submit row" id="AddBtn"><img src="images/addbtn.webp" alt=""></div>
 
     <!-------------detailed expense report html end------------------------>
 </body>

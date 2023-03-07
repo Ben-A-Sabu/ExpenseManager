@@ -373,7 +373,8 @@ function createstructure(expense, where_to_add) {
 }
 ///////////////////////// display daily expenses function /////////////////////////////////////
 function displayMonthlyExpenses(month, year) {
-    MonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${month} Expnse</div>`
+    const monthName = new Date(year, month - 1).toLocaleString('default', { month: 'long' });
+    MonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${monthName} Expnse</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.month == month && expense.year == year) {
@@ -384,7 +385,11 @@ function displayMonthlyExpenses(month, year) {
 }
 ///////////////////////// display daily expenses function ////////////////////////////////////
 function displayweeklyExpenses(week, year) {
-    WeeklyExpense.innerHTML = `<div class="ExpenseListHeading row">${week} Expnse</div>`
+    const day = new Date(year, 0, 1 + (week) * 7);
+    /// get month name from date
+    const monthName = day.toLocaleString('default', { month: 'long' });
+    const weekNumber = getWeekOfMonth(day);
+    WeeklyExpense.innerHTML = `<div class="ExpenseListHeading row">${monthName} Week ${weekNumber} Expnse</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
 
@@ -396,6 +401,7 @@ function displayweeklyExpenses(week, year) {
 }
 ///////////////////////// display daily expenses function ////////////////////////////////////
 function DisplayDailyExpenses(date) {
+    console.log(new Date(date));
     DailyMonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${date} Expnse</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
@@ -680,11 +686,20 @@ function restbudget() {
         budgetAmount.forEach(function (budget) {
             if (budget.budgetmonth == currentMonth && budget.year == new Date().getFullYear()) {
                 resetvalue = true;
-                budgetOfMonth.innerHTML = "Budget: " + budget.budgetamount;
-                balanceLeft.innerHTML = "Balance: " + (JSON.parse(budget.budgetamount) - TotalExpenseOfmonth(currentMonth, budget.year));
+                budgetOfMonth.innerHTML = "Budget:Rs " + budget.budgetamount;
+                balanceLeft.innerHTML = "Balance:Rs " + (JSON.parse(budget.budgetamount) - TotalExpenseOfmonth(currentMonth, budget.year));
+                document.getElementById("TotalExpense").innerHTML = "Expense:Rs " + TotalExpenseOfmonth(currentMonth, new Date().getFullYear());
             }
         })
         localStorage.setItem('Is_budget_set', JSON.stringify(resetvalue));
+    }
+
+    else {
+        resetvalue = false;
+        localStorage.setItem('Is_budget_set', JSON.stringify(resetvalue));
+        budgetOfMonth.style.display = "none";
+        balanceLeft.style.display = "none";
+        document.getElementById("TotalExpense").innerHTML = "Expense:Rs " + TotalExpenseOfmonth(currentMonth, new Date().getFullYear());
     }
     return resetvalue;
 }
@@ -747,7 +762,7 @@ function displaybudgetbtn() {
     if (budget) {
         setbudget.style.display = "none";
     } else {
-        setbudget.style.display = "block";
+        setbudget.style.display = "flex";
     }
 }
 ///////////////////////////////ckechIs underbudget/////////////////////////////////
@@ -842,20 +857,61 @@ function deleteNote(id, element) {
 }
 //<------------------------------ floating btn js---------------------------------------------->
 fltbtn.addEventListener("click", function () {
-    // create a new Date object
-    const currentDate = new Date();
-    // get the current week (Sunday is the first day of the week)
-    const currentWeek = Math.ceil((((currentDate - new Date(currentDate.getFullYear(), 0, 1)) / 86400000) + 1) / 7);
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentYear = currentDate.getFullYear();
+    findcurrentdate();
+    const weekArr = currentdate.split("-", 3);
+    const currentWeek = getWeek(weekArr[0], weekArr[1] - 1, weekArr[2])
     cost.classList.toggle('active');
     thisday.addEventListener("click", function () {
-        DisplayDailyExpenses(currentDate)
+        DisplayDailyExpenses(currentdate)
     });
     thisweek.addEventListener("click", function () {
-        displayweeklyExpenses(currentWeek, currentYear);
+        displayweeklyExpenses(currentWeek, weekArr[0]);
     });
     thismonth.addEventListener("click", function () {
-        displayMonthlyExpenses(currentMonth, currentYear);
+        displayMonthlyExpenses(weekArr[1], weekArr[0]);
     });
 });
+//// closing the btns when clicked outside///////////////////////////////////////
+document.addEventListener("click", function (e) {
+    if (e.target.parentElement !== fltbtn && e.target !== thisday && e.target !== thisweek && e.target !== thismonth) {
+        cost.classList.remove('active');
+    }
+    if (!e.target.classList.contains('action') && !e.target.classList.contains('editoption')) {
+        document.querySelectorAll('.action').forEach(function (action_btn) {
+            action_btn.classList.remove('active');
+        })
+    }
+
+    if (e.target != sidebarContent && e.target != DisplaysidebarContent) {
+        sidebarContent.classList.remove('active');
+        DisplaysidebarContent.classList.remove('active');
+    }
+})
+//<------------------------------ budget js---------------------------------------------->
+document.getElementById("Budgetset&remove").addEventListener("click", function () {
+    const currentDate = new Date();
+    const cMonth = currentDate.getMonth() + 1;
+    const cYear = currentDate.getFullYear();
+    if (Is_expanse_set === true) {
+        alert("do you want to remove this budget")
+        const budgetlist = JSON.parse(localStorage.getItem("budgetlist")) || [];
+        const budget = budgetlist.find(b => b.budgetmonth === cMonth && b.year === cYear);
+        const index = budgetlist.indexOf(budget);
+        budgetlist.splice(index, 1);
+        localStorage.setItem("budgetlist", JSON.stringify(budgetlist));
+        localStorage.setItem("Is_budget_set", JSON.stringify(false));
+        alert("budget removed successfully");
+        restbudget();
+        displaybudgetbtn();
+    }
+});
+
+function getWeekOfMonth(date) {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const dayOfWeek = firstDayOfMonth.getDay();
+    const adjustedDate = dayOfWeek === 0 ? 7 : dayOfWeek;
+    const dayOfMonth = date.getDate();
+    const weekOfMonth = Math.ceil((dayOfMonth + adjustedDate - 1) / 7);
+    return weekOfMonth;
+}
+
