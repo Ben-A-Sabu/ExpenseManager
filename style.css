@@ -7,13 +7,13 @@
 
 /*----------------body-----------------------------*/
 body {
-    background-color: #ADE792;
     height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    background-color: #ADE792;
     overscroll-behavior: none;
 }
 
@@ -23,11 +23,11 @@ body {
 
 /*-----------------header--------------------------------*/
 #header {
-    background-color: #0E8388;
     height: 10vh;
     width: 100vw;
     justify-content: space-between;
     padding: 20px;
+    background-color: #0E8388;
 }
 
 /*------------------ ExpenseInput------------------------*/
@@ -83,16 +83,16 @@ body {
 
 /*------------------menuitems ----------------------- */
 .menuitems {
-    background-color: #63af73;
     height: clamp(5vh, 10%, 30vh);
     width: 90%;
-    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     font-size: clamp(1rem, 2vw, 2rem);
     font-family: 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    background-color: #63af73;
+    cursor: pointer;
 }
 
 /*---------------- menuitems:hover----------------------- */
@@ -136,11 +136,11 @@ body {
     width: 90%;
     font-size: clamp(12px, 2vw, 50px);
     font-weight: bold;
-    color: #333;
     border: 1px solid rgba(204, 204, 204, 0.614);
-    background-color: rgba(223, 220, 220, 0.857);
     border-radius: 5px;
     padding: 0 1rem;
+    color: #333;
+    background-color: rgba(223, 220, 220, 0.857);
     box-shadow: 10 10 10px #000;
 }
 
@@ -170,16 +170,16 @@ body {
 
 /*----------------heading area-------------------- */
 .headingarea {
-    background-color: rgba(100, 147, 99, 0.909);
     width: 100%;
+    background-color: rgba(100, 147, 99, 0.909);
 }
 
 /*----------------popupbg-------------------- */
 .popupcollection {
-    position: fixed;
-    top: 0;
     width: 100%;
     height: 100vh;
+    position: fixed;
+    top: 0;
     background-color: rgba(0, 0, 0, 0.515);
     opacity: 1;
     visibility: hidden;
@@ -188,25 +188,25 @@ body {
 
 /*----------------popup content-------------------- */
 .ppcontent {
-    position: absolute;
-    background-color: #8de4a1;
     height: 50vh;
+    width: clamp(500px, 40%, 700px);
+    position: absolute;
+    top: 20%;
+    border-radius: 10px;
+    padding: 20px;
     opacity: 1;
     z-index: 2;
     visibility: hidden;
-    top: 20%;
-    border-radius: 10px;
-    width: clamp(500px, 40%, 700px);
-    padding: 20px;
     overflow: auto;
+    background-color: #8de4a1;
     box-shadow: 10px 10px 15px #000;
 }
 
 /*----------------popup content h4-------------------- */
 .ppcontent h4 {
-    font-size: clamp(1rem, 2vw, 2rem);
     width: 100%;
     height: 5vh;
+    font-size: clamp(1rem, 2vw, 2rem);
     color: #333;
 }
 
@@ -223,25 +223,23 @@ body {
     padding: 10px;
     font-size: clamp(12px, 2vw, 25px);
     font-weight: bold;
-    color: #333;
     border-radius: 5px;
+    color: #333;
     box-shadow: 10px 10px 15px #000;
 }
 
 .Expense {
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: space-around;
     text-align: center;
+    align-items: center;
     margin-top: 1vh;
     font-size: clamp(2rem, 1vw, 1.5rem);
     font-weight: bold;
     color: #dd1313;
     border-radius: 5px;
     box-shadow: 10px 10px 15px #000;
-
-
 }
 
 .Expense:hover {
@@ -463,7 +461,6 @@ body {
     }
 
 }
-
 
 img {
     height: 20px;
