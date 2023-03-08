@@ -661,6 +661,7 @@ budgetcloseBtn.addEventListener("click", function () {
 })
 ///////////////////// Edit budget btn eventlistner ///////////////////////////////////
 EditBudget.addEventListener("click", function () {
+    Is_expanse_set = JSON.parse(localStorage.getItem('Is_budget_set'));
     if (Is_expanse_set === false) {
         alert("You hadn't set budget for this month");
     }
@@ -756,8 +757,10 @@ function displaybudgetbtn() {
     const budget = budgetlist.find(b => b.budgetmonth === cMonth && b.year === cYear);
     if (budget) {
         setbudget.style.display = "none";
+        EditBudget.style.display = "flex";
     } else {
         setbudget.style.display = "flex";
+        EditBudget.style.display = "none";
     }
 }
 ///////////////////////////////ckechIs underbudget/////////////////////////////////
