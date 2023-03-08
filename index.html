@@ -46,7 +46,7 @@
         <div id="popupContent" class="ppcontent col">
             <div class="headingarea row">
               <h4 class="row">Expense Added</h4>
-              <div type="submit" class="close" id="closeBtn">&times;</div>
+              <div  class="close" id="closeBtn">&times;</div>
             </div>
             <input type="text" class="Inputbox" name="expense" id="expenseIn" placeholder="expense" />
             <input type="text" class="Inputbox" name="amount" id="amount" placeholder="Amount" />
@@ -64,7 +64,7 @@
               <option value="Child-related expenses" id="cat10">  Child-related expenses </option>
               <option value="Others" id="cat 11">Others</option>
             </select>
-            <div type="submit" class="Submit row" id="AddpopupBtn">OK</div>
+            <div  class="Submit row" id="AddpopupBtn">OK</div>
         </div>
     </div>
     <!-- edit part elements -->
@@ -72,7 +72,7 @@
     <div id="editpopupContent" class="ppcontent col">
         <div class="headingarea row">
            <h4 class="row">Expense Added</h4>
-           <div type="submit" class="close" id="editcloseBtn">&times;</div>
+           <div  class="close" id="editcloseBtn">&times;</div>
         </div>
         <input type="text" class="Inputbox" name="expense" id="EexpenseIn" placeholder="expense" />
         <input type="text" class="Inputbox" name="amount" id="Eamount" placeholder="Amount" />
@@ -90,7 +90,7 @@
             <option value="Child-related expenses" id="Ecat10">Child-related expenses</option>
             <option value="Others" id="Ecat 11">Others</option>
           </select>
-        <div type="submit" class="Submit row" id="editpopupBtn">OK</div>
+        <div  class="Submit row" id="editpopupBtn">OK</div>
     </div>
     <!-- edit part elements -->
     <!--------- view details  part-->
@@ -98,13 +98,13 @@
     <div id="ViewTypeconts" class="ppcontent col">
         <div class="headingarea row">
             <h4 class="row">Details</h4>
-            <div type="submit" class="close" id="viewclsBtn">&times;</div>
+            <div  class="close" id="viewclsBtn">&times;</div>
         </div>
         <div id="vdis">Descriptin:</div>
         <div id="vamt">Amount:</div>
         <div id="vdate">Date:</div>
         <div id="vcat">Category:</div>
-        <div type="submit" class="Submit row" id="vclsbtn">OK</div>
+        <div  class="Submit row" id="vclsbtn">OK</div>
     </div>
     <!--------------------  view details part end -->
     <div id="ExpenseList" class="col">
@@ -127,7 +127,7 @@
         <div id="displayGraphpopupContent" class="ppcontent col">
            <div class="headingarea row">
               <h4 class="row">graph</h4>
-              <div type="submit" class="close" id="GraphcloseBtn">&times;</div>
+              <div  class="close" id="GraphcloseBtn">&times;</div>
            </div>
            <div id="container"></div>
         </div>
@@ -142,18 +142,18 @@
     <div id="budgetpopupContent" class="ppcontent col">
         <div class="headingarea row">
              <h4 class="row">Budget Added</h4>
-             <div type="submit" class="close" id="budgetcloseBtn">&times;</div>
+             <div  class="close" id="budgetcloseBtn">&times;</div>
         </div>
         <input type="month" id="expensemonth" class="Inputbox" />
         <input type="text" class="Inputbox" name="amount" id="bamount" placeholder="Amount" />
-        <div type="submit" class="Submit row" id="budgetpopupBtn">OK</div>
+        <div  class="Submit row" id="budgetpopupBtn">OK</div>
     </div>
     <!-------------notes html begin------------------------>
     <div id="notepopup" class="popupcollection"></div>
     <div id="NoteContent" class="ppcontent">
         <div class="headingarea row">
            <h2 class="row">Notes</h2>
-           <div type="submit" class="close" id="noteclose">&times;</div>
+           <div  class="close" id="noteclose">&times;</div>
         </div>
         <div id="Notes">
             <div class="add-note" type="div">+</div>
@@ -164,22 +164,22 @@
     <div id="ExpenseTypeconts" class="ppcontent col">
         <div class="headingarea row">
            <h4 class="row">Expenses Details</h4>
-           <div type="submit" class="close" id="ExpenseTypeBtn">&times;</div>
+           <div  class="close" id="ExpenseTypeBtn">&times;</div>
         </div>
-        <select name="Category" id="typeCat" class="Inputbox">
-               <option value="Select Expense detail type" id="type1">Select Expense detail type </option>
-               <option value="Daily Expense" id="type2">Daily Expense</option>
-               <option value="Weekly Expense" id="type3">Weekly Expense</option>
-               <option value="Monthly Expense" id="type4">Monthly Expense</option>
-        </select>
         <div id="typeSelection" class="col">
                 <input type="month" id="typemonth" class="tpsel  Inputbox col" value="tmonth" />
                 <input type="date" id="typeDate" class="tpsel Inputbox col" value="tDate" />
                 <input type="week" id="typeweek" class="tpsel Inputbox col" value="tweek" />
         </div>
-        <div type="submit" class="tpsel Submit row" id="TypeSubmissionBtn">Submit</div>
-        <div type="submit" class="tpsel Submit row" id="TypeBackBtn">Back</div>
-        <div type="submit" class="Submit row" id="ExpenseTypeSubmissionBtn">OK</div>
+        <select name="Category" id="typeCat" class="Inputbox">
+            <option value="Select Expense detail type" id="type1">Select Expense detail type </option>
+            <option value="Daily Expense" id="type2">Daily Expense</option>
+            <option value="Weekly Expense" id="type3">Weekly Expense</option>
+            <option value="Monthly Expense" id="type4">Monthly Expense</option>
+     </select>
+        <div  class="tpsel Submit row" id="TypeSubmissionBtn">Submit</div>
+        <div  class="tpsel Submit row" id="TypeBackBtn">Back</div>
+        <div  class="Submit row" id="ExpenseTypeSubmissionBtn">OK</div>
     </div>
     <div class="Submit row" id="AddBtn"><img src="images/addbtn.webp" alt=""></div>
 

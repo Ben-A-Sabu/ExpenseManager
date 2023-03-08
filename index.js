@@ -118,7 +118,7 @@ window.addEventListener('load', function () {
     //////////////////// id checking and budget set checking////////////////////////
     objid = JSON.parse(localStorage.getItem('explastId') || 0);
     budid = JSON.parse(localStorage.getItem('budgetId') || 0);
-    Is_expanse_set = (localStorage.getItem('Is_budget_set') || "false");
+    Is_expanse_set = (localStorage.getItem('Is_budget_set') || false);
     displaybudgetbtn();
 });
 /////////////////////////////// to display/return the menu //////////////////////////////////////////
@@ -374,7 +374,7 @@ function createstructure(expense, where_to_add) {
 ///////////////////////// display daily expenses function /////////////////////////////////////
 function displayMonthlyExpenses(month, year) {
     const monthName = new Date(year, month - 1).toLocaleString('default', { month: 'long' });
-    MonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${monthName} Expnse</div>`
+    MonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${monthName} Expense</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.month == month && expense.year == year) {
@@ -389,7 +389,7 @@ function displayweeklyExpenses(week, year) {
     /// get month name from date
     const monthName = day.toLocaleString('default', { month: 'long' });
     const weekNumber = getWeekOfMonth(day);
-    WeeklyExpense.innerHTML = `<div class="ExpenseListHeading row">${monthName} Week ${weekNumber} Expnse</div>`
+    WeeklyExpense.innerHTML = `<div class="ExpenseListHeading row">${monthName} Week ${weekNumber} Expense</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
 
@@ -402,7 +402,7 @@ function displayweeklyExpenses(week, year) {
 ///////////////////////// display daily expenses function ////////////////////////////////////
 function DisplayDailyExpenses(date) {
     console.log(new Date(date));
-    DailyMonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${date} Expnse</div>`
+    DailyMonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${date} Expense</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
         if (expense.date === date) {
@@ -658,6 +658,7 @@ setbudget.addEventListener("click", function () {
             budgetManagement();
         })
     }
+    restbudget();
 })
 ///////////////////////////// close budget set/display ///////////////////////////////
 budgetcloseBtn.addEventListener("click", function () {
@@ -666,7 +667,7 @@ budgetcloseBtn.addEventListener("click", function () {
 })
 ///////////////////// Edit budget btn eventlistner ///////////////////////////////////
 EditBudget.addEventListener("click", function () {
-    if (Is_expanse_set == "false") {
+    if (Is_expanse_set === false) {
         alert("You hadn't set budget for this month");
     }
     else {
@@ -677,11 +678,13 @@ EditBudget.addEventListener("click", function () {
             budgetManagement();
         })
     }
+    restbudget();
 });
 /////////////////////////// reset budget js//////////////////////////////////////////
 function restbudget() {
     var budgetAmount = JSON.parse(localStorage.getItem('budgetlist'));
     var resetvalue = localStorage.getItem('Is_budget_set');
+    console.log("resetvalue:" + resetvalue)
     if (resetvalue == "true") {
         budgetAmount.forEach(function (budget) {
             if (budget.budgetmonth == currentMonth && budget.year == new Date().getFullYear()) {
@@ -724,17 +727,18 @@ function budgetManagement() {
         alert(`Your current expense is ${check}. Consider increasing your budget.`);
         return;
     }
-    if (Is_expanse_set === "true") {
+    if (Is_expanse_set === true) {
         const budgetlist = JSON.parse(localStorage.getItem("budgetlist")) || [];
         const budget = budgetlist.find(b => b.budgetmonth === eMonth && b.year === eYear);
         if (budget) {
             budget.budgetamount = amount;
         } else {
             Is_expanse_set = false;
-            budgetManagement();
+            // budgetManagement();
             return;
         }
         localStorage.setItem("budgetlist", JSON.stringify(budgetlist));
+        localStorage.setItem("Is_budget_set", JSON.stringify(Is_expanse_set));
         alert("Budget edited successfully.");
     } else {
         Is_expanse_set = true;
@@ -745,9 +749,7 @@ function budgetManagement() {
         localStorage.setItem("Is_budget_set", JSON.stringify(Is_expanse_set));
         Budgetidupdate();
         alert("Budget set successfully.");
-
     }
-    restbudget();
     displaybudgetbtn();
     budgetpopup.classList.remove("active");
     budgetpopupContent.classList.remove("active");
@@ -892,17 +894,20 @@ document.getElementById("Budgetset&remove").addEventListener("click", function (
     const currentDate = new Date();
     const cMonth = currentDate.getMonth() + 1;
     const cYear = currentDate.getFullYear();
+    var Is_expanse_set = JSON.parse(localStorage.getItem("Is_budget_set"));
     if (Is_expanse_set === true) {
-        alert("do you want to remove this budget")
-        const budgetlist = JSON.parse(localStorage.getItem("budgetlist")) || [];
-        const budget = budgetlist.find(b => b.budgetmonth === cMonth && b.year === cYear);
-        const index = budgetlist.indexOf(budget);
-        budgetlist.splice(index, 1);
-        localStorage.setItem("budgetlist", JSON.stringify(budgetlist));
-        localStorage.setItem("Is_budget_set", JSON.stringify(false));
-        alert("budget removed successfully");
-        restbudget();
-        displaybudgetbtn();
+        if (confirm("do you want to remove this budget")) {
+            const budgetlist = JSON.parse(localStorage.getItem("budgetlist")) || [];
+            const budget = budgetlist.find(b => b.budgetmonth === cMonth && b.year === cYear);
+            const index = budgetlist.indexOf(budget);
+            budgetlist.splice(index, 1);
+            Is_expanse_set = false;
+            localStorage.setItem("budgetlist", JSON.stringify(budgetlist));
+            localStorage.setItem("Is_budget_set", JSON.stringify(Is_expanse_set));
+            alert("budget removed successfully");
+            restbudget();
+            displaybudgetbtn();
+        }
     }
 });
 
