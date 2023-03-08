@@ -210,24 +210,16 @@ function addcontrolbtns() {
     ////////////////////////delete option(Data manipulation btn(delete))//////////////////////////
     deletebtnarray.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
-            const parent = e.target.parentElement.parentElement.parentElement.parentElement.id;
-            e.target.parentElement.parentElement.parentElement.parentElement.remove();
-            deletefromlocalstorage(parent);
+            const parent = e.target.parentElement.parentElement.parentElement.id;
             e.target.parentElement.parentElement.parentElement.remove();
+            deletefromlocalstorage(parent);
         })
     });
     ////////////////////////edit option(Data manipulation btn(edit))//////////////////////////
     editbtnarray.forEach(function (btn) {
         btn.addEventListener('click', function (e) {
-            const parent = e.target.parentElement.parentElement.parentElement.parentElement.id;
+            const parent = e.target.parentElement.parentElement.parentElement.id;
             initiateEdit(parent)
-        })
-    });
-    ////////////////////////view option(Data manipulation btn(view))//////////////////////////
-    viewbtnarray.forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-            const parent = e.target.parentElement.parentElement.parentElement.parentElement.id;
-            viewfromlocalstorage(parent);
         })
     });
     /////////////////edit option(Data manipulation btn(edit,del,view)) //////////////////////////    
@@ -236,10 +228,15 @@ function addcontrolbtns() {
             const parent = e.target.parentElement.parentElement.id;
             document.querySelectorAll('.action').forEach(function (action_btn) {
                 if (action_btn.parentElement.parentElement.parentElement.id == parent) {
-                    console.log('clicked');
                     action_btn.classList.toggle('active');
                 }
             })
+        })
+    })
+
+    document.querySelectorAll('.Expense').forEach(function (expense) {
+        expense.addEventListener('click', function (e) {
+            viewfromlocalstorage(e.target.id);
         })
     })
 }
@@ -315,7 +312,7 @@ function displayFromlocalStorage() {
             <div>Rs:${expense.amount}</div>
             <div>${expense.date}</div>
            <div class=actioncontainer><div class="editoption">...</div>
-           <div class="actionbtncontainer"><div  class="action deletebtn"><img src="images/delete.webp" alt="delete"></div><div  class="action editbtn"><img src="images/edit.webp" alt="edit"></div><div  class="action viewbtn"><img src="images/view.webp" alt="view"></div></div>`;
+           <div class="actionbtncontainer"><img src="images/delete.webp" alt="delete" class="action deletebtn"><img src="images/edit.webp" alt="edit"  class="action editbtn"></div>`;
             TodayExpense.appendChild(li);
             li.setAttribute('id', expense.id);
         }
@@ -362,7 +359,7 @@ function createstructure(expense, where_to_add) {
     <div>Rs:${expense.amount}</div>
     <div>${expense.date}</div>
     <div class=actioncontainer><div class="editoption">...</div>
-    <div class="actionbtncontainer"><div  class="action deletebtn"><img src="images/delete.webp" alt="delete"></div><div  class="action editbtn"><img src="images/edit.webp" alt="edit"></div><div  class="action viewbtn"><img src="images/view.webp" alt="view"></div></div>`
+    <div class="actionbtncontainer"><img src="images/delete.webp" alt="delete" class="action deletebtn"><img src="images/edit.webp" alt="edit"  class="action editbtn"></div>`
     li.setAttribute('id', expense.id);
     MonthlyExpense.style.display = "none";
     WeeklyExpense.style.display = "none";
@@ -392,7 +389,6 @@ function displayweeklyExpenses(week, year) {
     WeeklyExpense.innerHTML = `<div class="ExpenseListHeading row">${monthName} Week ${weekNumber} Expense</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
-
         if (expense.week == week && expense.year == year) {
             createstructure(expense, WeeklyExpense);
         }
@@ -401,7 +397,6 @@ function displayweeklyExpenses(week, year) {
 }
 ///////////////////////// display daily expenses function ////////////////////////////////////
 function DisplayDailyExpenses(date) {
-    console.log(new Date(date));
     DailyMonthlyExpense.innerHTML = `<div class="ExpenseListHeading row">${date} Expense</div>`
     let expenseList = JSON.parse(localStorage.getItem('expenseList')) || [];
     expenseList.forEach(function (expense) {
@@ -482,11 +477,10 @@ function viewfromlocalstorage(displayid) {
             const amt = document.querySelector('#vamt');
             const dte = document.querySelector('#vdate');
             const cat = document.querySelector('#vcat');
-
             discrt.innerHTML = "Discription : " + expense.expense
             amt.innerHTML = "Amount: " + expense.amount
             dte.innerHTML = "Date: " + expense.date
-            cat.innerHTML = "Categeory" + expense.category
+            cat.innerHTML = "Categeory:" + expense.category
             view.classList.add('active');
             viewTypeconts.classList.add('active');
         }
@@ -684,7 +678,6 @@ EditBudget.addEventListener("click", function () {
 function restbudget() {
     var budgetAmount = JSON.parse(localStorage.getItem('budgetlist'));
     var resetvalue = localStorage.getItem('Is_budget_set');
-    console.log("resetvalue:" + resetvalue)
     if (resetvalue == "true") {
         budgetAmount.forEach(function (budget) {
             if (budget.budgetmonth == currentMonth && budget.year == new Date().getFullYear()) {
@@ -889,7 +882,7 @@ document.addEventListener("click", function (e) {
         DisplaysidebarContent.classList.remove('active');
     }
 })
-//<------------------------------ budget js---------------------------------------------->
+////////////////// to remove budget/////////////////////////////////////
 document.getElementById("Budgetset&remove").addEventListener("click", function () {
     const currentDate = new Date();
     const cMonth = currentDate.getMonth() + 1;
@@ -910,7 +903,7 @@ document.getElementById("Budgetset&remove").addEventListener("click", function (
         }
     }
 });
-
+////////// function to know 1st, 2nd, 3rd, 4th, 5th week of month///////////////////////
 function getWeekOfMonth(date) {
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     const dayOfWeek = firstDayOfMonth.getDay();
@@ -919,4 +912,3 @@ function getWeekOfMonth(date) {
     const weekOfMonth = Math.ceil((dayOfMonth + adjustedDate - 1) / 7);
     return weekOfMonth;
 }
-
