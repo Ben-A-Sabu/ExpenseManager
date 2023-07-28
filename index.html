@@ -1,190 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        Expense Manager
-    </title>
-    <script  defer src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
-    <script  defer src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+    <title>Expense Manager</title>
+    <script
+      defer
+      src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"
+    ></script>
 
     <meta name="description" content="A simple ExpenseManagerApp" />
-<script defer src="Index.js"></script></head>
-<link rel="stylesheet" href="style.css">
+    <script defer src="Index.js"></script>
+  </head>
+  <link rel="stylesheet" href="style.css" />
 
-<body>
+  <body>
     <!------------------------------ header ------------------------------------------->
     <div id="header" class="row">
-        <div id="loginBtn" class="Submit row ">Sign In</div>
-        <div id="logoutBtn" class="Submit row ">Sign Out</div>
-              <h1 class="headng " id="MainHeading">Expense Tracker</h1>
-        <input type="image" src="./images/sidebar.webp" name="sidebar" id="sidebar" alt="submit" label="homebtnimage" />
-        <div class="menu col">
-            <div id="HomeBtn" class="menuitems ">Home</div>    
-            <div id="graphViewer" class="menuitems">view graph</div>
-            <div id="KeepNotes" class="menuitems">Keep notes</div>
-            <div id="EditBudget" class="menuitems">edit Budget</div>
-            <div id="Details" class="menuitems ">Detailed Report of Expense</div>
-       </div>
-  
+      <h1 class="headng" id="MainHeading">Expense Tracker</h1>
+      <input
+        type="image"
+        src="./images/sidebar.webp"
+        name="sidebar"
+        id="sidebar"
+        alt="submit"
+        label="homebtnimage"
+      />
+      <div class="menu col">
+        <div id="HomeBtn" class="menuitems">Home</div>
+        <div id="graphViewer" class="menuitems">view graph</div>
+        <div id="KeepNotes" class="menuitems">Keep notes</div>
+        <div id="EditBudget" class="menuitems">edit Budget</div>
+        <div id="Details" class="menuitems">Detailed Report of Expense</div>
+      </div>
     </div>
     <!------------------------------ ExpenseInput ------------------------------------------->
     <div id="ExpenseInput" class="row">
-        <div id="SetBudget" class="Submit row" style="display: none;">Set Budget</div>  
-            <!------------------------------ floating btn  ------------------------------------------->
-            <div id="td_detail" class="fpcontent">
-              <div id="this_day" class="fpbtn">Day</div>
-              <div id="this_week" class="fpbtn">Week</div>
-              <div id="this_month" class="fpbtn">Month</div>
-          </div>
-          <div class="row" id="fltbtn" ><img src="images/featurebtn.webp" alt=""></div>
-       <!---------------------------------------- popup1---------------------------------->
-        <div id="Addpopup" class="popupcollection"></div>
-        <div id="popupContent" class="ppcontent col">
-            <div class="headingarea row">
-              <h4 class="row">Expense Added</h4>
-              <div  class="close" id="closeBtn">&times;</div>
-            </div>
-            <input type="text" class="Inputbox" name="expense" id="expenseIn" placeholder="expense" />
-            <input type="text" class="Inputbox" name="amount" id="amount" placeholder="Amount" />
-            <input type="date" id="expenseDate" class="Inputbox" />
-              <select name="Category"  id="ExpenseCat" class="Inputbox">
-              <option value="SelectCategory" id="cat1">Select Expense Category</option>
-              <option value="Home Expense" id="cat2">Home Expense</option>
-              <option value="Transportation Expense" id="cat3"> Transportation Expense </option>
-              <option value="Food Expense" id="cat4">Food Expense</option>
-              <option value="lend" id="cat5">lend</option>
-              <option value="borrow" id="cat6">borrow</option>
-              <option value="HealthCare Expense" id="cat7">HealthCare Expense </option>
-              <option value="PetCare Expense" id="cat8">PetCare Expense</option>
-              <option value="Entertainment Expense" id="cat9"> Entertainment Expense </option>
-              <option value="Child-related expenses" id="cat10">  Child-related expenses </option>
-              <option value="Others" id="cat 11">Others</option>
-            </select>
-            <div  class="Submit row" id="AddpopupBtn">OK</div>
+      <div id="SetBudget" class="Submit row" style="display: none">
+        Set Budget
+      </div>
+      <!------------------------------ floating btn  ------------------------------------------->
+      <div id="td_detail" class="fpcontent">
+        <div id="this_day" class="fpbtn">Day</div>
+        <div id="this_week" class="fpbtn">Week</div>
+        <div id="this_month" class="fpbtn">Month</div>
+      </div>
+      <div class="row" id="fltbtn">
+        <img src="images/featurebtn.webp" alt="" />
+      </div>
+      <!---------------------------------------- popup1---------------------------------->
+      <div id="Addpopup" class="popupcollection"></div>
+      <div id="popupContent" class="ppcontent col">
+        <div class="headingarea row">
+          <h4 class="row">Expense Added</h4>
+          <div class="close" id="closeBtn">&times;</div>
         </div>
+        <input
+          type="text"
+          class="Inputbox"
+          name="expense"
+          id="expenseIn"
+          placeholder="expense"
+        />
+        <input
+          type="text"
+          class="Inputbox"
+          name="amount"
+          id="amount"
+          placeholder="Amount"
+        />
+        <input type="date" id="expenseDate" class="Inputbox" />
+        <select name="Category" id="ExpenseCat" class="Inputbox">
+          <option value="SelectCategory" id="cat1">
+            Select Expense Category
+          </option>
+          <option value="Home Expense" id="cat2">Home Expense</option>
+          <option value="Transportation Expense" id="cat3">
+            Transportation Expense
+          </option>
+          <option value="Food Expense" id="cat4">Food Expense</option>
+          <option value="lend" id="cat5">lend</option>
+          <option value="borrow" id="cat6">borrow</option>
+          <option value="HealthCare Expense" id="cat7">
+            HealthCare Expense
+          </option>
+          <option value="PetCare Expense" id="cat8">PetCare Expense</option>
+          <option value="Entertainment Expense" id="cat9">
+            Entertainment Expense
+          </option>
+          <option value="Child-related expenses" id="cat10">
+            Child-related expenses
+          </option>
+          <option value="Others" id="cat 11">Others</option>
+        </select>
+        <div class="Submit row" id="AddpopupBtn">OK</div>
+      </div>
     </div>
     <!-- edit part elements -->
     <div id="editpopup" class="popupcollection"></div>
     <div id="editpopupContent" class="ppcontent col">
-        <div class="headingarea row">
-           <h4 class="row">Expense Added</h4>
-           <div  class="close" id="editcloseBtn">&times;</div>
-        </div>
-        <input type="text" class="Inputbox" name="expense" id="EexpenseIn" placeholder="expense" />
-        <input type="text" class="Inputbox" name="amount" id="Eamount" placeholder="Amount" />
-        <input type="date" id="editexpenseDate" class="Inputbox" />
-         <select name="Category" id="editExpenseCat" class="Inputbox">
-            <option value="SelectCategory" id="Ecat1">Select Expense Category</option>
-            <option value="Home Expense" id="Ecat2">Home Expense</option>
-            <option value="Transportation Expense" id="Ecat3">Transportation Expense</option>
-            <option value="Food Expense" id="Ecat4">Food Expense</option>
-            <option value="lend" id="Ecat5">lend</option>
-            <option value="borrow" id="Ecat6">borrow</option>
-            <option value="HealthCare Expense" id="Ecat7">HealthCare Expense</option>
-            <option value="PetCare Expense" id="Ecat8">PetCare Expense</option>
-            <option value="Entertainment Expense" id="Ecat9">Entertainment Expense</option>
-            <option value="Child-related expenses" id="Ecat10">Child-related expenses</option>
-            <option value="Others" id="Ecat 11">Others</option>
-          </select>
-        <div  class="Submit row" id="editpopupBtn">OK</div>
+      <div class="headingarea row">
+        <h4 class="row">Expense Added</h4>
+        <div class="close" id="editcloseBtn">&times;</div>
+      </div>
+      <input
+        type="text"
+        class="Inputbox"
+        name="expense"
+        id="EexpenseIn"
+        placeholder="expense"
+      />
+      <input
+        type="text"
+        class="Inputbox"
+        name="amount"
+        id="Eamount"
+        placeholder="Amount"
+      />
+      <input type="date" id="editexpenseDate" class="Inputbox" />
+      <select name="Category" id="editExpenseCat" class="Inputbox">
+        <option value="SelectCategory" id="Ecat1">
+          Select Expense Category
+        </option>
+        <option value="Home Expense" id="Ecat2">Home Expense</option>
+        <option value="Transportation Expense" id="Ecat3">
+          Transportation Expense
+        </option>
+        <option value="Food Expense" id="Ecat4">Food Expense</option>
+        <option value="lend" id="Ecat5">lend</option>
+        <option value="borrow" id="Ecat6">borrow</option>
+        <option value="HealthCare Expense" id="Ecat7">
+          HealthCare Expense
+        </option>
+        <option value="PetCare Expense" id="Ecat8">PetCare Expense</option>
+        <option value="Entertainment Expense" id="Ecat9">
+          Entertainment Expense
+        </option>
+        <option value="Child-related expenses" id="Ecat10">
+          Child-related expenses
+        </option>
+        <option value="Others" id="Ecat 11">Others</option>
+      </select>
+      <div class="Submit row" id="editpopupBtn">OK</div>
     </div>
     <!-- edit part elements -->
     <!--------- view details  part-->
     <div id="ViewType" class="popupcollection"></div>
     <div id="ViewTypeconts" class="ppcontent col">
-        <div class="headingarea row">
-            <h4 class="row">Details</h4>
-            <div  class="close" id="viewclsBtn">&times;</div>
-        </div>
-        <div id="vdis">Descriptin:</div>
-        <div id="vamt">Amount:</div>
-        <div id="vdate">Date:</div>
-        <div id="vcat">Category:</div>
-        <div  class="Submit row" id="vclsbtn">OK</div>
+      <div class="headingarea row">
+        <h4 class="row">Details</h4>
+        <div class="close" id="viewclsBtn">&times;</div>
+      </div>
+      <div id="vdis">Descriptin:</div>
+      <div id="vamt">Amount:</div>
+      <div id="vdate">Date:</div>
+      <div id="vcat">Category:</div>
+      <div class="Submit row" id="vclsbtn">OK</div>
     </div>
     <!--------------------  view details part end -->
     <div id="ExpenseList" class="col">
-                <div id="TodayExp" >
-                    <div class="ExpenseListHeading row">Todays Expense</div>
-                </div>
-                <div  id="WeekExp">
-                    <div class="ExpenseListHeading row"> Weekly Expense</div>
-                </div>
-                <div id="MonthExp">
-                    <div class="ExpenseListHeading row"> Monthly Expense</div>
-                </div>
-                <div id="DailyExp">
-                    <div class="ExpenseListHeading row">Daily Expense</div>
-                </div>
+      <div id="TodayExp">
+        <div class="ExpenseListHeading row">Todays Expense</div>
+      </div>
+      <div id="WeekExp">
+        <div class="ExpenseListHeading row">Weekly Expense</div>
+      </div>
+      <div id="MonthExp">
+        <div class="ExpenseListHeading row">Monthly Expense</div>
+      </div>
+      <div id="DailyExp">
+        <div class="ExpenseListHeading row">Daily Expense</div>
+      </div>
     </div>
     <!----------------footeer begin-------------------------------->
     <div id="footer" class="row">
-        <div id="displayGraphpopup" class="popupcollection"></div>
-        <div id="displayGraphpopupContent" class="ppcontent col">
-           <div class="headingarea row">
-              <h4 class="row">graph</h4>
-              <div  class="close" id="GraphcloseBtn">&times;</div>
-           </div>
-           <div id="container"></div>
+      <div id="displayGraphpopup" class="popupcollection"></div>
+      <div id="displayGraphpopupContent" class="ppcontent col">
+        <div class="headingarea row">
+          <h4 class="row">graph</h4>
+          <div class="close" id="GraphcloseBtn">&times;</div>
         </div>
-        <div class="budgetarea" id="Budgetset&remove">
-            <div id="budgetOfMon" class="Budgetdet">Budget :</div>
-            <div id="balance" class="Budgetdet">Balance :</div>
-            <div id="TotalExpense" class="Budgetdet">Expense:</div>
-        </div>
+        <div id="container"></div>
+      </div>
+      <div class="budgetarea" id="Budgetset&remove">
+        <div id="budgetOfMon" class="Budgetdet">Budget :</div>
+        <div id="balance" class="Budgetdet">Balance :</div>
+        <div id="TotalExpense" class="Budgetdet">Expense:</div>
+      </div>
     </div>
     <!-------------setbudget html begin------------------------>
     <div id="budgetpopup" class="popupcollection"></div>
     <div id="budgetpopupContent" class="ppcontent col">
-        <div class="headingarea row">
-             <h4 class="row">Budget Added</h4>
-             <div  class="close" id="budgetcloseBtn">&times;</div>
-        </div>
-        <input type="month" id="expensemonth" class="Inputbox" />
-        <input type="text" class="Inputbox" name="amount" id="bamount" placeholder="Amount" />
-        <div  class="Submit row" id="budgetpopupBtn">OK</div>
+      <div class="headingarea row">
+        <h4 class="row">Budget Added</h4>
+        <div class="close" id="budgetcloseBtn">&times;</div>
+      </div>
+      <input type="month" id="expensemonth" class="Inputbox" />
+      <input
+        type="text"
+        class="Inputbox"
+        name="amount"
+        id="bamount"
+        placeholder="Amount"
+      />
+      <div class="Submit row" id="budgetpopupBtn">OK</div>
     </div>
     <!-------------notes html begin------------------------>
     <div id="notepopup" class="popupcollection"></div>
     <div id="NoteContent" class="ppcontent">
-        <div class="headingarea row">
-           <h2 class="row">Notes</h2>
-           <div  class="close" id="noteclose">&times;</div>
-        </div>
-        <div id="Notes">
-            <div class="add-note" type="div">+</div>
-        </div>
+      <div class="headingarea row">
+        <h2 class="row">Notes</h2>
+        <div class="close" id="noteclose">&times;</div>
+      </div>
+      <div id="Notes">
+        <div class="add-note" type="div">+</div>
+      </div>
     </div>
     <!-------------detailed expense reports html begin------------------------>
     <div id="ExpenseType" class="popupcollection"></div>
     <div id="ExpenseTypeconts" class="ppcontent col">
-        <div class="headingarea row">
-           <h4 class="row">Expenses Details</h4>
-           <div  class="close" id="ExpenseTypeBtn">&times;</div>
-        </div>
-        <div id="typeSelection" class="col">
-                <input type="month" id="typemonth" class="tpsel  Inputbox col" value="tmonth" />
-                <input type="date" id="typeDate" class="tpsel Inputbox col" value="tDate" />
-                <input type="week" id="typeweek" class="tpsel Inputbox col" value="tweek" />
-        </div>
-        <select name="Category" id="typeCat" class="Inputbox">
-            <option value="Select Expense detail type" id="type1">Select Expense detail type </option>
-            <option value="Daily Expense" id="type2">Daily Expense</option>
-            <option value="Weekly Expense" id="type3">Weekly Expense</option>
-            <option value="Monthly Expense" id="type4">Monthly Expense</option>
-     </select>
-        <div  class="tpsel Submit row" id="TypeSubmissionBtn">Submit</div>
-        <div  class="tpsel Submit row" id="TypeBackBtn">Back</div>
-        <div  class="Submit row" id="ExpenseTypeSubmissionBtn">OK</div>
+      <div class="headingarea row">
+        <h4 class="row">Expenses Details</h4>
+        <div class="close" id="ExpenseTypeBtn">&times;</div>
+      </div>
+      <div id="typeSelection" class="col">
+        <input
+          type="month"
+          id="typemonth"
+          class="tpsel Inputbox col"
+          value="tmonth"
+        />
+        <input
+          type="date"
+          id="typeDate"
+          class="tpsel Inputbox col"
+          value="tDate"
+        />
+        <input
+          type="week"
+          id="typeweek"
+          class="tpsel Inputbox col"
+          value="tweek"
+        />
+      </div>
+      <select name="Category" id="typeCat" class="Inputbox">
+        <option value="Select Expense detail type" id="type1">
+          Select Expense detail type
+        </option>
+        <option value="Daily Expense" id="type2">Daily Expense</option>
+        <option value="Weekly Expense" id="type3">Weekly Expense</option>
+        <option value="Monthly Expense" id="type4">Monthly Expense</option>
+      </select>
+      <div class="tpsel Submit row" id="TypeSubmissionBtn">Submit</div>
+      <div class="tpsel Submit row" id="TypeBackBtn">Back</div>
+      <div class="Submit row" id="ExpenseTypeSubmissionBtn">OK</div>
     </div>
-    <div class="Submit row" id="AddBtn"><img src="images/addbtn.webp" alt=""></div>
+    <div class="row" id="AddBtn">+</div>
 
     <!-------------detailed expense report html end------------------------>
-</body>
-
+  </body>
 </html>
-

@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: #ADE792;
+    background-color: #ffffff;
     overscroll-behavior: none;
 }
 
@@ -27,7 +27,7 @@ body {
     width: 100vw;
     justify-content: space-between;
     padding: 20px;
-    background-color: #0E8388;
+    background-color:rgb(213, 213, 175);
 }
 
 /*------------------ ExpenseInput------------------------*/
@@ -35,7 +35,7 @@ body {
     width: 100vw;
     height: 10vh;
     color: #333;
-    background-color: rgba(162, 221, 227, 0.503);
+    background-color:beige
 }
 
 /*-------------------------ExpenseList--------------------- */
@@ -152,7 +152,7 @@ body {
     font-weight: bold;
     border-radius: 50px;
     color: #ffffff;
-    background-color: #70dd66;
+    background-color: #90d583;
     box-shadow: 10px 10px 15px #000;
     cursor: pointer;
 }
@@ -353,15 +353,16 @@ body {
 
 
 #AddBtn {
-    width: clamp(50px, 60px, 70px);
-    height: clamp(50px, 60px, 70px);
+    width: clamp(60px, 70px, 80px);
+    height: clamp(60px, 70px, 80px);
     border-radius: 50px;
     margin-bottom: 5px;
     position: absolute;
     right: 50px;
     bottom: 50px;
     cursor: pointer;
-    box-shadow: 10px 10px 15px #000;
+    background-color: #46797d;
+    font-size: clamp(2rem, 2vw, 2.5rem);
 }
 
 #fltbtn {
@@ -438,15 +439,18 @@ img {
         font-size: clamp(20px, 2vw, 25px);
     }
 
-    #AddBtn,
+    #AddBtn {
+        width: clamp(60px, 30px, 40px);
+        height: clamp(60px, 30px, 40px);
+        right: 160px;
+        bottom: 82px;
+    }
+
     #fltbtn {
         width: clamp(50px, 30px, 40px);
         height: clamp(50px, 30px, 40px);
         right: 10px;
         bottom: 0px;
-    }
-
-    #fltbtn {
         top: clamp(75px, 90px, 85px);
     }
 
